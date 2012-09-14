@@ -24,5 +24,9 @@ class ComicFile(models.Model):
     comic_year = models.CharField(max_length=255,blank=True,null=True)
     comic_most_likely = models.ForeignKey(Comic,blank=True,null=True)
     ### Once "confirmed" these values are possible
-    covers = "" #files could have one or more covers in them!
+    covers = "" #files could have one or more covers in them! Array of keys?! 
+    '''
+        Make a new object that's covers and use letter A - Z and numbers 1 - 100
+        OR just use a general "tag" style, with a parent|name|val setup? or just db.covers['parent','val']
+    '''
     comic = models.ForeignKey(Comic,blank=True,null=True)
