@@ -3,6 +3,6 @@ from issues.models import Comic
 
 # Create your models here.
 
-class comic_files(models.Model):
+class ComicFile(models.Model):
     covers = "" #files could have one or more covers in them!
     comic = models.ForeignKey(Comic)
