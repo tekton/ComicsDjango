@@ -121,7 +121,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'issues',
     'ratings',
-    'comicFiles'
+    'comicFiles',
+    'PullLists'
 )
 
 # A sample logging configuration. The only tangible logging

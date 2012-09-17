@@ -12,6 +12,9 @@ def parse_file(FOLDER, FILE, date=""):
 #    print date + " :: " + FILE
     ### CHECK TO SEE IF FILE IS IN DB!
     
+    extension = os.path.splitext(FILE)[1][1:]
+    print extension
+    
     try: 
         print "checking for db item..."
         ComicFile.objects.get(name=FILE,dir_path=FOLDER)
@@ -19,7 +22,7 @@ def parse_file(FOLDER, FILE, date=""):
         print "No Object exist...that's good!"
 #        return False
     else:
-        print "Not sure what state this would be really..."
+        print "No exceptions, but there was a file already in there, so no processing!"
         return
     
     f = ComicFile(name=FILE,dir_path=FOLDER,comic_date=date)
