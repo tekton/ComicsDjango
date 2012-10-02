@@ -21,4 +21,4 @@ class SeriesAdmin(admin.ModelAdmin):
     actions = [make_new52]
 
 admin.site.register(Series, SeriesAdmin)
-admin.site.register(Comic)   
+admin.site.register(Comic)
