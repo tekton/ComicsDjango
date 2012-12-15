@@ -13,23 +13,34 @@ from django.conf import settings
 
 def rar_parse(dir_path,name):
 	img_root = settings.IMG_ROOT
-	r = rarfile.RarFile(dir_path+"/"+name)
-	try:
-		r.extract(r.namelist()[0],img_root)
-	except:
-		print "No unrar image for you..."
-	f_name = str(r.namelist()[0]).replace("\\","/")
-	return thumbnail_create(f_name)
+	r = rarfile
+	if r.is_rarfile(dir_path+"/"+name):
+		r = rarfile.RarFile(dir_path+"/"+name)
+		try:
+			r.extract(r.namelist()[0],img_root)
+		except:
+			print "No unrar image for you..."
+		f_name = str(r.namelist()[0]).replace("\\","/")
+		### todo: check for if the replace worked, or for \ ???
+		return thumbnail_create(f_name)
+	else:
+		print "Not actually a RAR :("
+		return False
 	
 def zip_parse(dir_path,name):
 	img_root = settings.IMG_ROOT
-	z = zipfile.ZipFile(dir_path+"/"+name)
-	try:
-		z.extract(z.namelist()[0],img_root)
-	except:
-		print "No unzipped image for you!"
-	### don't need to edit the rar directory seperator
-	return thumbnail_create(z.namelist()[0])
+	z = zipfile
+	if z.is_zipfile(dir_path+"/"+name):
+		z = zipfile.ZipFile(dir_path+"/"+name)
+		try:
+			z.extract(z.namelist()[0],img_root)
+		except:
+			print "No unzipped image for you!"
+		### don't need to edit the rar directory seperator
+		return thumbnail_create(z.namelist()[0])
+	else:
+		print "Not actually a zip :("
+		return False
 	
 def thumbnail_create(f_name):
 	img_root = settings.IMG_ROOT
@@ -48,7 +59,7 @@ def thumbnail_create(f_name):
 		img.save(img_root+"/"+f_name)
 		return f_name
 	else:
-		print "Can't find the image that should have been extracted..."
+		print "Can't find the image that should have been extracted for:: "+f_name
 		return False
 
 def walkit():
