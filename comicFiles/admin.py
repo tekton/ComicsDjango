@@ -6,21 +6,39 @@ from comicFiles.models import ComicFile
 from comicFiles.models import RootFolder
 from comicFiles import file_parsing
 from django.contrib.admin.templatetags.admin_list import date_hierarchy
-from comicFiles.file_parsing import parse_folder
+from comicFiles.file_parsing import parse_folder, re_parse_file
 
 def folder_parse(modeladmin, request, queryset):
-    #print modeladmin
-    #print request
-    print queryset
-    for q in queryset:
-        #print q
-        parse_folder(q)
+	#print modeladmin
+	#print request
+	print queryset
+	for q in queryset:
+		#print q
+		print q.id
+		parse_folder(q)
+
+def reparse_comic(modeladmin, request, queryset):
+	#print modeladmin
+	#print request
+	print queryset
+	for q in queryset:
+		#print q
+		print q.id
+		re_parse_file(q)	
 
 class RootFolderAdmin(admin.ModelAdmin):
-    list_display = ['uri', 'last_scanned']
-    ordering = ['uri','last_scanned']
-    actions = [folder_parse]
+	list_display = ['uri', 'last_scanned']
+	ordering = ['uri','last_scanned']
+	actions = [folder_parse]
+
+class ComicFileAdmin(admin.ModelAdmin):
+	list_display = ['id','name','dir_path','rootFolder']
+	ordering = ['id','name','dir_path','error_flag']
+	actions = [reparse_comic]
+	list_filter = ['rootFolder','error_flag','review_flag']
+	search_fields = ['name','dir_path']
 
 folder_parse.short_description = "Parse Folder For New Comics"
-admin.site.register(ComicFile)
+reparse_comic.short_description = "ReParse the selected files"
+admin.site.register(ComicFile,ComicFileAdmin)
 admin.site.register(RootFolder,RootFolderAdmin)
