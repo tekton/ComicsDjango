@@ -3,7 +3,6 @@ import re
 from comicFiles.models import ComicFile
 from comicFiles.models import RootFolder
 
-
 def parse_file(FOLDER, FILE, rootFolder,date="",check_override=False):
 	#file = open(FILE.RootFolder+"/"+FILE.name+"."+FILE.extension)
 	regex	=	"(.*?)[\(\[](.*)";

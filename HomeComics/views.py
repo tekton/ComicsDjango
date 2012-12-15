@@ -9,14 +9,20 @@ from issues.models import *
 from PullLists.models import *
 from ratings.models import *
 
+from django.conf import settings
+
 # Create your views here.
 
 def index(request):
 	recentFiles = ComicFile.objects.all()[:5].values()
 	
+	recentFiles = ComicFile.objects.filter(rootFolder=1).values()
+	
 	print ComicFile.objects.filter(extension__contains='cbz').count()
 	print ComicFile.objects.filter(extension__contains='cbr').count()
-	
+	#
+	print settings.IMG_ROOT
+	#
 	return render_to_response("index.html", {"recentFiles":recentFiles}, context_instance=RequestContext(request))
 
 def single_issue(request,id):
