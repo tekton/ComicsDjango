@@ -48,8 +48,8 @@ def thumbnail_create(f_name):
 		img.save(img_root+"/"+f_name)
 		return f_name
 	else:
-		print "Can't fint he image that should have been extracted..."
-		return false
+		print "Can't find the image that should have been extracted..."
+		return False
 
 def walkit():
 	for dir_path,dir_names,files in os.walk(dir_root):
