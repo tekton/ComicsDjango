@@ -67,10 +67,9 @@ def walkit():
 	for dir_path,dir_names,files in os.walk(dir_root):
 		for name in files:
 			extension = os.path.splitext(name)[1][1:]
-			z = zipfile
-			r = rarfile
 		
 			if extension == "cbz":
+			    z = zipfile
 				print "process as zip!"
 				if z.is_zipfile(name):
 					z = zipfile.ZipFile(name)
@@ -85,6 +84,7 @@ def walkit():
 				else:
 					print "not a zip..."
 			elif extension == "cbr":
+			    r = rarfile
 				print "process as rar!"
 				if r.is_rarfile(name):
 					print "rar to process"
