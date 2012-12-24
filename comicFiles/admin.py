@@ -33,12 +33,12 @@ def reparse_comic(modeladmin, request, queryset):
 def reparse_image(modeladmin,request,queryset):
     for q in queryset:
         if q.thumbnail is None:
+            if q.extension == "cbr":
+                q.thumbnail = rar_parse(q.dir_path, q.name)
+            elif q.extension == "cbz":
+                q.thumbnail = zip_parse(q.dir_path, q.name)
+        else:
             print "Thumbnail already exist...most likely."
-            pass
-        elif q.extension == "cbr":
-            q.thumbnail = rar_parse(q.dir_path, q.name)
-        elif q.extension == "cbz":
-            q.thumbnail = zip_parse(q.dir_path, q.name)
         q.save()
 
 class RootFolderAdmin(admin.ModelAdmin):
