@@ -51,6 +51,7 @@ def thumbnail_create(f_name):
 			img = Image.open(img_root+"/"+f_name)
 		except:
 			print "no img?!"
+			return False
 	
 		basewidth = 200
 		wpercent = (basewidth / float(img.size[0]))
