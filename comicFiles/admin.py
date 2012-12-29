@@ -9,8 +9,8 @@ from django.contrib.admin.templatetags.admin_list import date_hierarchy
 
 from comicFiles.file_parsing import parse_folder, re_parse_file
 
-from comicFiles.images import rar_parse
-from comicFiles.images import zip_parse
+from comicFiles.images import rar_parse,zip_parse,thumbnail_parse_task
+
 
 def folder_parse(modeladmin, request, queryset):
     #print modeladmin
@@ -28,18 +28,11 @@ def reparse_comic(modeladmin, request, queryset):
     for q in queryset:
         #print q
         print q.id
-        re_parse_file(q)    
+        re_parse_file.delay(q)
 
 def reparse_image(modeladmin,request,queryset):
     for q in queryset:
-        if q.thumbnail is None:
-            if q.extension == "cbr":
-                q.thumbnail = rar_parse(q.dir_path, q.name)
-            elif q.extension == "cbz":
-                q.thumbnail = zip_parse(q.dir_path, q.name)
-        else:
-            print "Thumbnail already exist...most likely."
-        q.save()
+        thumbnail_parse_task.delay(q)
 
 class RootFolderAdmin(admin.ModelAdmin):
     list_display = ['uri', 'last_scanned']

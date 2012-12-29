@@ -14,9 +14,9 @@ from django.conf import settings
 # Create your views here.
 
 def index(request):
-	recentFiles = ComicFile.objects.all()[:5].values()
+	recentFiles = ComicFile.objects.all().order_by("-id")[:5].values()
 	
-	recentFiles = ComicFile.objects.filter(rootFolder=3).values()
+	#recentFiles = ComicFile.objects.filter(rootFolder=3).values()
 	
 	print ComicFile.objects.filter(extension__contains='cbz').count()
 	print ComicFile.objects.filter(extension__contains='cbr').count()

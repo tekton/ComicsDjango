@@ -3,6 +3,8 @@ import re
 from comicFiles.models import ComicFile
 from comicFiles.models import RootFolder
 
+import celery
+
 def parse_file(FOLDER, FILE, rootFolder,date="",check_override=False):
 	#file = open(FILE.RootFolder+"/"+FILE.name+"."+FILE.extension)
 	regex	=	"(.*?)[\(\[](.*)";
@@ -53,9 +55,9 @@ def parse_file(FOLDER, FILE, rootFolder,date="",check_override=False):
 #		 #do more stuff
 #		 print file_parse
 
-
-##### function will change over time as regex changes for other sections...
+@celery.task
 def re_parse_file(comic):
+	"""function will change over time as regex changes for other sections..."""
 	print comic
 	# date???
 	
@@ -64,6 +66,7 @@ def re_parse_file(comic):
 	
 	return
 
+@celery.task
 def parse_folder(FOLDER):
 	### take the FOLDER object and assign out the variables to local renditions
 	### folder = FOLDER.uri

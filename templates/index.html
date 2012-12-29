@@ -1,5 +1,6 @@
 <div>
 	{% for file in recentFiles %}
-		<!-- {{ file.name }}--><img src="/static/images/{{file.thumbnail}}" width="160px" />
+		<!-- {{ file.name }}-->
+		<a href="{% url HomeComics.views.single_issue file.id %}"><img src="/static/images/{{file.thumbnail}}" width="160px" /></a>
 	{% endfor %}
 </div>

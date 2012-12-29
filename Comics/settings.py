@@ -4,6 +4,15 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+### CELERY SETTINGS
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = "django://"
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+CELERY_IMPORTS = ("comicFiles.file_parsing","comicFiles.images")
+### END CELERY SETTINS
+
+
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),".."))
 
 ADMINS = (
@@ -139,6 +148,9 @@ INSTALLED_APPS = (
     'comicFiles',
     'PullLists',
 	'south',
+    'HomeComics',
+    'djcelery',
+    'kombu.transport.django',
 )
 
 # A sample logging configuration. The only tangible logging

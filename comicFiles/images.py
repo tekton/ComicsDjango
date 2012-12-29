@@ -8,9 +8,19 @@ from PIL import Image
 
 from django.conf import settings
 
+import celery
+
+#### moving some image processing to tasks, consolidating here
+from ratings.models import UserRating
+from issues.models import Series
+from issues.models import Comic
+from comicFiles.models import ComicFile
+from comicFiles.models import RootFolder
+
 #dir_root = "/Users/tyler/Projects/Comics/static/comics/Week of 2012-06-20/DC"
 #img_root = settings.IMG_ROOT
 
+@celery.task
 def rar_parse(dir_path,name):
     img_root = settings.IMG_ROOT
     r = rarfile
@@ -26,7 +36,8 @@ def rar_parse(dir_path,name):
     else:
         print "Not actually a RAR :("
         return False
-    
+
+@celery.task    
 def zip_parse(dir_path,name):
     img_root = settings.IMG_ROOT
     z = zipfile
@@ -41,6 +52,18 @@ def zip_parse(dir_path,name):
     else:
         print "Not actually a zip :("
         return False
+
+@celery.task
+def thumbnail_parse_task(q):
+    """ q is used to represent a queryset item """
+    if q.thumbnail is None:
+        if q.extension == "cbr":
+            q.thumbnail = rar_parse(q.dir_path, q.name)
+        elif q.extension == "cbz":
+            q.thumbnail = zip_parse(q.dir_path, q.name)
+    else:
+        print "Thumbnail already exist...most likely."
+    q.save()
     
 def thumbnail_create(f_name):
     img_root = settings.IMG_ROOT
