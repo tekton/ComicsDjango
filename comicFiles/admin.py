@@ -19,7 +19,7 @@ def folder_parse(modeladmin, request, queryset):
     for q in queryset:
         #print q
         print q.id
-        parse_folder(q)
+        parse_folder.delay(q)
 
 def reparse_comic(modeladmin, request, queryset):
     #print modeladmin

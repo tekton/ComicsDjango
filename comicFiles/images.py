@@ -21,8 +21,9 @@ from comicFiles.models import RootFolder
 #img_root = settings.IMG_ROOT
 
 @celery.task
-def rar_parse(dir_path,name):
-    img_root = settings.IMG_ROOT
+def rar_parse(dir_path,name,num):
+    img_root = settings.IMG_ROOT+"/"+str(num)
+    print img_root
     r = rarfile
     if r.is_rarfile(dir_path+"/"+name):
         r = rarfile.RarFile(dir_path+"/"+name)
@@ -32,14 +33,14 @@ def rar_parse(dir_path,name):
             print "No unrar image for you..."
         f_name = str(r.namelist()[0]).replace("\\","/")
         ### todo: check for if the replace worked, or for \ ???
-        return thumbnail_create(f_name)
+        return thumbnail_create(f_name,img_root)
     else:
         print "Not actually a RAR :("
         return False
 
 @celery.task    
-def zip_parse(dir_path,name):
-    img_root = settings.IMG_ROOT
+def zip_parse(dir_path,name,num):
+    img_root = settings.IMG_ROOT+"/"+str(num)
     z = zipfile
     if z.is_zipfile(dir_path+"/"+name):
         z = zipfile.ZipFile(dir_path+"/"+name)
@@ -48,7 +49,7 @@ def zip_parse(dir_path,name):
         except:
             print "No unzipped image for you!"
         ### don't need to edit the rar directory seperator
-        return thumbnail_create(z.namelist()[0])
+        return thumbnail_create(z.namelist()[0],img_root)
     else:
         print "Not actually a zip :("
         return False
@@ -56,17 +57,17 @@ def zip_parse(dir_path,name):
 @celery.task
 def thumbnail_parse_task(q):
     """ q is used to represent a queryset item """
-    if q.thumbnail is None:
-        if q.extension == "cbr":
-            q.thumbnail = rar_parse(q.dir_path, q.name)
-        elif q.extension == "cbz":
-            q.thumbnail = zip_parse(q.dir_path, q.name)
-    else:
-        print "Thumbnail already exist...most likely."
+    #if q.thumbnail is None:
+    if q.extension == "cbr":
+        q.thumbnail = str(q.id) + "/" + rar_parse(q.dir_path, q.name, q.id)
+    elif q.extension == "cbz":
+        q.thumbnail = str(q.id) + "/" + zip_parse(q.dir_path, q.name, q.id)
+    #else:
+    #    print "Thumbnail already exist...most likely."
     q.save()
     
-def thumbnail_create(f_name):
-    img_root = settings.IMG_ROOT
+def thumbnail_create(f_name,img_root):
+    #img_root = settings.IMG_ROOT
     if os.path.isfile(img_root+"/"+f_name):
         print "should resize it to a real thumbnail..."
     

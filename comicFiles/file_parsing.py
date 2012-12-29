@@ -5,6 +5,7 @@ from comicFiles.models import RootFolder
 
 import celery
 
+@celery.task
 def parse_file(FOLDER, FILE, rootFolder,date="",check_override=False):
 	#file = open(FILE.RootFolder+"/"+FILE.name+"."+FILE.extension)
 	regex	=	"(.*?)[\(\[](.*)";
@@ -16,7 +17,12 @@ def parse_file(FOLDER, FILE, rootFolder,date="",check_override=False):
 	
 	extension = os.path.splitext(FILE)[1][1:]
 	#print extension
-	
+	if extension == "txt":
+		return False
+	elif extension == "com":
+		return False
+	elif extension == "com.txt":
+		return False
 	'''
 		Check the DB to see if we already parsed this one; don't if we already have
 	'''
@@ -84,4 +90,4 @@ def parse_folder(FOLDER):
 				#print "DIR_PATH :: "+dir_path
 				#print "NAME :: " + name
 				#print "DATE :: "+possible_date
-				parse_file(dir_path, name, FOLDER, possible_date)
+				parse_file.delay(dir_path, name, FOLDER, possible_date)
