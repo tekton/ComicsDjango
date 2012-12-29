@@ -1,6 +1,7 @@
 *.pyc
 *.DS_Store
 .project
-.pydevproject
+*.pydevproject*
 *comics.db
 static/
+celery*

@@ -1,3 +1,14 @@
-{{comic.name}}<br />
-{{comic.comic_name}}<br />
-{{comic.comic_issue}}
+{% load text_tags %}
+
+<div>
+Name: {{comic.name}}<br />
+Comic Name: {{comic.comic_name}}<br />
+Comic Issue: {{comic.comic_issue}}<br />
+<img src="/static/images/{{comic.thumbnail|hexVert}}" />
+</div>
+
+<div>
+	
+	{{comic.dir_path}}
+	
+</div>

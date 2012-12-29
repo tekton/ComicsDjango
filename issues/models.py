@@ -24,6 +24,8 @@ class Comic(models.Model):
 	number = models.CharField(max_length=255)  ###ususally numbers, but there's a decent amount of A, B, C, etc
 	year = models.CharField(max_length=255,blank=True,null=True) ###should be a date or year stamp
 	series = models.ForeignKey(Series)
+	read = models.BooleanField(default=False)
+	own = models.BooleanField(default=False)
 	def __unicode__(self):
 		rtn_str = self.series.name + " v" + self.series.volume + " " + self.number
 		if self.series.new52_flag == True:
