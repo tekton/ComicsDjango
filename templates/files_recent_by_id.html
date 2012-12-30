@@ -1,0 +1,14 @@
+{% load text_tags %}
+<div>
+    <table>
+	{% for file in recentFiles %}
+		<!-- {{ file.name }}-->
+		<tr>		    
+            <td>{{file.comic_name}}<td>
+		    <td><a href="{% url HomeComics.views.new_series_from_data file.id  %}">{{file.comic_issue}}</a><td>
+	        <td>{{file.name}}</td>
+		    <td>{{file.dir_path}}</td>
+		</tr>
+	{% endfor %}
+	</table>
+</div>

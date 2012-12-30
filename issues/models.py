@@ -15,7 +15,7 @@ class Series(models.Model):
 	new52_flag = models.BooleanField(default=False)
 	marvel_now = models.BooleanField(default=False)
 	def __unicode__(self):
-		return self.name + " v" + self.volume
+		return str(self.name) + " v" + str(self.volume)
 '''
 	this class is for the actual issues/series management side of things
 '''
@@ -27,7 +27,7 @@ class Comic(models.Model):
 	read = models.BooleanField(default=False)
 	own = models.BooleanField(default=False)
 	def __unicode__(self):
-		rtn_str = self.series.name + " v" + self.series.volume + " " + self.number
+		rtn_str = str(self.series.name) + " " + str(self.number)
 		if self.series.new52_flag == True:
 			rtn_str += " (New 52)"
 		if self.series.marvel_now == True:

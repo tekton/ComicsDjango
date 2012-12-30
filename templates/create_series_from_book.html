@@ -1,0 +1,7 @@
+<form action="{% url HomeComics.views.new_series_from_data comic.id %}" method="post">
+    {% csrf_token %}
+    <table>
+    {{form}}
+    </table>
+    <input type="Submit" />
+</form>
