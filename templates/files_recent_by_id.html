@@ -6,7 +6,7 @@
 		<tr>		    
             <td>{{file.comic_name}}<td>
 		    <td><a href="{% url HomeComics.views.new_series_from_data file.id  %}">{{file.comic_issue}}</a><td>
-	        <td>{{file.name}}</td>
+	        <td><a href="{% url HomeComics.views.single_issue file.id  %}">{{file.name}}</a></td>
 		    <td><a href="{% url HomeComics.views.view_dir_path %}?dir_path={{file.dir_path}}">{{file.dir_path}}</td>
 		</tr>
 	{% endfor %}

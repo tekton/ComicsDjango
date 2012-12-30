@@ -1,0 +1,12 @@
+{% load text_tags %}
+<div>
+    <table>
+	{% for file in possible_series %}
+		<tr>		    
+		    <td>{{file.comic_name__count}}</td>
+		    <td><a href="{% url HomeComics.views.view_dir_path %}?dir_path={{file.dir_path|hexVert}}">{{file.comic_name}}</td>
+		    <td>{{file.comic_issue__max}}</td>
+		</tr>
+	{% endfor %}
+	</table>
+</div>

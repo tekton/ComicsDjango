@@ -75,13 +75,13 @@ def new_series_from_data(request,id):
             #try:
             try:
                 min_num = int(form.data["min_issue"])
-                max_num = int(form.data["max_issue"])
+                max_num = int(form.data["max_issue"]) + 1
                 rng = True
             except:
                 rng = False
             if rng:
                 for x in range(min_num, max_num):
-                    #print x
+                    print x
                     try:
                         issue = Comic.objects.get(series=series,number=x)
                         print "Issue exists!"
@@ -130,4 +130,8 @@ def view_dir_paths_list(request):
     comic_dir_paths = ComicFile.objects.all().values("dir_path").annotate(Count("dir_path"))
     print comic_dir_paths
     return render_to_response("dir_paths.py", {"recentFiles":comic_dir_paths}, context_instance=RequestContext(request))
-     
+
+def possible_series_list(request):
+    print "trying to find all the comics..."
+    possible_series = ComicFile.objects.all().values("comic_name").annotate(Count("comic_name"),Max("comic_issue")) 
+    return render_to_response("possible_series.html", {"possible_series":possible_series}, context_instance=RequestContext(request))
