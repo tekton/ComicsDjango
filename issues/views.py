@@ -17,6 +17,10 @@ from django.conf import settings
 def index(request):
     series_list = Series.objects.all()
     return render_to_response("series/index.html", {"series_list":series_list}, context_instance=RequestContext(request))
+
+def single(request,id):
+    comic = Comic.objects.get(pk=id)
+    return render_to_response("series/single.html", {"comic":comic}, context_instance=RequestContext(request))
     
 def browse(request,id):
     print "browse"

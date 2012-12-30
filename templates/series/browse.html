@@ -1,6 +1,6 @@
 <h1>{{series}}</h1>
 <div>
 {% for issue in comics %}
-    <div><a href="{% url HomeComics.views.single_issue issue.id %}">{{issue}}</a></div>
+    <div><a href="{% url issues.views.single issue.id %}">{{issue}}</a></div>
 {% endfor %}
 </div>
