@@ -17,7 +17,7 @@ class ComicInline(admin.TabularInline):
 class SeriesAdmin(admin.ModelAdmin):
     list_display = ['name', 'publisher', 'new52_flag']
     ordering = ['name']
-    inlines = [ComicInline]
+    #inlines = [ComicInline]
     actions = [make_new52]
 
 admin.site.register(Series, SeriesAdmin)
