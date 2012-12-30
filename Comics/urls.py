@@ -17,4 +17,6 @@ urlpatterns = patterns('',
 
 	url(r'^$',include('HomeComics.urls')),
 	url(r'^issues',include('HomeComics.urls')),
+	
+	url(r'^series',include('issues.urls')),
 )

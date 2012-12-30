@@ -20,12 +20,14 @@ def index(request):
     
     #recentFiles = ComicFile.objects.filter(rootFolder=3).values()
     
+    series_list = Series.objects.all()#.values()
+    
     print ComicFile.objects.filter(extension__contains='cbz').count()
     print ComicFile.objects.filter(extension__contains='cbr').count()
     #
     print settings.IMG_ROOT
     #
-    return render_to_response("index.html", {"recentFiles":recentFiles}, context_instance=RequestContext(request))
+    return render_to_response("index.html", {"recentFiles":recentFiles,"series_list":series_list}, context_instance=RequestContext(request))
 
 def single_issue(request,id):
     print "SINGLE ISSUE"

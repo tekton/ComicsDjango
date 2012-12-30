@@ -5,3 +5,9 @@
 		<a href="{% url HomeComics.views.single_issue file.id %}"><img src="/static/images/{{file.thumbnail|hexVert}}" width="160px" /></a>
 	{% endfor %}
 </div>
+
+<div>
+    {% for series in series_list %}
+        {{series}}<br />
+    {% endfor %}
+</div>

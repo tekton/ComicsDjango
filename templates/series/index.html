@@ -1,0 +1,9 @@
+{% load text_tags %}
+
+<div>
+    {% for series in series_list %}
+        <div><a href="{% url issues.views.browse series.id %}">
+            {{series}}
+        </a></div>
+    {% endfor %}
+</div>
