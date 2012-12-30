@@ -1,1 +1,1 @@
-celeryd: python manage.py celeryd -E -B --loglevel=INFO
+celeryd: python manage.py celeryd -E -B --loglevel=INFO --autorelaod
