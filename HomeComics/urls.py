@@ -10,4 +10,6 @@ urlpatterns = patterns('',
 	url(r'/recent','HomeComics.views.recent_by_id'),
 	url(r'/new_series/(.*)','HomeComics.views.new_series_from_data'),
 	#url(r'/new_series','HomeComics.views.recent_by_id'),
+	url(r'/view/dirpath$','HomeComics.views.view_dir_path'),
+	url(r'/view/paths','HomeComics.views.view_dir_paths_list'),
 )

@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.template import RequestContext
 from collections import OrderedDict
+from django.db.models import *
 
 from forms import *
 from comicFiles.models import *
@@ -114,3 +115,17 @@ def new_series_from_data(request,id):
 def new_series_form(request):    
     comics = ComicFile.objects.all().order_by("-id")[:50].values()
     return render_to_response("files_recent_by_id.html", {"recentFiles":comics}, context_instance=RequestContext(request))
+
+
+def view_dir_path(request):
+    """The variable we're looking for it in the GET properties"""
+    dir_path = request.GET.get('dir_path')
+    comics = ComicFile.objects.filter(dir_path=dir_path)
+    return render_to_response("files_recent_by_id.html", {"recentFiles":comics}, context_instance=RequestContext(request))
+    
+def view_dir_paths_list(request):
+    print "trying to find all the paths..."
+    comic_dir_paths = ComicFile.objects.all().values("dir_path").annotate(Count("dir_path"))
+    print comic_dir_paths
+    return render_to_response("dir_paths.py", {"recentFiles":comic_dir_paths}, context_instance=RequestContext(request))
+     
