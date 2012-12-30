@@ -8,6 +8,8 @@
 
 <div>
     {% for series in series_list %}
-        {{series}}<br />
+        <div><a href="{% url issues.views.browse series.id %}">
+            {{series}}
+        </a></div>
     {% endfor %}
 </div>
