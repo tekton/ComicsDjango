@@ -1,9 +1,14 @@
 {% load text_tags %}
 
 <div>
+    <table>
+        <tr><th>Comic</th><th>Read</th><th>Own</th></tr>
     {% for series in series_list %}
-        <div><a href="{% url issues.views.browse series.id %}">
+        <tr><td><a href="{% url issues.views.browse series.id %}">
             {{series}}
-        </a></div>
+        </a></td>
+        <td></td>
+        <td></td>
+        </tr>
     {% endfor %}
 </div>
