@@ -31,6 +31,8 @@ def browse(request,id):
     print "browse"
     series = Series.objects.get(pk=id)
     issues = Comic.objects.filter(series=series).order_by("-number")
+    #issues = Comic.objects.raw("select * from issues_comic where series_id = %s order by number+0 desc",[series.id])###
+    print issues
     return render_to_response("series/browse.html", {"series":series,"comics":issues}, context_instance=RequestContext(request))
     
 

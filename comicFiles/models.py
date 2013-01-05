@@ -22,7 +22,7 @@ class ComicFile(models.Model):
     ### Potential values for processing and "attatching" to a comic
     ### It's very possible none of these will pan out...
     comic_name = models.CharField(max_length=255,blank=True,null=True)
-    comic_issue = models.CharField(max_length=255,blank=True,null=True)
+    comic_issue = models.FloatField(blank=True,null=True) ### it's far and away the most common type of numering system...
     comic_volume = models.CharField(max_length=255,blank=True,null=True)
     comic_year = models.CharField(max_length=255,blank=True,null=True)
     comic_date = models.CharField(max_length=255, blank=True, null=True)
