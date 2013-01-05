@@ -30,7 +30,7 @@ def single(request,id):
 def browse(request,id):
     print "browse"
     series = Series.objects.get(pk=id)
-    issues = Comic.objects.filter(series=series).order_by("number")
+    issues = Comic.objects.filter(series=series).order_by("-number")
     return render_to_response("series/browse.html", {"series":series,"comics":issues}, context_instance=RequestContext(request))
     
 

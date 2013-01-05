@@ -1,13 +1,24 @@
 {% load text_tags %}
+<style>
+	table td {
+		border: 1px solid gray;
+		padding: 10px;
+	}
+</style>
 <div>
-    <table>
+    <table cellspacing="0">
 	{% for file in recentFiles %}
 		<!-- {{ file.name }}-->
 		<tr>		    
-            <td>{{file.comic_name}}<td>
-		    <td><a href="{% url HomeComics.views.new_series_from_data file.id  %}">{{file.comic_issue}}</a><td>
-	        <td><a href="{% url HomeComics.views.single_issue file.id  %}">{{file.name}}</a></td>
-		    <td><a href="{% url HomeComics.views.view_dir_path %}?dir_path={{file.dir_path}}">{{file.dir_path}}</td>
+            <td>{{file.comic_name}}</td>
+		    <td>
+		    	<a href="{% url HomeComics.views.new_series_from_data file.id  %}">{{file.comic_issue}}</a>
+		    </td>
+	        <td>
+	        	<a href="{% url HomeComics.views.single_issue file.id  %}">{{file.name}}</a>
+	        </td>
+		    <td><a href="{% url HomeComics.views.view_dir_path %}?dir_path={{file.dir_path}}">{{file.dir_path}}</a></td>
+		    <td><a href="/comic_files_static{{file.dir_path}}/{{file.name}}">Download</a></td>
 		</tr>
 	{% endfor %}
 	</table>

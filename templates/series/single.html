@@ -1,7 +1,12 @@
+{% extends "root.html" %}
+{% load text_tags %}
+
+{% block main %}
 <div>{{comic}}</div>
 
 <div>
 {% for single in possible %}
-    <div><a href="{% url HomeComics.views.single_issue single.id %}">{{single.name}}</div>
+    <div><a href="{% url HomeComics.views.single_issue single.id %}">{{single.name}}</a> | <a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a></div>
 {% endfor %}
 </div>
+{% endblock %}

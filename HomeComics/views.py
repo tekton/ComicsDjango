@@ -16,7 +16,7 @@ from django.conf import settings
 # Create your views here.
 
 def index(request):
-    recentFiles = ComicFile.objects.all().order_by("-id")[:5].values()
+    recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
     
     #recentFiles = ComicFile.objects.filter(rootFolder=3).values()
     
@@ -55,7 +55,10 @@ def recent_by_id(request):
     return render_to_response("files_recent_by_id.html", {"recentFiles":comics}, context_instance=RequestContext(request))
 
 def new_series_from_data(request,id):
-    comic = ComicFile.objects.get(pk=id)
+    try:
+        comic = ComicFile.objects.get(pk=id)
+    except:
+        comic = ComicFile()
     if request.POST:
         print "posting..."
         form = NewSeriesFromData(request.POST)
@@ -105,9 +108,12 @@ def new_series_from_data(request,id):
         form = NewSeriesFromData()
         form.initial['orig_id'] = id
         form.initial['series'] = comic.comic_name
-        form.initial['max_issue'] = int(comic.comic_issue)
+        if comic.comic_issue is None:
+            form.initial['max_issue'] = 0
+        else:
+            form.initial['max_issue'] = int(comic.comic_issue)
     
-        min_issue = int(comic.comic_issue) - 50
+        min_issue = form.initial['max_issue'] - 50
         if min_issue < 0:
             min_issue = 0
     
