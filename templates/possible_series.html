@@ -1,4 +1,7 @@
+{% extends "root.html" %}
 {% load text_tags %}
+
+{% block main %}
 <div>
     <table>
 	{% for file in possible_series %}
@@ -10,3 +13,4 @@
 	{% endfor %}
 	</table>
 </div>
+{% endblock %}
