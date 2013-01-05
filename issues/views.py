@@ -23,7 +23,9 @@ def index(request):
 
 def single(request,id):
     comic = Comic.objects.get(pk=id)
-    return render_to_response("series/single.html", {"comic":comic}, context_instance=RequestContext(request))
+    possible = ComicFile.objects.filter(comic_name=comic.series.name,comic_issue=comic.number).values()
+    print possible
+    return render_to_response("series/single.html", {"comic":comic,"possible":possible}, context_instance=RequestContext(request))
     
 def browse(request,id):
     print "browse"

@@ -1,1 +1,7 @@
-{{comic}}
+<div>{{comic}}</div>
+
+<div>
+{% for single in possible %}
+    <div><a href="{% url HomeComics.views.single_issue single.id %}">{{single.name}}</div>
+{% endfor %}
+</div>
