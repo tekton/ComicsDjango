@@ -1,14 +1,17 @@
+{% extends "root.html" %}
 {% load text_tags %}
 
+{% block main %}
+
 <div>
-Name: {{comic.name}}<br />
+Name: <a href="/comic_files_static{{comic.dir_path}}/{{comic.name}}">{{comic.name}}</a><br />
 Comic Name: {{comic.comic_name}}<br />
 Comic Issue: {{comic.comic_issue}}<br />
 <img src="/static/images/{{comic.thumbnail|hexVert}}" />
 </div>
 
 <div>
-	
-	{{comic.dir_path}}
-	
+	<a href="{% url HomeComics.views.view_dir_path %}?dir_path={{comic.dir_path}}">{{comic.dir_path}}</a>	
 </div>
+
+{% endblock %}

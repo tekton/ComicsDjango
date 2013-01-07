@@ -31,7 +31,7 @@ class Series(models.Model):
 '''
 class Comic(models.Model):
     name = models.CharField(max_length=255)
-    number = models.CharField(max_length=255)  ###ususally numbers, but there's a decent amount of A, B, C, etc
+    number = models.FloatField()  ###ususally numbers, but there's a decent amount of A, B, C, etc
     year = models.CharField(max_length=255,blank=True,null=True) ###should be a date or year stamp
     series = models.ForeignKey(Series)
     read = models.BooleanField(default=False)
