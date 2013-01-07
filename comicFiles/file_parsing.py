@@ -90,4 +90,9 @@ def parse_folder(FOLDER):
 				#print "DIR_PATH :: "+dir_path
 				#print "NAME :: " + name
 				#print "DATE :: "+possible_date
-				parse_file.delay(dir_path, name, FOLDER, possible_date)
+				if "@eaDir" in dir_path:
+				    ### for ignoring synology nas "special" files
+				    ### TODO add this to settings, an outside conf, or a DB entry
+				    pass
+				else:
+				    parse_file.delay(dir_path, name, FOLDER, possible_date)
