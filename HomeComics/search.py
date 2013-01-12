@@ -19,10 +19,10 @@ def search_all(request):
         form = SearchFormClass(request.POST)
         srch_str = form.data["search_data"]
         #print srch_str
-        files = ComicFile.objects.filter(name__contains=srch_str).values()
-        file_by_dir = ComicFile.objects.filter(dir_path__contains=srch_str).values()
-        comics = Comic.objects.filter(name__contains=srch_str).values()
-        series = Series.objects.filter(name__contains=srch_str)#.values()
+        files = ComicFile.objects.filter(name__icontains=srch_str).values()
+        file_by_dir = ComicFile.objects.filter(dir_path__icontains=srch_str).values()
+        comics = Comic.objects.filter(name__icontains=srch_str).values()
+        series = Series.objects.filter(name__icontains=srch_str)#.values()
         print files.query
         print comics.query
         print series.query
