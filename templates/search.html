@@ -25,4 +25,10 @@
     <div><a href="{% url HomeComics.views.single_issue file.id%}">{{file.name}}</a></div>
 {% endfor %}
 
+<h3>Files By Path</h3>
+<h3>Files</h3>
+{% for file in files_by_dir %}
+    <div><a href="{% url HomeComics.views.single_issue file.id%}">{{file.name}}</a></div>
+{% endfor %}
+
 {% endblock %}

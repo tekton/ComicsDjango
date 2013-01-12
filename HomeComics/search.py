@@ -19,12 +19,13 @@ def search_all(request):
         form = SearchFormClass(request.POST)
         srch_str = form.data["search_data"]
         #print srch_str
-        files = ComicFile.objects.filter(Q(name__contains=srch_str)|Q(dir_path__contains=srch_str)).values()
+        files = ComicFile.objects.filter(name__contains=srch_str).values()
+        file_by_dir = ComicFile.objects.filter(dir_path__contains=srch_str).values()
         comics = Comic.objects.filter(name__contains=srch_str).values()
         series = Series.objects.filter(name__contains=srch_str)#.values()
-        #print files
-        #print comics
-        #print series
+        print files.query
+        print comics.query
+        print series.query
     except:
         form = SearchFormClass()
     if form.is_valid:
@@ -34,5 +35,5 @@ def search_all(request):
         pass
         ###show blank form again!
     
-    return render_to_response("search.html", {"form":form,"seri":series,"files":files,"comics":comics}, context_instance=RequestContext(request))
+    return render_to_response("search.html", {"form":form,"seri":series,"files":files,"comics":comics,"file_by_dir":file_by_dir}, context_instance=RequestContext(request))
     
