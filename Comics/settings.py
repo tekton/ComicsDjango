@@ -7,8 +7,10 @@ TEMPLATE_DEBUG = DEBUG
 ### CELERY SETTINGS
 import djcelery
 djcelery.setup_loader()
-BROKER_URL = "django://"
-BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+#BROKER_URL = "django://"
+BROKER_URL = 'redis://localhost:6379/0'
+#BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+CELERY_RESULT_BACKEND = "redis://"
 CELERY_IMPORTS = ("comicFiles.file_parsing","comicFiles.images")
 ### END CELERY SETTINS
 
