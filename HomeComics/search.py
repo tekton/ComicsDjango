@@ -23,9 +23,10 @@ def search_all(request):
         file_by_dir = ComicFile.objects.filter(dir_path__icontains=srch_str).values()
         comics = Comic.objects.filter(name__icontains=srch_str).values()
         series = Series.objects.filter(name__icontains=srch_str)#.values()
-        print files.query
-        print comics.query
-        print series.query
+        print file_by_dir.query
+        #print files.query
+        #print comics.query
+        #print series.query
     except:
         form = SearchFormClass()
     if form.is_valid:
