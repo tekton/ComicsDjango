@@ -19,8 +19,6 @@
     		background: #eee;
     		border-radius: 5px;
     	}
-    	
-    	/* Gradient transparent - color - transparent :: stolen from http://css-tricks.com/examples/hrs/ */
 		
 		#head h3 {
 			color: #222;
@@ -40,6 +38,7 @@
 			text-decoration: none
 		}
 		
+		/* Gradient transparent - color - transparent :: stolen from http://css-tricks.com/examples/hrs/ */
 		hr {
 		    border: 0;
 		    height: 1px;
@@ -53,7 +52,14 @@
 </head>
 	<div id="head">
 		<h3><a href="{% url HomeComics.views.index %}">ComicRate :: Python</a></h3>
+	    <div style="margin: 0 auto; width: 750px;">
+    	    <form action="{% url HomeComics.search.search_all %}" method="POST">
+    	        {% csrf_token %}
+    	        <table width="100%"><tr><th align="left" style="width:150px"><label for="id_search_data">Search everything:</label></th><td><input type="text" name="search_data" id="id_search_data" style="width:100%"/></td><td align="right" style="width:75px"><input type="Submit"></td></tr></table>
+    	    </form>
+    	</div>
 	</div>
+	
     <div id="container">
         {% block main %}{% endblock %}
     </div>
