@@ -2,6 +2,9 @@
 {% load text_tags %}
 
 {% block main %}
+
+{{form.as_table}}
+
 <div>
 	{% for file in recentFiles %}
 		<!-- {{ file.name }}-->

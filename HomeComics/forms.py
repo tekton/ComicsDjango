@@ -17,3 +17,6 @@ class NewSeriesFromData(forms.Form):
     #### optional inputs
     publisher = forms.CharFiled(max_length=255,required=False)
 """
+
+class SearchFormClass(forms.Form):
+    search_data = forms.CharField()
