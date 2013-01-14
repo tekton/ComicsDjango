@@ -2,8 +2,11 @@ import os
 import re
 from comicFiles.models import ComicFile
 from comicFiles.models import RootFolder
+from comicFiles.models import TransferRoot
 
 import celery
+
+from shutil import copy2
 
 @celery.task
 def parse_file(FOLDER, FILE, rootFolder,date="",check_override=False):
@@ -96,3 +99,13 @@ def parse_folder(FOLDER):
 				    pass
 				else:
 				    parse_file.delay(dir_path, name, FOLDER, possible_date)
+
+@celery.task
+def copy_file_to_transfer(comic):
+	#print comic.dir_path
+	#print comic.name
+	orig = comic.dir_path + "/" + comic.name
+	loc = TransferRoot.objects.get(status="primary")
+	print loc.uri
+	print orig
+	copy2(orig,loc.uri)

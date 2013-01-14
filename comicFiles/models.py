@@ -8,6 +8,12 @@ class RootFolder(models.Model):
     last_scanned = models.DateTimeField(blank=True,null=True)
     def __unicode__(self):
         return self.uri
+
+class TransferRoot(models.Model):
+    uri = models.CharField(max_length=255)
+    status = models.CharField(max_length=255,default="none")
+    def __unicode__(self):
+        return self.uri    
     
 class ComicFile(models.Model):
     ### The one things they'll all have...when you combine them!
