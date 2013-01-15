@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.http import Http404
 from django.template import RequestContext
 from collections import OrderedDict
@@ -12,6 +12,10 @@ from PullLists.models import *
 from ratings.models import *
 
 from django.conf import settings
+
+from comicFiles.file_parsing import copy_file_to_transfer
+
+import json
 
 # Create your views here.
 
@@ -34,6 +38,13 @@ def single_issue(request,id):
     comic = ComicFile.objects.get(pk=id)
     return render_to_response("single_issue.html", {"comic":comic}, context_instance=RequestContext(request))
 
+def to_transfer_single_issue(request,id):
+    print "called the transfer function"
+    comic = ComicFile.objects.get(pk=id)
+    copy_file_to_transfer.delay(comic)
+    rtn_dict={"added":True}
+    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    
 def search(request):
     if request.method == 'POST':
         ### construct the query!

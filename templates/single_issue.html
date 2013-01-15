@@ -1,6 +1,28 @@
 {% extends "root.html" %}
 {% load text_tags %}
 
+{% block head %}
+<script type="text/javascript">
+    function to_transfer(comic) {
+    	//alert(comic);
+        //$("#verses_linked").html("");
+        //alert(id+" - "+box);
+        $.getJSON(
+            "/issues/ajax/transfer/"+comic,
+            function(data){
+            	//alert(data);
+                if (data["added"] == True) {
+                    //alert(data[box]);
+                } else {
+                    alert("Error");
+                }                
+            }
+        );        
+    }
+    
+</script>
+{% endblock %}
+
 {% block main %}
 
 <div>
@@ -13,5 +35,7 @@ Comic Issue: {{comic.comic_issue}}<br />
 <div>
 	<a href="{% url HomeComics.views.view_dir_path %}?dir_path={{comic.dir_path}}">{{comic.dir_path}}</a>	
 </div>
+
+<div><button onClick='javascript:to_transfer("{{comic.id}}")'>Add to transfer</button></div>
 
 {% endblock %}

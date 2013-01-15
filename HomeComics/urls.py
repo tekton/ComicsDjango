@@ -12,5 +12,6 @@ urlpatterns = patterns('',
 	#url(r'/new_series','HomeComics.views.recent_by_id'),
 	url(r'/view/dirpath$','HomeComics.views.view_dir_path'),
 	url(r'/view/paths','HomeComics.views.view_dir_paths_list'),
-	url(r'/possible',"HomeComics.views.possible_series_list")
+	url(r'/possible',"HomeComics.views.possible_series_list"),
+	url(r'/ajax/transfer/(\d+)','HomeComics.views.to_transfer_single_issue'),
 )
