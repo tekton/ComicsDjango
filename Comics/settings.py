@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'HomeComics',
     'djcelery',
     'kombu.transport.django',
+    'stories',
 )
 
 # A sample logging configuration. The only tangible logging

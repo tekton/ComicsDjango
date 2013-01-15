@@ -14,6 +14,7 @@ class Series(models.Model):
     publisher = models.CharField(max_length=255,blank=True,null=True) ### could turn in to a select given how few there really are
     new52_flag = models.BooleanField(default=False)
     marvel_now = models.BooleanField(default=False)
+    front_page = models.BooleanField(default=False)
     def __unicode__(self):
         if self.volume:
             v_str = " v" + str(self.volume)
