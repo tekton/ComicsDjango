@@ -20,7 +20,15 @@ from stories.models import *
 # Create your views here.
 
 def addIssueToStory(request,arc,comic):
-    '''Handle AJAX adds'''
+    '''
+    
+        Handle AJAX adds
+    
+        What I *want* to happen:
+            if this returns success, make the row it came from un-editable
+            add new row with a blank series dropdown, or the same one as before
+    
+    '''
     pass
 
 def viewArcAJAX(request,arc):
