@@ -1,0 +1,74 @@
+{% extends "root.html" %}
+{% load text_tags %}
+
+{% block head %}
+<script type="text/javascript">
+
+    var divs = 1;
+
+    function get_series_list() {
+    	//alert(comic);
+        //$("#verses_linked").html("");
+        //alert(id+" - "+box);
+        $.getJSON(
+            "/series/ajax/series/all",
+            function(data){
+                var str = "";
+                var d = $("<div/>").attr({'id':"select_div_"+divs});
+                $("#form_container").append(d);
+                var s = $('<select/>').attr({'id':"series_select_"+divs});
+                s.change(function(){
+                    var comic_select_div = $('<select/>').attr({'id':"blah_get_parent_id"})
+                    s.parent().append(comic_select_div);
+                    get_comic_list(this.value,comic_select_div);
+                    alert(this.value);
+                });
+                var x = $("#form_container").append(s);
+                var o = $('<option/>');
+                o.attr({'value':0}).text(" ");
+                s.append(o);
+            	$.each(data, function(i, item){
+                    //alert("This is :: " + item["id"] + " | " + item["publisher"]);
+                    str += "<option value='"+ item["id"] +"'>"+ item["name"] +"</option>";
+                    var o = $('<option/>');
+                    o.attr({'value':item["id"]}).text(item["name"]);
+                    s.append(o);
+                    //alert(str);2
+                });
+                divs += 1;
+            }
+        );        
+    }
+    
+    function get_comic_list(series,s) {
+        $.getJSON(
+            "/series/ajax/series/"+series,
+            function(data){
+                var str = "";
+            	$.each(data, function(i, item){
+                    //alert("This is :: " + item["id"] + " | " + item["publisher"]);
+                    str += "<option value='"+ item["id"] +"'>"+ item["number"] +"</option>";
+                    var o = $('<option/>');
+                    o.attr({'value':item["id"]}).text(item["number"]);
+                    s.append(o);
+                    //alert(str);2
+                });
+            }
+        );        
+    }
+    
+    $(document).ready(function() {
+       // put all your jQuery goodness in here.
+       get_series_list();
+     });
+    
+</script>
+{% endblock %}
+
+{% block main %}
+
+    look it's a thing where a form should go eventually...
+
+    <div id="form_container"></div>
+    <div id="new_row_button"><button onClick="javascript:get_series_list();">Add Issue</button></div>
+{% endblock %}

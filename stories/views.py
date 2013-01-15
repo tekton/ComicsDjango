@@ -19,6 +19,16 @@ from stories.models import *
 
 # Create your views here.
 
+def newArcDisplay(request):
+    ### if post
+    
+    ### else
+    
+    #return
+    
+    return render_to_response("arc/form.html", {}, context_instance=RequestContext(request))
+    
+
 def addIssueToStory(request,arc,comic):
     '''
     
