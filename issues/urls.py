@@ -13,4 +13,7 @@ urlpatterns = patterns('',
 	#url(r'/view/dirpath$','HomeComics.views.view_dir_path'),
 	#url(r'/view/paths','HomeComics.views.view_dir_paths_list'),
 	url(r'/ajax/(\d+)/(.*)','issues.views.toggle_box'),
+	url(r'/ajax/series/all','stories.views.getSeriesList'),
+	url(r'/ajax/series/(\d+)','stories.views.getComicsFromSeries'),
+	url(r'/ajax/series/add/(\d+)/(\d+)','stories.views.addIssueToStory'), ### series // comic id
 )
