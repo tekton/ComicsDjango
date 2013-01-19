@@ -114,6 +114,8 @@ def new_series_from_data(request,id):
                     print "New entry created!"
             #except:
             #    print "just create a single issue in the series based on the current book..."
+            ### forward to view based on series...
+            return HttpResponseRedirect(series.get_absolute_url())
             
     else:
         form = NewSeriesFromData()
