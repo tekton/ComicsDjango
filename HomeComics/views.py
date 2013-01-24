@@ -24,7 +24,7 @@ def index(request):
     
     #recentFiles = ComicFile.objects.filter(rootFolder=3).values()
     
-    series_list = Series.objects.all()#.values()
+    series_list = Series.objects.all().order_by("name")#.values()
     
     print ComicFile.objects.filter(extension__contains='cbz').count()
     print ComicFile.objects.filter(extension__contains='cbr').count()
