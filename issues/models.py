@@ -15,6 +15,11 @@ class Series(models.Model):
     new52_flag = models.BooleanField(default=False)
     marvel_now = models.BooleanField(default=False)
     front_page = models.BooleanField(default=False)
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('issues.views.browse', [str(self.id)])
+    
     def __unicode__(self):
         if self.volume:
             v_str = " v" + str(self.volume)

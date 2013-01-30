@@ -24,7 +24,7 @@ def index(request):
     
     #recentFiles = ComicFile.objects.filter(rootFolder=3).values()
     
-    series_list = Series.objects.all()#.values()
+    series_list = Series.objects.all().order_by("name")#.values()
     
     print ComicFile.objects.filter(extension__contains='cbz').count()
     print ComicFile.objects.filter(extension__contains='cbr').count()
@@ -114,6 +114,8 @@ def new_series_from_data(request,id):
                     print "New entry created!"
             #except:
             #    print "just create a single issue in the series based on the current book..."
+            ### forward to view based on series...
+            return HttpResponseRedirect(series.get_absolute_url())
             
     else:
         form = NewSeriesFromData()

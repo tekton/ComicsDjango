@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 
-urlpatterns = patterns('',
+urlpatterns = patterns('', ### /series
 	url(r'^$','issues.views.index'),
 	#url(r'/issue/(.*)/(.*)/(.*)$','HomeComics.views.issue_search_issue'), ### Series / volume / number
 	url(r'^/(\d+)$','issues.views.browse'),
