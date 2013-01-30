@@ -28,10 +28,10 @@ def rar_parse(dir_path,name,num):
     if r.is_rarfile(dir_path+"/"+name):
         r = rarfile.RarFile(dir_path+"/"+name)
         try:
-            r.extract(r.infolist()[0],img_root)
+            r.extract(r.namelist()[0],img_root)
         except:
             print "No unrar image for you..."
-        f_name = str(r.infolist()[0]).replace("\\","/")
+        f_name = str(r.namelist()[0]).replace("\\","/")
         ### todo: check for if the replace worked, or for \ ???
         return thumbnail_create(f_name,img_root)
     else:
