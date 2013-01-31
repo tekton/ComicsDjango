@@ -16,9 +16,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
 	url(r'^$',include('HomeComics.urls')),
-	url(r'^issues',include('HomeComics.urls')),
+	url(r'^comics',include('HomeComics.urls')),
 	
-	url(r'^series',include('issues.urls')),
+	url(r'^issues',include('issues.urls')),
 	
 	url(r'^files',include('comicFiles.urls')),
 )

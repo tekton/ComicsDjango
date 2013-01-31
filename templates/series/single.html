@@ -29,11 +29,13 @@
 
 <div>
 {% for single in possible %}
-    <div>
-        <img src="/static/images/{{single.thumbnail|hexVert}}" />
-    	<a href="{% url HomeComics.views.single_issue single.id %}">{{single.name}}</a> | 
-    	<a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a>
+    <div style="clear: both;">
+        <img src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
+    	<a href="{% url HomeComics.views.single_issue single.id %}">{{single.name}}</a><br />
+    	<a href="#">Make Primary</a><br />
+    	<a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a><br />
     	<button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button>
+    	<div style="clear: both;">&nbsp;</div>
     </div>
 {% endfor %}
 </div>
