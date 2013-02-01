@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter
 def hexVert(value):
     """Removes all values of # from the given string and replaces with %23"""

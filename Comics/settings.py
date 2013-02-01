@@ -7,10 +7,10 @@ TEMPLATE_DEBUG = DEBUG
 ### CELERY SETTINGS
 import djcelery
 djcelery.setup_loader()
-BROKER_URL = "django://"
-BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
-#BROKER_URL = 'redis://localhost:6379/0'
-#CELERY_RESULT_BACKEND = "redis://"
+#BROKER_URL = "django://"
+#BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = "redis://"
 CELERY_IMPORTS = ("comicFiles.file_parsing","comicFiles.images")
 ### END CELERY SETTINS
 
@@ -34,7 +34,7 @@ DATABASES = {
     }
 }
 
-#DATABASES = {'default': {'ENGINE': 'django.db.backends.mysql','NAME': 'comics','USER': 'root', 'PASSWORD': 'Blizzard1'}}
+DATABASES = {'default': {'ENGINE': 'django.db.backends.mysql','NAME': 'comics','USER': 'root', 'PASSWORD': 'Blizzard1'}}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

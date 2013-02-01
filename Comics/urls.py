@@ -15,10 +15,10 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-	url(r'^$',include('HomeComics.urls')),
-	url(r'^comics',include('HomeComics.urls')),
-	
-	url(r'^issues',include('issues.urls')),
-	
-	url(r'^files',include('comicFiles.urls')),
+    url(r'^$', include('HomeComics.urls')),
+    url(r'^comics', include('HomeComics.urls')),
+    #
+    url(r'^issues', include('issues.urls')),
+    #
+    url(r'^files', include('comicFiles.urls')),
 )
