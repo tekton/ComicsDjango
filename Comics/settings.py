@@ -11,11 +11,11 @@ djcelery.setup_loader()
 #BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = "redis://"
-CELERY_IMPORTS = ("comicFiles.file_parsing","comicFiles.images")
+CELERY_IMPORTS = ("comicFiles.file_parsing", "comicFiles.images")
 ### END CELERY SETTINS
 
 
-PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),".."))
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -25,7 +25,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'comics.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
@@ -34,7 +34,7 @@ DATABASES = {
     }
 }
 
-DATABASES = {'default': {'ENGINE': 'django.db.backends.mysql','NAME': 'comics','USER': 'root', 'PASSWORD': 'Blizzard1'}}
+DATABASES = {'default': {'ENGINE': 'django.db.backends.mysql', 'NAME': 'comics', 'USER': 'root', 'PASSWORD': 'Blizzard1'}}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -83,10 +83,10 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	os.path.join(PROJECT_DIR, 'static'),
+    os.path.join(PROJECT_DIR, 'static'),
 )
 
-IMG_ROOT = os.path.join(PROJECT_DIR, 'static','images')
+IMG_ROOT = os.path.join(PROJECT_DIR, 'static', 'images')
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -143,7 +143,7 @@ INSTALLED_APPS = (
     'ratings',
     'comicFiles',
     'PullLists',
-	'south',
+    'south',
     'HomeComics',
     'djcelery',
     'kombu.transport.django',

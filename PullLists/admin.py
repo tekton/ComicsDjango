@@ -4,9 +4,10 @@ from PullLists.models import PullList
 #from issues.models import Series
 #from issues.models import Comic
 #from comicFiles.models import ComicFile
-from django.contrib.admin.templatetags.admin_list import date_hierarchy
+#from django.contrib.admin.templatetags.admin_list import date_hierarchy
 
 #class ComicFileAdmin(admin.ModelAdmin):
+
 
 #def make_new52(modeladmin, request, queryset):
 #    queryset.update(new52_flag=True)
@@ -17,10 +18,10 @@ from django.contrib.admin.templatetags.admin_list import date_hierarchy
 #
 class PullListAdmin(admin.ModelAdmin):
     list_display = ['username', 'seriesname']
-    list_filter = ['user','series']
+    list_filter = ['user', 'series']
 #    ordering = ['username']
 #    inlines = [ComicInline]
 #    actions = [make_new52]
 
 admin.site.register(PullList, PullListAdmin)
-#admin.site.register(Comic)   
+# admin.site.register(Comic)
