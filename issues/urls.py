@@ -6,6 +6,7 @@ urlpatterns = patterns('',  # /series
     url(r'^$', 'issues.views.index'),
     #url(r'/issue/(.*)/(.*)/(.*)$','HomeComics.views.issue_search_issue'), ### Series / volume / number
     url(r'^/(\d+)$', 'issues.views.browse'),
+    url(r'^/increment/(\d+)', 'issues.views.incrementSeries'),
     #url(r'/search','HomeComics.views.search'),
     #url(r'/recent','HomeComics.views.recent_by_id'),
     url(r'/issue/(.*)', 'issues.views.single'),
