@@ -28,7 +28,7 @@
 <div>
 Name: <a href="/comic_files_static{{comic.dir_path}}/{{comic.name}}">{{comic.name}}</a><br />
 Comic Name: {{comic.comic_name}}<br />
-Comic Issue: {{comic.comic_issue}}<br />
+Comic Issue: <a href="{% url HomeComics.views.new_series_from_data comic.id  %}">{{comic.comic_issue}}</a><br />
 <img src="/static/images/{{comic.thumbnail|hexVert}}" />
 </div>
 

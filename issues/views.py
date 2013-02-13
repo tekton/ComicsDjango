@@ -41,14 +41,19 @@ def incrementSeries(request, series_id):
     max_comic = Comic.objects.filter(series=series).aggregate(Max('number'))
     # check the +1 comic for being beyond the series max
     max_num = int(max_comic["number__max"]) + 1
-    # print str(series.series_max), str(max_comic), str(max_num)
-    if int(max_num) > int(series.series_max):
-        print "New max is over the series max"
-        return redirect('issues.views.browse', series_id)
+
+    print str(series.series_max), str(max_comic), str(max_num)
+
+    if series.series_max is not None:
+        if int(max_num) > int(series.series_max):
+            print "New max is over the series max"
+            return redirect('issues.views.browse', series_id)
+        else:
+            pass
     else:
-        # create the +1 comic
-        issue = Comic(series=series, number=max_num)
-        issue.save()
+        pass
+    issue = Comic(series=series, number=max_num)
+    issue.save()
     return redirect('issues.views.browse', series_id)
 
 

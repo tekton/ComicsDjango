@@ -8,7 +8,7 @@
         //$("#verses_linked").html("");
         //alert(id+" - "+box);
         $.getJSON(
-            "/series/ajax/"+id+"/"+box,
+            "/issues/ajax/"+id+"/"+box,
             function(data){
                 if (data["Success"] == "Updated!") {
                     //alert(data[box]);
@@ -35,5 +35,6 @@
         </tr>
     {% endfor %}
     <table>
+<p><a href='{% url issues.views.incrementSeries series.id %}'>Increment Series</a></p>
 </div>
 {% endblock %}
