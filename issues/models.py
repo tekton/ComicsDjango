@@ -14,6 +14,7 @@ class Series(models.Model):
     new52_flag = models.BooleanField(default=False)
     marvel_now = models.BooleanField(default=False)
     front_page = models.BooleanField(default=False)
+    alt_search_text = models.TextField(blank=True, null=True)
 
     @models.permalink
     def get_absolute_url(self):
@@ -26,9 +27,9 @@ class Series(models.Model):
             v_str = ""
 
         rtn_str = str(self.name) + v_str
-        if self.new52_flag == True:
+        if self.new52_flag is True:
             rtn_str += " (New 52)"
-        if self.marvel_now == True:
+        if self.marvel_now is True:
             rtn_str += "(Marvel NOW!)"
         return rtn_str
 
@@ -43,11 +44,13 @@ class Comic(models.Model):
     series = models.ForeignKey(Series)
     read = models.BooleanField(default=False)
     own = models.BooleanField(default=False)
+    annual = models.BooleanField(default=False)
+    annual_number = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         rtn_str = str(self.series.name) + " " + str(self.number)
-        if self.series.new52_flag == True:
+        if self.series.new52_flag is True:
             rtn_str += " (New 52)"
-        if self.series.marvel_now == True:
+        if self.series.marvel_now is True:
             rtn_str += "(Marvel NOW!)"
         return rtn_str

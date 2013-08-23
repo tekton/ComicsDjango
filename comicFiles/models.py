@@ -1,5 +1,5 @@
 from django.db import models
-from issues.models import Comic
+from issues.models import Comic, Series
 
 
 class RootFolder(models.Model):
@@ -50,3 +50,9 @@ class ComicFile(models.Model):
 
     def __unicode__(self):
         return self.name + " (" + self.dir_path + ")"
+
+
+class PrimaryComics(models.Model):
+    series = models.ForeignKey(Series)
+    comic = models.ForeignKey(Comic)
+    comicFile = models.ForeignKey(ComicFile)

@@ -39,7 +39,7 @@ def single_issue(request, id):
     return render_to_response("single_issue.html", {"comic": comic}, context_instance=RequestContext(request))
 
 
-def to_transfer_single_issue(request, id):
+def to_transfer_single_issue(id):
     print "called the transfer function"
     comic = ComicFile.objects.get(pk=id)
     copy_file_to_transfer.delay(comic)

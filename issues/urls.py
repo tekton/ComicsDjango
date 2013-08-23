@@ -17,5 +17,6 @@ urlpatterns = patterns('',  # /series
     url(r'/ajax/series/(\d+)', 'stories.views.getComicsFromSeries'),
     url(r'/ajax/series/add/(\d+)/(\d+)', 'stories.views.addIssueToStory'),  # series // comic id
     url(r'/arc/new', 'stories.views.newArcDisplay'),
+    url(r'/ajax/transfer/(\d+)', 'HomeComics.views.to_transfer_single_issue'),
     url(r'/ajax/(\d+)/(.*)', 'issues.views.toggle_box'),
 )
