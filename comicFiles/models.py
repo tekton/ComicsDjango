@@ -56,3 +56,9 @@ class PrimaryComics(models.Model):
     series = models.ForeignKey(Series)
     comic = models.ForeignKey(Comic)
     comicFile = models.ForeignKey(ComicFile)
+
+    class Meta:
+        unique_together = ('series', 'comic', 'comicFile')
+
+    def __unicode__(self):
+        return "{0} | {1} | {2}".format(self.series, self.comic, self.comicFile)

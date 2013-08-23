@@ -20,19 +20,38 @@
         );        
     }
     
+    function make_primary(series, comic, file) {
+        console.log("make_primary called");
+        $.getJSON(
+            "/files/primary/"+series+"/"+comic+"/"+file,
+            function(data){
+                console.log(data);
+                if (data["success"] == True) {
+                    conosle.log("Success!");
+                    console.log(data);
+                } else {
+                    alert("Error");
+                    console.log(data);
+                }                
+            }
+        ); 
+    }
+
 </script>
 {% endblock %}
 
 
 {% block main %}
+<div><a href="{% url issues.views.browse comic.series.id %}">{{comic.series}}</a></div>
 <div>{{comic}}</div>
 
 <div>
 {% for single in possible %}
     <div style="clear: both;">
+        <!--{{comic.id}} | {{comic.series.id}} | {{single.id}}-->
         <img src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
     	<a href="{% url HomeComics.views.single_issue single.id %}">{{single.name}}</a><br />
-    	<a href="#">Make Primary</a><br />
+    	<a onClick="javascript:make_primary('{{comic.series.id}}', '{{comic.id}}', '{{single.id}}');">Make Primary</a><br />
     	<a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a><br />
     	<button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button><br />
 	Increment/Create series to: <a href="{% url HomeComics.views.new_series_from_data single.id  %}">{{single.comic_issue}}</a>
