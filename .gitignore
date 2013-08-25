@@ -5,3 +5,9 @@
 *comics.db
 static/images/
 celery*
+._db.py
+access.log
+error.log
+g.pid
+upstart/
+uwsgi.ini
