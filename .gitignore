@@ -3,5 +3,5 @@
 .project
 *.pydevproject*
 *comics.db
-static/
+static/images/
 celery*
