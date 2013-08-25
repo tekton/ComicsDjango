@@ -44,6 +44,9 @@ class ComicFile(models.Model):
     '''
     comic = models.ForeignKey(Comic, blank=True, null=True)
     thumbnail = models.CharField(max_length=255, blank=True, null=True)
+    # ratings
+    scan_quallity = models.IntegerField(blank=True, null=True)
+    ads = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ('name', 'dir_path')

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Series(models.Model):
     '''
@@ -54,3 +54,11 @@ class Comic(models.Model):
         if self.series.marvel_now is True:
             rtn_str += "(Marvel NOW!)"
         return rtn_str
+
+
+class Ratings(models.Model):
+    user = models.ForeignKey(User)
+    art = models.FloatField(blank=True, null=True)
+    story = models.FloatField(blank=True, null=True)
+    overall = models.FloatField(blank=True, null=True)
+    notes = models.TextField(null=True, blank=True)

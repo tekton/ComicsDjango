@@ -54,8 +54,6 @@
         </tr>
     {% endfor %}
     <table>
-<p><a href='{% url issues.views.incrementSeries series.id %}'>Increment Series</a></p>
-<p><a onClick="javascript:transfer_primaries('{{series.id}}');">Transfer Primaries</a></p>
-<p><a onClick="javascript:transfer_unread_primaries('{{series.id}}', 'True');">Transfer Unread Primaries</a></p>
+<p><a href='{% url issues.views.incrementSeries series.id %}'>Increment Series</a> | <a onClick="javascript:transfer_primaries('{{series.id}}');">Transfer Primaries</a> | <a onClick="javascript:transfer_unread_primaries('{{series.id}}', 'True');">Transfer Unread Primaries</a></p>
 </div>
 {% endblock %}

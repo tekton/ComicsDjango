@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import *
 #from collections import OrderedDict
-from django.http import HttpResponseRedirect  # ,HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 #from django.http import Http404
 
 from forms import *
@@ -39,11 +39,19 @@ def single_issue(request, id):
     return render_to_response("single_issue.html", {"comic": comic}, context_instance=RequestContext(request))
 
 
-def to_transfer_single_issue(id):
+def to_transfer_single_issue(request, id):
     print "called the transfer function"
-    comic = ComicFile.objects.get(pk=id)
-    copy_file_to_transfer.delay(comic)
-    rtn_dict = {"added": True}
+    rtn_dict = {"added": None, "id": id}
+    try:
+        comic = ComicFile.objects.get(pk=id)
+        rtn_dict["comic"] = comic.name
+    except Exception as e:
+        rtn_dict["error_comic"] = e
+    try:
+        copy_file_to_transfer.delay(comic)
+        rtn_dict["added"] = True
+    except Exception as e:
+        rtn_dict["error_celery"] = e
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
 
 
