@@ -58,7 +58,11 @@ class Comic(models.Model):
 
 class Ratings(models.Model):
     user = models.ForeignKey(User)
+    comic = models.ForeignKey(Comic, null=True, blank=True)
     art = models.FloatField(blank=True, null=True)
     story = models.FloatField(blank=True, null=True)
     overall = models.FloatField(blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('user', 'comic')

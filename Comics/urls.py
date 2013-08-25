@@ -23,4 +23,6 @@ urlpatterns = patterns('',
     url(r'^files', include('comicFiles.urls')),
     #
     url(r'^auth', include('auth.urls')),
+    #
+    url(r'^pull', include('PullLists.urls')),
 )
