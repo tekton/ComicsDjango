@@ -38,14 +38,13 @@ def recentPullListCovers(request):
     # get users pull list info...
     pulllist = PullList.objects.filter(user=request.user)
     if pulllist:
-        pass
+        rtn_dict["success"] = True
+        for pull in pulllist:  # this sadly can cause a lot of db hits; should probably sync this up in redis instead...
+            primaries = PrimaryComics.objects.filter(series=pull.series.id)
+            for item in primaries:
+                rtn_dict[item.series.name][item.comic.number] = {"name": item.comic.name, "image": item.comicFile.thumbnail}
     else:
         rtn_dict["success"] = False
         rtn_dict["error"] = "Unable to get pull list for user"
-        return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
-        #
-    for pull in pulllist:
-        primaries = PrimaryComics.objects.filter(series=pull.series.id)
-        for item in primaries:
-            rtn_dict[item.series.name][item.comic.number] = {"name": item.comic.name, "image": item.comicFile.thumbnail}
+    #
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
