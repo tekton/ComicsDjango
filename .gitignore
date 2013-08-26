@@ -11,3 +11,4 @@ error.log
 g.pid
 upstart/
 uwsgi.ini
+._*
