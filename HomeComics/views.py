@@ -19,7 +19,7 @@ import json
 
 
 def index(request):
-    recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
+    recentFiles = ComicFile.objects.all().order_by("-id")[:5].values()
 
     #recentFiles = ComicFile.objects.filter(rootFolder=3).values()
 

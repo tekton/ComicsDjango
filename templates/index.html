@@ -5,7 +5,7 @@
 
 {{form.as_table}}
 
-<div>
+<div style="text-align: center;">
 	{% for file in recentFiles %}
 		<!-- {{ file.name }}-->
 		<a href="{% url HomeComics.views.single_issue file.id %}"><img src="/static/images/{{file.thumbnail|hexVert}}" width="160px" /></a>
