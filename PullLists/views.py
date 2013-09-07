@@ -42,7 +42,7 @@ def recentPullListCovers(request):
         for pull in pulllist:  # this sadly can cause a lot of db hits; should probably sync this up in redis instead...
             primaries = PrimaryComics.objects.filter(series=pull.series.id)
             for item in primaries:
-                rtn_dict[item.series.name][item.comic.number] = {"name": item.comic.name, "image": item.comicFile.thumbnail}
+                rtn_dict[item.series.name][item.comic.number] = {"name": item.comic.name, "image": item.comicFile.thumbnail,}
     else:
         rtn_dict["success"] = False
         rtn_dict["error"] = "Unable to get pull list for user"
