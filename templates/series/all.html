@@ -1,4 +1,4 @@
- {% extends "root.html" %}
+{% extends "root.html" %}
 {% load text_tags %}
 
 {% block main %}
@@ -16,17 +16,10 @@
 <hr />
 <div>
     {% for series in series_list %}
-        <div><a href="{% url issues.views.browse series.series.id %}">
-            {{series.series}}
+        <div><a href="{% url issues.views.browse series.id %}">
+            {{series}}
         </a></div>
     {% endfor %}
 </div>
 <hr />
-
 {% endblock %}
-
-<!--
- [CR+][search bar]
-[[ X MOST RECENT ]]
-{...}[ Pull List Images ]{...}
--->

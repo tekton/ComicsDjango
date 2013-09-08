@@ -73,10 +73,10 @@ def transferPrimaries(request, series_id, unread=False):
             if issue.comic.read:
                 rtn_dict[issue.id] = "Did not add a comic as it was already read - " + str(issue.comicFile.id)
             else:
-                copy_file_to_transfer.delay(issue.comicFile.id)
+                copy_file_to_transfer.delay(issue.comicFile)
                 rtn_dict[issue.id] = "Adding unread comic to queue :: " + str(issue.comicFile.id)
         else:
-            copy_file_to_transfer.delay(issue.comicFile.id)
-            rtn_dict[issue.id] = "added to queue :: " + str(issue.comicFile.id)
+            copy_file_to_transfer.delay(issue.comicFile)
+            rtn_dict[issue.id] = "added to queue :: " + str(issue.comicFile)
     print rtn_dict
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")

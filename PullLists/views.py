@@ -1,7 +1,8 @@
 import json
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
+from django.template import RequestContext
 from django.db.models import *
 
 from issues.models import Series
@@ -48,3 +49,19 @@ def recentPullListCovers(request):
         rtn_dict["error"] = "Unable to get pull list for user"
     #
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+
+
+def currentList(request):
+    pulllist = PullList.objects.filter(user=request.user)  # .order_by('series')
+    return render_to_response("pulllist/index.html", {"series_list": pulllist}, context_instance=RequestContext(request))
+
+
+def deleteList(request, pl_id):
+    #
+    try:
+        PullList.objects.get(pk=pl_id).delete()
+    except Exception as e:
+        print e
+    # return redirect('PullList.views.currentList')
+    return redirect('/pull')
+    # return render_to_response("pulllist/index.html", {"series_list": pulllist}, context_instance=RequestContext(request))

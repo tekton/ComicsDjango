@@ -25,4 +25,6 @@ urlpatterns = patterns('',
     url(r'^auth', include('auth.urls')),
     #
     url(r'^pull', include('PullLists.urls')),
+    #
+    url(r'^accounts', include('auth.urls')),
 )

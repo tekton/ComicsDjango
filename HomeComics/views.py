@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import *
+from django.contrib.auth.decorators import login_required
 #from collections import OrderedDict
 from django.http import HttpResponseRedirect, HttpResponse
 #from django.http import Http404
@@ -10,6 +11,7 @@ from comicFiles.models import *
 from issues.models import *
 from PullLists.models import *
 from ratings.models import *
+from PullLists.models import *
 
 from django.conf import settings
 
@@ -18,19 +20,13 @@ from comicFiles.file_parsing import copy_file_to_transfer
 import json
 
 
+@login_required
 def index(request):
-    recentFiles = ComicFile.objects.all().order_by("-id")[:5].values()
-
+    recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
     #recentFiles = ComicFile.objects.filter(rootFolder=3).values()
-
-    series_list = Series.objects.all().order_by("name")  # .values()
-
-    print ComicFile.objects.filter(extension__contains='cbz').count()
-    print ComicFile.objects.filter(extension__contains='cbr').count()
+    pulllist = PullList.objects.filter(user=request.user)  # .order_by('series')
     #
-    print settings.IMG_ROOT
-    #
-    return render_to_response("index.html", {"recentFiles": recentFiles, "series_list": series_list}, context_instance=RequestContext(request))
+    return render_to_response("dashboard/index.html", {"recentFiles": recentFiles, "series_list": pulllist}, context_instance=RequestContext(request))
 
 
 def single_issue(request, id):
@@ -170,3 +166,9 @@ def possible_series_list(request):
     print "trying to find all the comics..."
     possible_series = ComicFile.objects.all().values("comic_name").annotate(Count("comic_name"), Max("comic_issue")).order_by()
     return render_to_response("possible_series.html", {"possible_series": possible_series}, context_instance=RequestContext(request))
+
+
+def known_series_list(request):
+    recentFiles = ComicFile.objects.all().order_by("-id")[:5].values()
+    series_list = Series.objects.all().order_by("name")
+    return render_to_response("series/all.html", {"recentFiles": recentFiles, "series_list": series_list}, context_instance=RequestContext(request))
