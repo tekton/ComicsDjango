@@ -16,9 +16,12 @@
 <hr />
 <div>
     {% for series in series_list %}
-        <div><a href="{% url issues.views.browse series.series.id %}">
-            {{series.series}}
-        </a></div>
+        <div>
+        	<a href="{% url issues.views.browse series.series.id %}">
+            	{{series.series}}
+        	</a> &mdash; 
+        	<a onClick="javascript:transfer_unread_primaries('{{series.series.id}}', 'True');">Transfer Unread Primaries</a>
+    	</div>
     {% endfor %}
 </div>
 <hr />
@@ -30,3 +33,53 @@
 [[ X MOST RECENT ]]
 {...}[ Pull List Images ]{...}
 -->
+
+{% block head %}
+<script type="text/javascript">
+    function toggle_status(id,box) {
+        //$("#verses_linked").html("");
+        //alert(id+" - "+box);
+        $.getJSON(
+            "/issues/ajax/"+id+"/"+box,
+            function(data){
+                if (data["Success"] == "Updated!") {
+                    //alert(data[box]);
+                } else {
+                    alert("Error");
+                }                
+            }
+        );        
+    }
+    
+    function transfer_primaries(series) {
+        console.log("Calling transfer_primaries")
+        $.getJSON(
+            "/files/primary/transfer/"+series,
+            function(data){
+                console.log(data);              
+            }
+        );         
+    }
+
+    function transfer_unread_primaries(series, unread) {
+        console.log("Calling transfer_unread_primaries")
+        $.getJSON(
+            "/files/primary/transfer/"+series+"/"+unread,
+            function(data){
+                console.log(data);              
+            }
+        );         
+    }
+
+    function add_to_pull_list(series) {
+        console.log("Calling add_to_pull_list")
+        $.getJSON(
+            "/pull/add/"+series,
+            function(data){
+                console.log(data);              
+            }
+        );        
+    }
+
+</script>
+{% endblock %}
