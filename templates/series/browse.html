@@ -54,6 +54,14 @@
 
 {% block main %}
 <h1>{{series}}</h1>
+<hr />
+<div class="thumbs">
+    <a href='{% url issues.views.incrementSeries series.id %}'>Increment Series</a> |
+    <a onClick="javascript:transfer_primaries('{{series.id}}');">Transfer Primaries</a> |
+    <a onClick="javascript:transfer_unread_primaries('{{series.id}}', 'True');">Transfer Unread Primaries</a> |
+    <a onClick="javascript:add_to_pull_list('{{series.id}}');">Add to Pull List</a>
+</div>
+<hr />
 <div>
     <table>
         <tr><th>Comic</th><th>Read</th><th>Own</th></tr>
@@ -65,10 +73,5 @@
         </tr>
     {% endfor %}
     <table>
-<p><a href='{% url issues.views.incrementSeries series.id %}'>Increment Series</a> |
-    <a onClick="javascript:transfer_primaries('{{series.id}}');">Transfer Primaries</a> |
-    <a onClick="javascript:transfer_unread_primaries('{{series.id}}', 'True');">Transfer Unread Primaries</a> |
-    <a onClick="javascript:add_to_pull_list('{{series.id}}');">Add to Pull List</a>
-</p>
 </div>
 {% endblock %}

@@ -4,7 +4,7 @@ from issues.models import Series
 from issues.models import Comic
 from comicFiles.models import ComicFile
 from comicFiles.models import RootFolder
-from comicFiles.models import TransferRoot, PrimaryComics
+from comicFiles.models import TransferRoot, PrimaryComics, ComicReadAndOwn
 from comicFiles import file_parsing
 from django.contrib.admin.templatetags.admin_list import date_hierarchy
 
@@ -65,4 +65,4 @@ admin.site.register(ComicFile, ComicFileAdmin)
 admin.site.register(RootFolder, RootFolderAdmin)
 admin.site.register(TransferRoot)
 admin.site.register(PrimaryComics)
-
+admin.site.register(ComicReadAndOwn)

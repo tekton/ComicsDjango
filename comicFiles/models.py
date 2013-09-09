@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from issues.models import Comic, Series
 
 
@@ -65,3 +66,10 @@ class PrimaryComics(models.Model):
 
     def __unicode__(self):
         return "{0} | {1} | {2}".format(self.series, self.comic, self.comicFile)
+
+
+class ComicReadAndOwn(models.Model):
+    user = models.ForeignKey(User)
+    issue = models.ForeignKey(Comic)
+    own = models.NullBooleanField()
+    read = models.NullBooleanField()
