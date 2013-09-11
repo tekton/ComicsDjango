@@ -64,7 +64,7 @@
 <hr />
 <div>
     <table>
-        <tr><th>Comic</th><th>Read</th><th>Own</th></tr>
+        <tr><th>Comic</th><th>Read</th><th>Own</th><th>Art</th><th>Story</th><th>Overall</th></tr>
     {% for issue in comics %}
         <tr>
         <td><a href="{% url 'issues.views.single' issue.id %}">{{issue}}</a></td>
