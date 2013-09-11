@@ -28,12 +28,12 @@
 <div>
 Name: <a href="/comic_files_static{{comic.dir_path}}/{{comic.name}}">{{comic.name}}</a><br />
 Comic Name: {{comic.comic_name}}<br />
-Comic Issue: <a href="{% url HomeComics.views.new_series_from_data comic.id  %}">{{comic.comic_issue}}</a><br />
+Comic Issue: <a href="{% url 'HomeComics.views.new_series_from_data' comic.id  %}">{{comic.comic_issue}}</a><br />
 <img src="/static/images/{{comic.thumbnail|hexVert}}" />
 </div>
 
 <div>
-	<a href="{% url HomeComics.views.view_dir_path %}?dir_path={{comic.dir_path}}">{{comic.dir_path}}</a>	
+	<a href="{% url 'HomeComics.views.view_dir_path' %}?dir_path={{comic.dir_path}}">{{comic.dir_path}}</a>	
 </div>
 
 <div><button onClick='javascript:to_transfer("{{comic.id}}")'>Add to transfer</button></div>

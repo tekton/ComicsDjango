@@ -56,7 +56,7 @@
 <h1>{{series}}</h1>
 <hr />
 <div class="thumbs">
-    <a href='{% url issues.views.incrementSeries series.id %}'>Increment Series</a> |
+    <a href="{% url 'issues.views.incrementSeries' series.id %}">Increment Series</a> |
     <a onClick="javascript:transfer_primaries('{{series.id}}');">Transfer Primaries</a> |
     <a onClick="javascript:transfer_unread_primaries('{{series.id}}', 'True');">Transfer Unread Primaries</a> |
     <a onClick="javascript:add_to_pull_list('{{series.id}}');">Add to Pull List</a>
@@ -67,9 +67,27 @@
         <tr><th>Comic</th><th>Read</th><th>Own</th></tr>
     {% for issue in comics %}
         <tr>
-        <td><a href="{% url issues.views.single issue.id %}">{{issue}}</a></td>
+        <td><a href="{% url 'issues.views.single' issue.id %}">{{issue}}</a></td>
         <td><input type='checkbox' name='{{issue.id}}-read' id='{{issue.id}}-read' onClick='javascript:toggle_status("{{issue.id}}","read")' {%if issue.read %}checked{% endif %}/></td>
         <td><input type='checkbox' name='{{issue.id}}-own' id='{{issue.id}}-own' onClick='javascript:toggle_status("{{issue.id}}","own")' {%if issue.own %}checked{% endif %}/></td>
+        <td>
+        <div id="{{issue.id}}-art"></div></td>
+        <td><div id="{{issue.id}}-story"></div></td>
+        <td><div id="{{issue.id}}-overall"></div></td>
+        <script>
+            $('#{{issue.id}}-art').raty({ half: true,
+                click: function(score, evt) {
+                    $.getJSON(
+                        "/issues/ajax/set/{{issue.id}}/art/"+score,
+                        function(data){
+                            console.log(data);              
+                        }
+                    );
+                }
+            });
+            $('#{{issue.id}}-story').raty({ half: true });
+            $('#{{issue.id}}-overall').raty({ half: true });
+        </script>
         </tr>
     {% endfor %}
     <table>
