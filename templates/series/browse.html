@@ -75,7 +75,7 @@
         <td><div id="{{issue.id}}-story"></div></td>
         <td><div id="{{issue.id}}-overall"></div></td>
         <script>
-            $('#{{issue.id}}-art').raty({ half: true,
+            $('#{{issue.id}}-art').raty({ score: {{issue.art|zeroVal}}, half: true,
                 click: function(score, evt) {
                     $.getJSON(
                         "/issues/ajax/set/{{issue.id}}/art/"+score,
@@ -85,8 +85,26 @@
                     );
                 }
             });
-            $('#{{issue.id}}-story').raty({ half: true });
-            $('#{{issue.id}}-overall').raty({ half: true });
+            $('#{{issue.id}}-story').raty({ score: {{issue.story|zeroVal}}, half: true,
+                click: function(score, evt) {
+                    $.getJSON(
+                        "/issues/ajax/set/{{issue.id}}/story/"+score,
+                        function(data){
+                            console.log(data);              
+                        }
+                    );
+                }
+            });
+            $('#{{issue.id}}-overall').raty({ score: {{issue.overall|zeroVal}}, half: true,
+                click: function(score, evt) {
+                    $.getJSON(
+                        "/issues/ajax/set/{{issue.id}}/overall/"+score,
+                        function(data){
+                            console.log(data);              
+                        }
+                    );
+                }
+            });
         </script>
         </tr>
     {% endfor %}

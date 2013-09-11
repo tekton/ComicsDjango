@@ -45,13 +45,19 @@ def browse(request, id):
                 `issues_comic`.`year`,
                 `issues_comic`.`series_id`,
                 `issues_comic`.`annual`,
-                `issues_comic`.`annual_number`
+                `issues_comic`.`annual_number`,
+                (ratings_userrating.art) as `art`,
+                (ratings_userrating.story) as `story`,
+                (ratings_userrating.overall) as `overall`
                 FROM `issues_comic` 
                 LEFT OUTER JOIN `comicFiles_comicreadandown`
                 ON (`issues_comic`.`id` = `comicFiles_comicreadandown`.`issue_id` AND 
-                    comicFiles_comicreadandown.user_id = %s) 
+                    comicFiles_comicreadandown.user_id = %s)
+                LEFT OUTER JOIN `ratings_userrating`
+                ON (`issues_comic`.`id` = `ratings_userrating`.`comic_id` AND 
+                    ratings_userrating.user_id = %s)
                 WHERE (`issues_comic`.`series_id` = %s);
-        ''',[request.user.id, series.id])
+        ''',[request.user.id, request.user.id, series.id])
     print issues.query
     return render_to_response("series/browse.html", {"series": series, "comics": issues}, context_instance=RequestContext(request))
 

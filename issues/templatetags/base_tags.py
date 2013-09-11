@@ -30,3 +30,11 @@ def checkbox_ajax(id, box):
     """Takes an issue ID and the type of checkbox and sends the command to toggle it!"""
     rtn_str = "<input type='checkbox' name='" + id + "-" + box + "' id='" + id + "-" + box + "' onClick='javascript:toggle_status('" + id + "','" + box + "')' />"
     return rtn_str
+
+
+@register.filter
+def zeroVal(val):
+    if val:
+        return val
+    else:
+        return 0
