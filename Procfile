@@ -1,2 +1,2 @@
-web: sudo python manage.py runfcgi method=threaded host=127.0.0.1 port=8000 pidfile=g.pid outlog=output.log errlog=error.log
+web: gunicorn_django --workers=3 --daemon --pid=g.pid -b 0.0.0.0:8000 --log-syslog --access-logfile access.log --error-logfile error.log
 celeryd: python manage.py celeryd -E -B --loglevel=INFO --autoreload
