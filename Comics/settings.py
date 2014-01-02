@@ -4,14 +4,18 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+ALLOWED_HOSTS = ['*', ]
+
 ### CELERY SETTINGS
 import djcelery
+from datetime import timedelta
 djcelery.setup_loader()
 #BROKER_URL = "django://"
 #BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = "redis://"
 CELERY_IMPORTS = ("comicFiles.file_parsing", "comicFiles.images")
+CELERYBEAT_SCHEDULE = {'parse_primaries': {'task': 'comicFiles.file_parsing.parsePrimaryFolder', 'schedule': timedelta(seconds=3600)},}
 ### END CELERY SETTINS
 
 
@@ -33,8 +37,6 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-
-DATABASES = {'default': {'ENGINE': 'django.db.backends.mysql', 'NAME': 'comics', 'USER': 'root', 'PASSWORD': 'Blizzard1'}}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -179,3 +181,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from settings_local import *
+except ImportError:
+    print "Can't import local settings for some reason..."

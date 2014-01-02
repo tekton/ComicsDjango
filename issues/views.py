@@ -72,6 +72,8 @@ def browseUnread(request, id):
 
 
 def incrementSeries(request, series_id):
+    max_num = 1
+
     try:
         series = Series.objects.get(pk=series_id)
     except:
@@ -79,11 +81,12 @@ def incrementSeries(request, series_id):
         return redirect('issues.views.browse', series_id)
     max_comic = Comic.objects.filter(series=series).aggregate(Max('number'))
     # check the +1 comic for being beyond the series max
-    max_num = int(max_comic["number__max"]) + 1
+    if max_comic["number__max"] is not None:
+        max_num = int(max_comic["number__max"]) + 1
 
-    print str(series.series_max), str(max_comic), str(max_num)
+    print "{} :: {} :: {}".format(str(series.series_max), str(max_comic), str(max_num))
 
-    if series.series_max is not None:
+    if series.series_max is not None and series.series_max != '':
         if int(max_num) > int(series.series_max):
             print "New max is over the series max"
             return redirect('issues.views.browse', series_id)
@@ -140,4 +143,4 @@ def toggle_box(request, comic_id, box):
     else:
         rtn_dict["Success"] = "False"
         rtn_dict["error"] = "Issue not obtained"
-    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")

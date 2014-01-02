@@ -169,6 +169,6 @@ def possible_series_list(request):
 
 
 def known_series_list(request):
-    recentFiles = ComicFile.objects.all().order_by("-id")[:5].values()
+    recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
     series_list = Series.objects.all().order_by("name")
     return render_to_response("series/all.html", {"recentFiles": recentFiles, "series_list": series_list}, context_instance=RequestContext(request))

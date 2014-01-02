@@ -5,8 +5,8 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.db.models import *
 
-from issues.models import Series
-from comicFiles.models import PrimaryComics
+from issues.models import Series, Comic
+from comicFiles.models import PrimaryComics, ComicReadAndOwn
 from models import PullList
 
 from collections import defaultdict
@@ -48,7 +48,7 @@ def recentPullListCovers(request):
         rtn_dict["success"] = False
         rtn_dict["error"] = "Unable to get pull list for user"
     #
-    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
 
 
 def currentList(request):
@@ -65,3 +65,27 @@ def deleteList(request, pl_id):
     # return redirect('PullList.views.currentList')
     return redirect('/pull')
     # return render_to_response("pulllist/index.html", {"series_list": pulllist}, context_instance=RequestContext(request))
+
+
+def ownedSeriesList(request):
+    serieses = ComicReadAndOwn.objects.filter(user=request.user).values("issue__series__name").annotate(c=Count("issue__series__name"))
+    print serieses
+    rtn_dict = defaultdict(dict)
+    for series in serieses:
+        rtn_dict[series["issue__series__name"]] = series["c"]
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
+
+
+def missing(request):
+    serieses = ComicReadAndOwn.objects.filter(user=request.user).values("issue__series__name").annotate(c=Count("issue__series__name"))
+    rtn_dict = defaultdict(list)
+    for series in serieses:
+        # rtn_dict[series["issue__series__name"]] = series["c"]
+        sereies_to_check = Comic.objects.filter(series__name=series["issue__series__name"])
+        for x in sereies_to_check:
+            rtn_dict[series["issue__series__name"]].append(x.number)
+        owned = ComicReadAndOwn.objects.filter(issue__series__name=series["issue__series__name"])
+        for own in owned:
+            rtn_dict[series["issue__series__name"]] = filter(lambda a: a != own.issue.number, rtn_dict[series["issue__series__name"]])
+    print rtn_dict
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")

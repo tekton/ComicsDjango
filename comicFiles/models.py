@@ -6,6 +6,7 @@ from issues.models import Comic, Series
 class RootFolder(models.Model):
     uri = models.CharField(max_length=255)
     last_scanned = models.DateTimeField(blank=True, null=True)
+    primary = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.uri
@@ -73,3 +74,7 @@ class ComicReadAndOwn(models.Model):
     issue = models.ForeignKey(Comic)
     own = models.NullBooleanField()
     read = models.NullBooleanField()
+    trade = models.NullBooleanField()
+
+    def __unicode__(self):
+        return "{}'s {} #{}".format(self.user.username, self.issue.series.name, self.issue.number)

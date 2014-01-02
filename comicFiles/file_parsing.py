@@ -1,8 +1,8 @@
 import os
 import re
-from comicFiles.models import ComicFile
-#from comicFiles.models import RootFolder
+from comicFiles.models import ComicFile, ComicReadAndOwn, RootFolder
 from comicFiles.models import TransferRoot
+from comicFiles.images import thumbnail_parse_task
 
 import celery
 
@@ -63,6 +63,8 @@ def parse_file(FOLDER, FILE, rootFolder, date="", check_override=False):
 #    if file_parse:
 #        #do more stuff
 #        print file_parse
+    # now that the file is saved; add to image processing queue!
+    thumbnail_parse_task.delay(f)
 
 
 @celery.task
@@ -112,3 +114,20 @@ def copy_file_to_transfer(comic):
     print loc.uri
     print orig
     copy2(orig, loc.uri)
+
+
+@celery.task
+def parsePrimaryFolder():
+    rootFolders = RootFolder.objects.filter(primary=True)
+    for FOLDER in rootFolders:
+        parse_folder.delay(FOLDER)
+
+@celery.task
+def toggleTrade(q):
+    try:
+        entry = ComicReadAndOwn.objects.get(pk=q)
+    except Exception as e:
+        print e
+        return False
+    entry.trade = not entry.trade
+    entry.save()

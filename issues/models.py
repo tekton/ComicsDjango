@@ -39,7 +39,7 @@ class Comic(models.Model):
     '''
         this class is for the actual issues/series management side of things
     '''
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True, null=True)
     number = models.FloatField()  # ususally numbers, but there's a decent amount of A, B, C, etc
     year = models.CharField(max_length=255, blank=True, null=True)  # should be a date or year stamp
     series = models.ForeignKey(Series)
