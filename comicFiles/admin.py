@@ -16,20 +16,20 @@ from comicFiles.images import rar_parse,zip_parse,thumbnail_parse_task
 def folder_parse(modeladmin, request, queryset):
     #print modeladmin
     #print request
-    print queryset
+    print(queryset)
     for q in queryset:
         #print q
-        print q.id
+        print(q.id)
         parse_folder.delay(q)
 
 
 def reparse_comic(modeladmin, request, queryset):
     #print modeladmin
     #print request
-    print queryset
+    print(queryset)
     for q in queryset:
         #print q
-        print q.id
+        print(q.id)
         re_parse_file.delay(q)
 
 

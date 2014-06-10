@@ -61,7 +61,7 @@ def deleteList(request, pl_id):
     try:
         PullList.objects.get(pk=pl_id).delete()
     except Exception as e:
-        print e
+        print(e)
     # return redirect('PullList.views.currentList')
     return redirect('/pull')
     # return render_to_response("pulllist/index.html", {"series_list": pulllist}, context_instance=RequestContext(request))
@@ -69,7 +69,7 @@ def deleteList(request, pl_id):
 
 def ownedSeriesList(request):
     serieses = ComicReadAndOwn.objects.filter(user=request.user).values("issue__series__name").annotate(c=Count("issue__series__name"))
-    print serieses
+    print(serieses)
     rtn_dict = defaultdict(dict)
     for series in serieses:
         rtn_dict[series["issue__series__name"]] = series["c"]
@@ -87,5 +87,5 @@ def missing(request):
         owned = ComicReadAndOwn.objects.filter(issue__series__name=series["issue__series__name"])
         for own in owned:
             rtn_dict[series["issue__series__name"]] = filter(lambda a: a != own.issue.number, rtn_dict[series["issue__series__name"]])
-    print rtn_dict
+    print(rtn_dict)
     return HttpResponse(json.dumps(rtn_dict), content_type="application/json")

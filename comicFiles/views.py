@@ -28,8 +28,8 @@ def view_by_comic_name(request, comic_name):
 
 def makePrimary(request, series_id, comic_id, file_id):
     rtn_dict = {"success": "True", "series": series_id, "comic": comic_id, "file": file_id, "primary": "null"}
-    print "make primary called"
-    print rtn_dict
+    print("make primary called")
+    print(rtn_dict)
     try:
         series = Series.objects.get(pk=series_id)
     except Exception as e:
@@ -60,12 +60,12 @@ def makePrimary(request, series_id, comic_id, file_id):
         rtn_dict["success"] = "False"
         rtn_dict["primary"] = '"'+str(e)+'"'
 
-    print rtn_dict
+    print(rtn_dict)
 
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
 
 def transferPrimaries(request, series_id, unread=False):
-    print "Calling transferPrimaries"
+    print("Calling transferPrimaries")
     rtn_dict = {}
     primaries = PrimaryComics.objects.filter(series=series_id)
     for issue in primaries:
@@ -78,5 +78,5 @@ def transferPrimaries(request, series_id, unread=False):
         else:
             copy_file_to_transfer.delay(issue.comicFile)
             rtn_dict[issue.id] = "added to queue :: " + str(issue.comicFile)
-    print rtn_dict
+    print(rtn_dict)
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")

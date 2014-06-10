@@ -30,13 +30,13 @@ def index(request):
 
 
 def single_issue(request, id):
-    print "SINGLE ISSUE"
+    print("SINGLE ISSUE")
     comic = ComicFile.objects.get(pk=id)
     return render_to_response("single_issue.html", {"comic": comic}, context_instance=RequestContext(request))
 
 
 def to_transfer_single_issue(request, id):
-    print "called the transfer function"
+    print("called the transfer function")
     rtn_dict = {"added": None, "id": id}
     try:
         comic = ComicFile.objects.get(pk=id)
@@ -80,21 +80,21 @@ def new_series_from_data(request, id):
     except:
         comic = ComicFile()
     if request.POST:
-        print "posting..."
+        print("posting...")
         form = NewSeriesFromData(request.POST)
         if form.is_valid():
-            print "valid form is valid!"
-            print form.data["series"]
-            print form.data["max_issue"]
+            print("valid form is valid!")
+            print(form.data["series"])
+            print(form.data["max_issue"])
             try:
                 series = Series.objects.get(name=form.data["series"])
-                print "Series already exists...should try to increase to new number!"
+                print("Series already exists...should try to increase to new number!")
             except Series.DoesNotExist:
                 series = Series(name=form.data["series"])
                 series.save()
-                print "No series yet!"
+                print("No series yet!")
             except:
-                print "um...what?!"
+                print("um...what?!")
             #try:
             try:
                 min_num = int(form.data["min_issue"])
@@ -104,25 +104,25 @@ def new_series_from_data(request, id):
                 rng = False
             if rng:
                 for x in range(min_num, max_num):
-                    print x
+                    print(x)
                     try:
                         issue = Comic.objects.get(series=series, number=x)
-                        print "Issue exists!"
+                        print("Issue exists!")
                     except Comic.DoesNotExist:
-                        print "should create a new issue..."
+                        print("should create a new issue...")
                         issue = Comic(series=series, number=x)
                         issue.save()
             else:
-                print "something wrong with range; just check/create a single entry..."
+                print("something wrong with range; just check/create a single entry...")
                 try:
                     issue = Comic.objects.get(series=series, number=comic.comic_issue)
-                    print "It exists anyway..."
+                    print("It exists anyway...")
                 except Comic.DoesNotExist:
                     issue = Comic(series=series, number=comic.comic_issue)
                     issue.save()
-                    print "New entry created!"
+                    print("New entry created!")
             #except:
-            #    print "just create a single issue in the series based on the current book..."
+            #    print("just create a single issue in the series based on the current book...")
             ### forward to view based on series...
             return HttpResponseRedirect(series.get_absolute_url())
 
@@ -156,14 +156,14 @@ def view_dir_path(request):
 
 
 def view_dir_paths_list(request):
-    print "trying to find all the paths..."
+    print("trying to find all the paths...")
     comic_dir_paths = ComicFile.objects.all().values("dir_path").annotate(Count("dir_path"))
-    print comic_dir_paths
+    print(comic_dir_paths)
     return render_to_response("dir_paths.py", {"recentFiles": comic_dir_paths}, context_instance=RequestContext(request))
 
 
 def possible_series_list(request):
-    print "trying to find all the comics..."
+    print("trying to find all the comics...")
     possible_series = ComicFile.objects.all().values("comic_name").annotate(Count("comic_name"), Max("comic_issue")).order_by()
     return render_to_response("possible_series.html", {"possible_series": possible_series}, context_instance=RequestContext(request))
 

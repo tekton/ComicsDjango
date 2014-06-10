@@ -15,7 +15,7 @@ def register(request):
             try:
                 form.save()
             except:
-                print "Unable to save form..."
+                print("Unable to save form...")
                 return render_to_response("registration/registration.html", {'form': form, 'next': nextPage}, context_instance=RequestContext(request))
             # log the user in before sending them to their next destination
             user = authenticate(username=request.POST.get("username"), password=request.POST.get("password1"))
@@ -28,8 +28,8 @@ def register(request):
             #
             return redirect(nextPage)
         else:
-            print "errors in registration"
-            print form.errors
+            print("errors in registration")
+            print(form.errors)
 
     else:
         form = RegisterForm()
@@ -60,8 +60,8 @@ def login_func(request):
                 state = "Your username and/or password were incorrect."
                 return render_to_response("registration/login.html", {'a_form': form, 'next': nextPage, 'state': state}, context_instance=RequestContext(request))
         except Exception as e:
-            print "Error authenticating form"
-            print e
+            print("Error authenticating form")
+            print(e)
 
     else:
         form = AuthenticationForm()
@@ -82,12 +82,12 @@ def change_password(request):
                     form.save()
                     return redirect('dashboard.views.home')
                 except Exception as e:
-                    print "Error saving form"
+                    print("Error saving form")
             else:
                 return render_to_response("registration/change_password.html", {'form': form}, context_instance=RequestContext(request))
         except Exception as e:
-            print "Error validating password"
-            print e
+            print("Error validating password")
+            print(e)
     else:
         form = EditAccountForm(SetPasswordForm)
     return render_to_response("registration/change_password.html", {'form': form}, context_instance=RequestContext(request))
@@ -104,13 +104,13 @@ def change_email(request):
                     user.save()
                     return redirect('dashboard.views.home')
                 except Exception as e:
-                    print e
+                    print(e)
 
             else:
                 print "form not valid"
         except Exception as e:
-            print "Error getting email from database"
-            print e
+            print("Error getting email from database")
+            print(e)
     else:
         form = ChangeEmailForm()
     return render_to_response("registration/change_email.html", {'form': form}, context_instance=RequestContext(request))

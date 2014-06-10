@@ -7,7 +7,7 @@ register = template.Library()
 def gVal(object, attr):
     """Check the array, dict, etc for a value"""
     quasai = {'object': object}
-    #print "gVal :: "  +  str(attr)  + " - " +  str(quasai)
+    #print("gVal :: "  +  str(attr)  + " - " +  str(quasai))
     try:
         value = Variable('object.%s' % attr).resolve(quasai)
     except VariableDoesNotExist:
@@ -18,7 +18,7 @@ def gVal(object, attr):
 @register.filter
 def xVal(a, b):
     """Since Python resolves left to right in template tags: pass value and then the dick to check; returns value or 0"""
-    #print "xVal",a,b
+    #print("xVal",a,b)
     if b in a:
         value = b[a]
     else:

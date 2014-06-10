@@ -26,6 +26,7 @@ class ComicFile(models.Model):
     dir_path = models.CharField(max_length=255)
     ### Should have,  but in case they're not needed for some reason...
     rootFolder = models.ForeignKey(RootFolder, blank=True, null=True)
+    folderPath = models.CharField(max_length=255, blank=True, null=True) 
     extension = models.CharField(max_length=255, blank=True, null=True)
     ### Parsing potential...
     error_flag = models.BooleanField(default=False)
@@ -66,7 +67,7 @@ class PrimaryComics(models.Model):
         unique_together = ('series', 'comic', 'comicFile')
 
     def __unicode__(self):
-        return "{0} | {1} | {2}".format(self.series, self.comic, self.comicFile)
+        return u"{0} | {1} | {2}".format(self.series, self.comic, self.comicFile)
 
 
 class ComicReadAndOwn(models.Model):
@@ -77,4 +78,4 @@ class ComicReadAndOwn(models.Model):
     trade = models.NullBooleanField()
 
     def __unicode__(self):
-        return "{}'s {} #{}".format(self.user.username, self.issue.series.name, self.issue.number)
+        return u"{}'s {} #{}".format(self.user.username, self.issue.series.name, self.issue.number)
