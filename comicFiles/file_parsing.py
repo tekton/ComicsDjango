@@ -43,6 +43,11 @@ def diff_check(y,z):
 @celery.task
 def procFolder(folder_path, old_value, rootFolder, check_override=False):
     b = x(folder_path)
+    try:
+        if not old_value:
+            old_value = []
+    except:
+        old_value=[]
     files_to_parse = diff_check(old_value, b)
     for f in files_to_parse:
         folder = os.path.dirname(f)
@@ -164,6 +169,7 @@ def parsePrimaryFolder():
     for FOLDER in rootFolders:
         blob = procFolder(FOLDER.uri, FOLDER.os_blob, FOLDER, check_override=False)
         # parse_folder.delay(FOLDER)
+        FOLDER.os_blob = blob
         FOLDER.save()
 
 @celery.task
