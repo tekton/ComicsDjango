@@ -48,7 +48,7 @@ def procFolder(folder_path, old_value, rootFolder, check_override=False):
         folder = os.path.dirname(f)
         file_name = os.path.basename(f)
         parse_file.delay(folder, file_name, rootFolder, check_override=check_override)
-
+    return b
 
 
 @celery.task
@@ -162,8 +162,9 @@ def copy_file_to_transfer(comic):
 def parsePrimaryFolder():
     rootFolders = RootFolder.objects.filter(primary=True)
     for FOLDER in rootFolders:
-        procFolder(FOLDER.uri, FOLDER.os_blob, FOLDER, check_override=False)
+        blob = procFolder(FOLDER.uri, FOLDER.os_blob, FOLDER, check_override=False)
         # parse_folder.delay(FOLDER)
+        FOLDER.save()
 
 @celery.task
 def toggleTrade(q):
