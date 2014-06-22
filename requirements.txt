@@ -1,0 +1,5 @@
+django
+gunicorn
+south
+redis
+django-celery

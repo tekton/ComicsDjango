@@ -7,6 +7,7 @@ class RootFolder(models.Model):
     uri = models.CharField(max_length=255)
     last_scanned = models.DateTimeField(blank=True, null=True)
     primary = models.BooleanField(default=False)
+    os_blob = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return self.uri

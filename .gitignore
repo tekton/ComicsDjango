@@ -13,3 +13,4 @@ upstart/
 uwsgi.ini
 ._*
 settings_local.py
+VENV
