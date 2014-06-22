@@ -8,7 +8,7 @@ from comicFiles.models import TransferRoot, PrimaryComics, ComicReadAndOwn
 from comicFiles import file_parsing
 from django.contrib.admin.templatetags.admin_list import date_hierarchy
 
-from comicFiles.file_parsing import parse_folder, re_parse_file, copy_file_to_transfer, toggleTrade
+from comicFiles.file_parsing import parse_folder, re_parse_file, copy_file_to_transfer, toggleTrade, parsePrimaryFolder, makeRootPrimary
 
 from comicFiles.images import rar_parse,zip_parse,thumbnail_parse_task
 
@@ -21,6 +21,18 @@ def folder_parse(modeladmin, request, queryset):
         #print q
         print(q.id)
         parse_folder.delay(q)
+
+def primary_parse(modeladmin, request, queryset):
+    parsePrimaryFolder.delay()
+
+def make_primary(modeladmin, request, queryset):
+    #print modeladmin
+    #print request
+    print(queryset)
+    for q in queryset:
+        #print q
+        print(q.id)
+        makeRootPrimary(q)
 
 
 def reparse_comic(modeladmin, request, queryset):
@@ -51,7 +63,7 @@ def queue_trade_toggle(modeladmin, request, queryset):
 class RootFolderAdmin(admin.ModelAdmin):
     list_display = ['uri', 'last_scanned']
     ordering = ['uri', 'last_scanned']
-    actions = [folder_parse]
+    actions = [folder_parse, primary_parse, make_primary]
 
 
 class ComicFileAdmin(admin.ModelAdmin):

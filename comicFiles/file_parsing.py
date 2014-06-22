@@ -7,6 +7,48 @@ from comicFiles.images import thumbnail_parse_task
 import celery
 
 from shutil import copy2
+###
+from difflib import unified_diff
+
+import os
+
+
+def x(start_path):
+    full_folder = []
+
+    try:
+        # check to make sure path is valid
+        if not os.path.isdir(start_path):
+            return False
+    except Exception as e:
+        print(e)
+        return False
+
+    for root, dirs, files in os.walk(start_path):
+        for file in files:
+            full_folder.append(os.path.join(root, file))
+    print(full_folder)
+    return full_folder
+
+
+def diff_check(y,z):
+    files = []
+    for line in unified_diff(y,z):
+        if line.startswith("+"):
+            if not line.startswith("+++"):
+                files.append(line.lstrip("+"))
+    return files
+###
+
+@celery.task
+def procFolder(folder_path, old_value, rootFolder, check_override=False):
+    b = x(folder_path)
+    files_to_parse = diff_check(old_value, b)
+    for f in files_to_parse:
+        folder = os.path.dirname(f)
+        file_name = os.path.basename(f)
+        parse_file.delay(folder, file_name, rootFolder, check_override=check_override)
+
 
 
 @celery.task
@@ -120,7 +162,8 @@ def copy_file_to_transfer(comic):
 def parsePrimaryFolder():
     rootFolders = RootFolder.objects.filter(primary=True)
     for FOLDER in rootFolders:
-        parse_folder.delay(FOLDER)
+        procFolder(FOLDER.uri, FOLDER.os_blob, FOLDER, check_override=False)
+        # parse_folder.delay(FOLDER)
 
 @celery.task
 def toggleTrade(q):
@@ -131,3 +174,14 @@ def toggleTrade(q):
         return False
     entry.trade = not entry.trade
     entry.save()
+
+def makeRootPrimary(ROOT):
+    ROOT.primary = True
+    try:
+        ROOT.save()
+        return True
+    except Exception as e:
+        print(e)
+        print("Unable to set as primary")
+        print(ROOT)
+        return False

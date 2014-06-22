@@ -3,3 +3,6 @@ gunicorn
 south
 redis
 django-celery
+rarfile
+MySQL-python
+pillow
