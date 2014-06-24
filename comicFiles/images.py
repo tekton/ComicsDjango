@@ -20,6 +20,43 @@ import celery
 #dir_root = "/Users/tyler/Projects/Comics/static/comics/DC"
 #img_root = settings.IMG_ROOT
 
+"""
+    TODO bug to investigate
+
+    [2014-06-22 00:50:23,126: ERROR/MainProcess] Task comicFiles.images.thumbnail_parse_task[4c5d128b-2b80-4721-ab12-b7dba8d44acd] raised unexpected: TypeError("cannot concatenate 'str' and 'ZipInfo' objects",)
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/trace.py", line 240, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/trace.py", line 437, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/projects/Projects/ComicsDjango/comicFiles/images.py", line 67, in thumbnail_parse_task
+    q.thumbnail = str(q.id) + "/" + zip_parse(q.dir_path, q.name, q.id)
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/trace.py", line 438, in __protected_call__
+    return orig(self, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/task.py", line 420, in __call__
+    return self.run(*args, **kwargs)
+  File "/projects/Projects/ComicsDjango/comicFiles/images.py", line 54, in zip_parse
+    return thumbnail_create(z.infolist()[0], img_root)
+  File "/projects/Projects/ComicsDjango/comicFiles/images.py", line 75, in thumbnail_create
+    if os.path.isfile(img_root + "/" + f_name):
+TypeError: cannot concatenate 'str' and 'ZipInfo' objects
+
+
+-----
+
+
+[2014-06-22 00:51:02,236: ERROR/MainProcess] Task comicFiles.images.thumbnail_parse_task[3bd5f035-f8ce-461f-aab3-254ce2c4fd9a] raised unexpected: TypeError("cannot concatenate 'str' and 'bool' objects",)
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/trace.py", line 240, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/trace.py", line 437, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/projects/Projects/ComicsDjango/comicFiles/images.py", line 65, in thumbnail_parse_task
+    q.thumbnail = str(q.id) + "/" + rar_parse(q.dir_path, q.name, q.id)
+TypeError: cannot concatenate 'str' and 'bool' objects
+
+"""
+
 
 @celery.task
 def rar_parse(dir_path, name, num):

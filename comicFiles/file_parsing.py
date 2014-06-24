@@ -10,6 +10,7 @@ from shutil import copy2
 ###
 from difflib import unified_diff
 
+import ast
 import os
 
 
@@ -167,7 +168,8 @@ def copy_file_to_transfer(comic):
 def parsePrimaryFolder():
     rootFolders = RootFolder.objects.filter(primary=True)
     for FOLDER in rootFolders:
-        blob = procFolder(FOLDER.uri, FOLDER.os_blob, FOLDER, check_override=False)
+        folder_list = ast.literal_eval(FOLDER.os_blob)
+        blob = procFolder(FOLDER.uri, folder_list, FOLDER, check_override=False)
         # parse_folder.delay(FOLDER)
         FOLDER.os_blob = blob
         FOLDER.save()
