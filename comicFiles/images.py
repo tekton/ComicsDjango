@@ -8,6 +8,8 @@ from PIL import Image
 
 from django.conf import settings
 
+from models import ComicFile
+
 import celery
 
 #### moving some image processing to tasks,  consolidating here
@@ -96,9 +98,15 @@ def zip_parse(dir_path, name, num):
 
 
 @celery.task
-def thumbnail_parse_task(q):
+def thumbnail_parse_task(i):
     """ q is used to represent a queryset item """
     #if q.thumbnail is None:
+
+    try:
+        q = ComicFile.objects.get(pk=i.id)
+    except Exception as e:
+        print("Unable to find comic file requested for thumbnail: ", e)
+
     if q.extension == "cbr":
         q.thumbnail = str(q.id) + "/" + rar_parse(q.dir_path, q.name, q.id)
     elif q.extension == "cbz":
