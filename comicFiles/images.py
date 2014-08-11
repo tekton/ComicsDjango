@@ -8,7 +8,7 @@ from PIL import Image
 
 from django.conf import settings
 
-from models import ComicFile
+from comicFiles.models import ComicFile
 
 import celery
 
