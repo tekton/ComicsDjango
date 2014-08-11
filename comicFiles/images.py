@@ -113,8 +113,11 @@ def thumbnail_parse_task(i):
         q.thumbnail = str(q.id) + "/" + zip_parse(q.dir_path, q.name, q.id)
     #else:
     #    print("Thumbnail already exist...most likely.")
-    print("saving updated thumbnail location")
-    q.save()
+    print("saving updated thumbnail location: ", q.thumbnail)
+    try:
+        q.save()
+    except Exception as e:
+        print("Unable to save thumbnail location: ", e)
 
 
 def thumbnail_create(f_name, img_root):
