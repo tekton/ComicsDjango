@@ -88,7 +88,8 @@ def zip_parse(dir_path, name, num):
         except:
             print("No unzipped image for you!")
         ### don't need to edit the rar directory seperator
-        return thumbnail_create(z.infolist()[0], img_root)
+        f_name = z.infolist()[0]
+        return thumbnail_create(f_name, img_root)
     else:
         print("Not actually a zip :(")
         return False
@@ -104,10 +105,16 @@ def thumbnail_parse_task(q):
         q.thumbnail = str(q.id) + "/" + zip_parse(q.dir_path, q.name, q.id)
     #else:
     #    print("Thumbnail already exist...most likely.")
+    print("saving updated thumbnail location")
     q.save()
 
 
 def thumbnail_create(f_name, img_root):
+    """
+        Runs once the images are extracted to save on space
+
+        Returns the image path or False if it fails
+    """
     #img_root = settings.IMG_ROOT
     if os.path.isfile(img_root + "/" + f_name):
         print("should resize it to a real thumbnail...")
