@@ -1,4 +1,8 @@
 import os
+
+import djcelery
+from datetime import timedelta
+
 # Django settings for Comics project.
 
 DEBUG = True
@@ -6,20 +10,24 @@ TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['*', ]
 
-### CELERY SETTINGS
-import djcelery
-from datetime import timedelta
+# CELERY SETTINGS
+
 djcelery.setup_loader()
-#BROKER_URL = "django://"
-#BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+# BROKER_URL = "django://"
+# BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = "redis://"
 CELERY_IMPORTS = ("comicFiles.file_parsing", "comicFiles.images")
-CELERYBEAT_SCHEDULE = {'parse_primaries': {'task': 'comicFiles.file_parsing.parsePrimaryFolder', 'schedule': timedelta(seconds=3600)},}
-### END CELERY SETTINS
+CELERYBEAT_SCHEDULE = {'parse_primaries': {
+        'task': 'comicFiles.file_parsing.parsePrimaryFolder',
+                'schedule': timedelta(seconds=3600)
+    },
+}
+# END CELERY SETTINS
 
 
-PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+PROJECT_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -29,12 +37,16 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'comics.db',                      # Or path to database file if using sqlite3.
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',
+        # Or path to database file if using sqlite3.
+        'NAME': 'comics.db',
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
     }
 }
 
@@ -95,7 +107,7 @@ IMG_ROOT = os.path.join(PROJECT_DIR, 'static', 'images')
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -105,7 +117,7 @@ SECRET_KEY = '%d@mggst$p6r=e&amp;7wod_)g9i7oa-c+cg2_78t0(hby2=nk%e2q'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
