@@ -4,5 +4,5 @@ south
 redis
 django-celery
 rarfile
-MySQL-python
+#MySQL-python
 pillow
