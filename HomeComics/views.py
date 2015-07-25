@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 # from django.http import Http404
 
-from forms import *
+from HomeComics.forms import *
 from comicFiles.models import *
 from issues.models import *
 from PullLists.models import *

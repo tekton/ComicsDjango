@@ -1,10 +1,11 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from forms import RegisterForm, EditAccountForm, ChangeEmailForm
+from auth2.forms import RegisterForm, EditAccountForm, ChangeEmailForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.decorators import login_required
+
 
 def register(request):
     if request.method == 'POST':
@@ -20,7 +21,7 @@ def register(request):
             # log the user in before sending them to their next destination
             user = authenticate(username=request.POST.get("username"), password=request.POST.get("password1"))
             login(request, user)
-            ### TODO Create account here!
+            # TODO Create account here!
             # account = Account()
             # account.user = User.objects.get(pk=user.id)
             # account.created_by = user
@@ -41,7 +42,8 @@ def login_func(request):
     nextPage = request.GET.get("next", "/")
     state = ""
     if request.method == 'POST':
-        nextPage = request.POST.get("next", "/")  # in theory we could take the default from before, but in case a url gets weird lets set a real default
+        # in theory we could take the default from before, but in case a url gets weird lets set a real default
+        nextPage = request.POST.get("next", "/")
         try:
             form = AuthenticationForm(data=request.POST)
             if form.is_valid():
@@ -68,9 +70,11 @@ def login_func(request):
 
     return render_to_response("registration/login.html", {'a_form': form, 'next': nextPage, 'state': state}, context_instance=RequestContext(request))
 
+
 @login_required
 def account_settings(request):
     pass
+
 
 @login_required
 def change_password(request):
@@ -92,6 +96,7 @@ def change_password(request):
         form = EditAccountForm(SetPasswordForm)
     return render_to_response("registration/change_password.html", {'form': form}, context_instance=RequestContext(request))
 
+
 @login_required
 def change_email(request):
     if request.method == "POST":
@@ -105,9 +110,8 @@ def change_email(request):
                     return redirect('dashboard.views.home')
                 except Exception as e:
                     print(e)
-
             else:
-                print "form not valid"
+                print("form not valid")
         except Exception as e:
             print("Error getting email from database")
             print(e)

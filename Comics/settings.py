@@ -157,12 +157,12 @@ INSTALLED_APPS = (
     'ratings',
     'comicFiles',
     'PullLists',
-    'south',
+    # 'south',
     'HomeComics',
     'djcelery',
     'kombu.transport.django',
     'stories',
-    'auth',
+    'auth2',
 )
 
 # A sample logging configuration. The only tangible logging
