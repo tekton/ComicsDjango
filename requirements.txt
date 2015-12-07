@@ -1,8 +1,14 @@
-django
-gunicorn
-south
-redis
-django-celery
-rarfile
-# MySQL-python
-pillow
+Django==1.9
+Pillow==3.0.0
+South==1.0.2
+amqp==1.4.7
+anyjson==0.3.3
+billiard==3.3.0.21
+celery==3.1.19
+django-celery==3.1.17
+gunicorn==19.4.1
+kombu==3.0.29
+pymongo==3.1.1
+pytz==2015.7
+rarfile==2.7
+redis==2.10.5
