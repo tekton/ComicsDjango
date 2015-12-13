@@ -1,23 +1,20 @@
-from django.conf.urls import patterns, url
-
+from django.conf.urls import url
+from issues import views
+from stories import views as storyViews
+from HomeComics import views as hcViews
+from ratings import views as ratingViews
 # Uncomment the next two lines to enable the admin:
 
-urlpatterns = patterns('',  # /series
-    url(r'^$', 'issues.views.index'),
-    #url(r'/issue/(.*)/(.*)/(.*)$','HomeComics.views.issue_search_issue'), ### Series / volume / number
-    url(r'^/(\d+)$', 'issues.views.browse'),
-    url(r'^/increment/(\d+)', 'issues.views.incrementSeries'),
-    #url(r'/search','HomeComics.views.search'),
-    #url(r'/recent','HomeComics.views.recent_by_id'),
-    url(r'/issue/(.*)', 'issues.views.single'),
-    #url(r'/new_series','HomeComics.views.recent_by_id'),
-    #url(r'/view/dirpath$','HomeComics.views.view_dir_path'),
-    #url(r'/view/paths','HomeComics.views.view_dir_paths_list'),
-    url(r'/ajax/series/all', 'stories.views.getSeriesList'),
-    url(r'/ajax/series/(\d+)', 'stories.views.getComicsFromSeries'),
-    url(r'/ajax/series/add/(\d+)/(\d+)', 'stories.views.addIssueToStory'),  # series // comic id
-    url(r'/arc/new', 'stories.views.newArcDisplay'),
-    url(r'/ajax/set/(\d+)/(art|story|overall)/(.*)', 'ratings.views.set_user_rating'),
-    url(r'/ajax/transfer/(\d+)', 'HomeComics.views.to_transfer_single_issue'),
-    url(r'/ajax/(\d+)/(.*)', 'issues.views.toggle_box'),
-)
+urlpatterns = [  # /series
+    url(r'^', views.index),
+    url(r'^(\d+)$', views.browse),
+    url(r'^increment/(\d+)', views.incrementSeries),
+    url(r'issue/(.*)', views.single),
+    url(r'ajax/series/all', storyViews.getSeriesList),
+    url(r'ajax/series/(\d+)', storyViews.getComicsFromSeries),
+    url(r'ajax/series/add/(\d+)/(\d+)', storyViews.addIssueToStory),  # series // comic id
+    url(r'arc/new', storyViews.newArcDisplay),
+    url(r'ajax/set/(\d+)/(art|story|overall)/(.*)', ratingViews.set_user_rating),
+    url(r'ajax/transfer/(\d+)', hcViews.to_transfer_single_issue),
+    url(r'ajax/(\d+)/(.*)', views.toggle_box),
+]
