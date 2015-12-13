@@ -1,8 +1,8 @@
-django
+
 gunicorn
 south
 redis
 django-celery
 rarfile
-# MySQL-python
+MySQL-python
 pillow

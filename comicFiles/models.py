@@ -22,25 +22,26 @@ class TransferRoot(models.Model):
 
 
 class ComicFile(models.Model):
-    ### The one things they'll all have...when you combine them!
+    # The one things they'll all have...when you combine them!
     name = models.CharField(max_length=255)
     dir_path = models.CharField(max_length=255)
-    ### Should have,  but in case they're not needed for some reason...
+    # Should have,  but in case they're not needed for some reason...
     rootFolder = models.ForeignKey(RootFolder, blank=True, null=True)
-    folderPath = models.CharField(max_length=255, blank=True, null=True) 
+    folderPath = models.CharField(max_length=255, blank=True, null=True)
     extension = models.CharField(max_length=255, blank=True, null=True)
-    ### Parsing potential...
+    # Parsing potential...
     error_flag = models.BooleanField(default=False)
     review_flag = models.BooleanField(default=False)
-    ### Potential values for processing and "attatching" to a comic
-    ### It's very possible none of these will pan out...
+    # Potential values for processing and "attatching" to a comic
+    # It's very possible none of these will pan out...
     comic_name = models.CharField(max_length=255, blank=True, null=True)
-    comic_issue = models.FloatField(blank=True, null=True)  # it's far and away the most common type of numering system...
+    # it's far and away the most common type of numering system...
+    comic_issue = models.FloatField(blank=True, null=True)
     comic_volume = models.CharField(max_length=255, blank=True, null=True)
     comic_year = models.CharField(max_length=255, blank=True, null=True)
     comic_date = models.CharField(max_length=255,  blank=True,  null=True)
-    ###comic_most_likely = models.ForeignKey(Comic, blank=True, null=True) ### TO DO: implement
-    ### Once "confirmed" these values are possible
+    # comic_most_likely = models.ForeignKey(Comic, blank=True, null=True) ### TO DO: implement
+    # Once "confirmed" these values are possible
     covers = ""  # files could have one or more covers in them! Array of keys?!
     '''
         Make a new object that's covers and use letter A - Z and numbers 1 - 100

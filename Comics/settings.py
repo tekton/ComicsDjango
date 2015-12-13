@@ -198,3 +198,5 @@ try:
     from Comics.settings_local import *
 except ImportError:
     print("Can't import local settings for some reason...")
+
+print(DATABASES)
