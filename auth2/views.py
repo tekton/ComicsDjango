@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render
 from django.template import RequestContext
 from auth2.forms import RegisterForm, EditAccountForm, ChangeEmailForm
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.decorators import login_required
@@ -17,7 +18,9 @@ def register(request):
                 form.save()
             except:
                 print("Unable to save form...")
-                return render_to_response("registration/registration.html", {'form': form, 'next': nextPage}, context_instance=RequestContext(request))
+                return render_to_response("registration/registration.html",
+                                          {'form': form, 'next': nextPage},
+                                          context_instance=RequestContext(request))
             # log the user in before sending them to their next destination
             user = authenticate(username=request.POST.get("username"), password=request.POST.get("password1"))
             login(request, user)
@@ -60,7 +63,9 @@ def login_func(request):
                 return redirect(nextPage)
             else:
                 state = "Your username and/or password were incorrect."
-                return render_to_response("registration/login.html", {'a_form': form, 'next': nextPage, 'state': state}, context_instance=RequestContext(request))
+                return render_to_response("registration/login.html",
+                                          {'a_form': form, 'next': nextPage, 'state': state},
+                                          context_instance=RequestContext(request))
         except Exception as e:
             print("Error authenticating form")
             print(e)
@@ -68,7 +73,9 @@ def login_func(request):
     else:
         form = AuthenticationForm()
 
-    return render_to_response("registration/login.html", {'a_form': form, 'next': nextPage, 'state': state}, context_instance=RequestContext(request))
+    return render(request, "registration/login.html",
+                  {'a_form': form, 'next': nextPage, 'state': state},
+                  )
 
 
 @login_required
@@ -88,13 +95,17 @@ def change_password(request):
                 except Exception as e:
                     print("Error saving form")
             else:
-                return render_to_response("registration/change_password.html", {'form': form}, context_instance=RequestContext(request))
+                return render_to_response("registration/change_password.html",
+                                          {'form': form},
+                                          context_instance=RequestContext(request))
         except Exception as e:
             print("Error validating password")
             print(e)
     else:
         form = EditAccountForm(SetPasswordForm)
-    return render_to_response("registration/change_password.html", {'form': form}, context_instance=RequestContext(request))
+    return render_to_response("registration/change_password.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))
 
 
 @login_required
@@ -117,4 +128,6 @@ def change_email(request):
             print(e)
     else:
         form = ChangeEmailForm()
-    return render_to_response("registration/change_email.html", {'form': form}, context_instance=RequestContext(request))
+    return render_to_response("registration/change_email.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))

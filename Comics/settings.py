@@ -9,8 +9,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*', ]
 
-# CELERY SETTINGS
+LOGIN_URL = '/accounts/login/'
 
+# CELERY SETTINGS
 djcelery.setup_loader()
 # BROKER_URL = "django://"
 # BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
@@ -127,7 +128,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
-        "TEMPLATE_DEBUG": DEBUG,
     },
 ]
 
