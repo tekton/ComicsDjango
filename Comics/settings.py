@@ -159,8 +159,8 @@ INSTALLED_APPS = (
     'PullLists',
     # 'south',
     'HomeComics',
-    # 'djcelery',
-    # 'kombu.transport.django',
+    'djcelery',
+    'kombu.transport.django',
     'stories',
     'auth2',
 )
