@@ -7,9 +7,10 @@ from django.db.models import *
 
 from issues.models import Series, Comic
 from comicFiles.models import PrimaryComics, ComicReadAndOwn
-from models import PullList
+from PullLists.models import PullList
 
 from collections import defaultdict
+
 
 def addToPullList(request, series_id):
     rtn_dict = {}

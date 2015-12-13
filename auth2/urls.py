@@ -1,14 +1,14 @@
 from django.conf.urls import *
 from django.contrib.auth.views import logout
-from views import *
+from auth2.views import *
 
 urlpatterns = patterns('',
-	url(r'register', 'auth.views.register'),
+	url(r'register', 'auth2.views.register'),
 #    url(r'edit',  'auth.views.edit_account', {"post_change_redirect": "campaign.views.home"}),
-	url(r'login', 'auth.views.login_func'),
-    url(r'account_settings', 'auth.views.account_settings'),
-    url(r'change_password', 'auth.views.change_password'),
-    url(r'change_email', 'auth.views.change_email'),
+	url(r'login', 'auth2.views.login_func'),
+    url(r'account_settings', 'auth2.views.account_settings'),
+    url(r'change_password', 'auth2.views.change_password'),
+    url(r'change_email', 'auth2.views.change_email'),
 #    url(r'forgot_password', 'auth.views.forgot_password'),
     url(r'logout', logout, name="logout"),
 

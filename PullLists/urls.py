@@ -1,5 +1,5 @@
 from django.conf.urls import *
-from views import *
+# from views import *
 
 urlpatterns = patterns('',
     url(r'/add/(\d+)', 'PullLists.views.addToPullList'),

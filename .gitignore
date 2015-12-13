@@ -14,3 +14,4 @@ uwsgi.ini
 ._*
 settings_local.py
 VENV
+VENV-OLD

@@ -17,7 +17,7 @@
     user = User.objects.get(pk=1)
 
     for issue in owned:
-        print "{} :: {} - {}".format(issue.series.name, issue.number, issue.id)
+        print("{} :: {} - {}".format(issue.series.name, issue.number, issue.id))
         try:
             c = ComicReadAndOwn.objects.get(user=1, issue=issue.id)
         except:

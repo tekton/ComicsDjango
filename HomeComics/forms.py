@@ -1,9 +1,9 @@
 from django import forms
-from models import *
+from HomeComics.models import *
 
 
 class NewSeriesFromData(forms.Form):
-    #name = forms.CharField()
+    # name = forms.CharField()
     series = forms.CharField()
     max_issue = forms.CharField(required=False)
     min_issue = forms.CharField(required=False)

@@ -57,8 +57,23 @@ Traceback (most recent call last):
     q.thumbnail = str(q.id) + "/" + rar_parse(q.dir_path, q.name, q.id)
 TypeError: cannot concatenate 'str' and 'bool' objects
 
+[2014-08-11 09:13:34,464: WARNING/Worker-8] No unrar image for you...
+[2014-08-11 09:13:34,464: WARNING/Worker-8] Can't find the image that should have been extracted for:: page1.jpg
+[2014-08-11 09:13:34,465: ERROR/MainProcess] Task comicFiles.images.thumbnail_parse_task[53e5cc84-e6f5-440c-8d9d-b5c71687736d] raised unexpected: TypeError("cannot concatenate 'str' and 'bool' objects",)
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/trace.py", line 240, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/celery/app/trace.py", line 437, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/projects/Projects/ComicsDjango/comicFiles/images.py", line 111, in thumbnail_parse_task
+    q.thumbnail = str(q.id) + "/" + rar_parse(q.dir_path, q.name, q.id)
+TypeError: cannot concatenate 'str' and 'bool' objects
+
 """
 
+"""
+    IDEA: take the first item in the extracted folder as the image to get processed instead of the one from the zip/rar file given the stuff from home scanners are sometimes silly with the order they actually send things to get compressed
+"""
 
 @celery.task
 def rar_parse(dir_path, name, num):

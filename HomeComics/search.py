@@ -24,7 +24,7 @@ def search_all(request):
         file_by_dir = ComicFile.objects.filter(dir_path__icontains=srch_str).values()
         comics = Comic.objects.filter(name__icontains=srch_str).values()
         series = Series.objects.filter(name__icontains=srch_str)  # .values()
-        print file_by_dir.query
+        print(file_by_dir.query)
         #print files.query
         #print comics.query
         #print series.query
@@ -33,7 +33,7 @@ def search_all(request):
     if form.is_valid:
         pass
     else:
-        print "Invalid form!"
+        print("Invalid form!")
         pass
         ###show blank form again!
 
