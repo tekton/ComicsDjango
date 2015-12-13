@@ -6,7 +6,6 @@ from datetime import timedelta
 # Django settings for Comics project.
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['*', ]
 
@@ -28,6 +27,8 @@ CELERYBEAT_SCHEDULE = {'parse_primaries': {
 
 PROJECT_DIR = os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -82,43 +83,21 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/comic_file_static/'
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_DIR, 'static'),
-)
-
-IMG_ROOT = os.path.join(PROJECT_DIR, 'static', 'images')
-
-# List of finder classes that know how to find static files in
-# various locations.
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'compressor.finders.CompressorFinder',
 )
+
+IMG_ROOT = os.path.join(BASE_DIR, 'static', 'images')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '%d@mggst$p6r=e&amp;7wod_)g9i7oa-c+cg2_78t0(hby2=nk%e2q'
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    #     'django.template.loaders.eggs.Loader',
-)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -135,12 +114,22 @@ ROOT_URLCONF = 'Comics.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'Comics.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_DIR, 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+        "TEMPLATE_DEBUG": DEBUG,
+    },
+]
 
 INSTALLED_APPS = (
     'django.contrib.auth',

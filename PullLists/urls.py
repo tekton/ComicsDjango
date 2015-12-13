@@ -1,11 +1,11 @@
 from django.conf.urls import *
-# from views import *
+from PullLists import views
 
-urlpatterns = patterns('',
-    url(r'add/(\d+)', 'PullLists.views.addToPullList'),
-    url(r'covers', 'PullLists.views.recentPullListCovers'),
-    url(r'delete/(\d+)', 'PullLists.views.deleteList'),
-    url(r'owned', 'PullLists.views.ownedSeriesList'),
-    url(r'missing', 'PullLists.views.missing'),
-    url(r'^', 'PullLists.views.currentList'),
-)
+urlpatterns = [
+    url(r'add/(\d+)', views.addToPullList),
+    url(r'covers', views.recentPullListCovers),
+    url(r'delete/(\d+)', views.deleteList),
+    url(r'owned', views.ownedSeriesList),
+    url(r'missing', views.missing),
+    url(r'^', views.currentList),
+]
