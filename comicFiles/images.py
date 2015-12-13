@@ -12,7 +12,7 @@ from comicFiles.models import ComicFile
 
 import celery
 
-#### moving some image processing to tasks,  consolidating here
+# moving some image processing to tasks,  consolidating here
 #from ratings.models import UserRating
 #from issues.models import Series
 #from issues.models import Comic
@@ -77,7 +77,7 @@ TypeError: cannot concatenate 'str' and 'bool' objects
 
 @celery.task
 def rar_parse(dir_path, name, num):
-    img_root = settings.IMG_ROOT + "/" + str(num)
+    img_root = "{}/{}".format(settings.IMG_ROOT, num)  # settings.IMG_ROOT + "/" + str(num)
     print(img_root)
     r = rarfile
     if r.is_rarfile(dir_path + "/" + name):
@@ -87,7 +87,7 @@ def rar_parse(dir_path, name, num):
         except:
             print("No unrar image for you...")
         f_name = str(r.namelist()[0]).replace("\\", "/")
-        ### todo: check for if the replace worked,  or for \ ???
+        # todo: check for if the replace worked,  or for \ ???
         return thumbnail_create(f_name, img_root)
     else:
         print("Not actually a RAR :(")
@@ -96,7 +96,7 @@ def rar_parse(dir_path, name, num):
 
 @celery.task
 def zip_parse(dir_path, name, num):
-    img_root = settings.IMG_ROOT + "/" + str(num)
+    img_root = "{}/{}".format(settings.IMG_ROOT, num)  # settings.IMG_ROOT + "/" + str(num)
     z = zipfile
     if z.is_zipfile(dir_path + "/" + name):
         z = zipfile.ZipFile(dir_path + "/" + name)
@@ -104,8 +104,10 @@ def zip_parse(dir_path, name, num):
             z.extract(z.infolist()[0], img_root)
         except:
             print("No unzipped image for you!")
-        ### don't need to edit the rar directory seperator
-        f_name = z.infolist()[0]
+        # print("ZIPINFO :: {}".format(dir(z.infolist())))
+        # print("ZIPINFO[0] :: {}".format(dir(z.infolist()[0])))
+        # print("ZIPINFO[0].filename :: {}".format(z.infolist()[0].filename))
+        f_name = z.infolist()[0].filename
         return thumbnail_create(f_name, img_root)
     else:
         print("Not actually a zip :(")
@@ -115,7 +117,7 @@ def zip_parse(dir_path, name, num):
 @celery.task
 def thumbnail_parse_task(i):
     """ q is used to represent a queryset item """
-    #if q.thumbnail is None:
+    # if q.thumbnail is None:
 
     try:
         q = ComicFile.objects.get(pk=i.id)
@@ -123,10 +125,12 @@ def thumbnail_parse_task(i):
         print("Unable to find comic file requested for thumbnail: ", e)
 
     if q.extension == "cbr":
-        q.thumbnail = str(q.id) + "/" + rar_parse(q.dir_path, q.name, q.id)
+        f = rar_parse(q.dir_path, q.name, q.id)
+        q.thumbnail = "{}/{}".format(q.id, f)  # q.id + "/" +
     elif q.extension == "cbz":
-        q.thumbnail = str(q.id) + "/" + zip_parse(q.dir_path, q.name, q.id)
-    #else:
+        f = zip_parse(q.dir_path, q.name, q.id)
+        q.thumbnail = "{}/{}".format(q.id, f)  # q.id + "/" +
+    # else:
     #    print("Thumbnail already exist...most likely.")
     print("saving updated thumbnail location: ", q.thumbnail)
     try:
@@ -141,25 +145,29 @@ def thumbnail_create(f_name, img_root):
 
         Returns the image path or False if it fails
     """
-    #img_root = settings.IMG_ROOT
-    if os.path.isfile(img_root + "/" + f_name):
-        print("should resize it to a real thumbnail...")
+    # img_root = settings.IMG_ROOT
+    print("thumbnail_create :: {}, {}".format(f_name, img_root))
+    try:
+        if os.path.isfile(img_root + "/" + f_name):
+            print("should resize it to a real thumbnail...")
 
-        try:
-            img = Image.open(img_root + "/" + f_name)
-        except:
-            print("no img?!")
+            try:
+                img = Image.open(img_root + "/" + f_name)
+            except:
+                print("no img?!")
+                return False
+
+            basewidth = 200
+            wpercent = (basewidth / float(img.size[0]))
+            hsize = int((float(img.size[1]) * float(wpercent)))
+            img = img.resize((basewidth,  hsize),  PIL.Image.ANTIALIAS)
+            img.save(img_root + "/" + f_name)
+            return f_name
+        else:
+            print("Can't find the image that should have been extracted for:: " + f_name)
             return False
-
-        basewidth = 200
-        wpercent = (basewidth / float(img.size[0]))
-        hsize = int((float(img.size[1]) * float(wpercent)))
-        img = img.resize((basewidth,  hsize),  PIL.Image.ANTIALIAS)
-        img.save(img_root + "/" + f_name)
-        return f_name
-    else:
-        print("Can't find the image that should have been extracted for:: " + f_name)
-        return False
+    except Exception as e:
+        print("ERROR: unabe to create thumbnail for :: {} due to {}".format(f_name, e))
 
 
 def walkit(dir_root):
@@ -173,8 +181,8 @@ def walkit(dir_root):
                 print("process as zip!")
                 if z.is_zipfile(name):
                     z = zipfile.ZipFile(name)
-                    #for a in z.namelist():
-                        #print(a)
+                    # for a in z.namelist():
+                        # print(a)
                     print(z.namelist()[0])
 
                     z.extract(z.namelist()[0], img_root)
@@ -190,12 +198,12 @@ def walkit(dir_root):
                     print("rar to process")
                     r = rarfile.RarFile(name)
                     print(r.namelist()[0])
-                    #print(r.infolist()[0])
-                    #for f in r.infolist():
+                    # print(r.infolist()[0])
+                    # for f in r.infolist():
                     #   print(f.filename,  f.file_size)
                     #   r.extract(f)
 
-                    #### TODO: check to see if the file exists and if we need to make a thumbnail...
+                    # TODO: check to see if the file exists and if we need to make a thumbnail...
 
                     try:
                         r.extract(r.namelist()[0], img_root)
