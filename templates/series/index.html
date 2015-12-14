@@ -4,7 +4,7 @@
     <table>
         <tr><th>Comic</th><th>Read</th><th>Own</th></tr>
     {% for series in series_list %}
-        <tr><td><a href="{% url 'issues.views.browse' series.id %}">
+        <tr><td><a href="{% url 'issues:browse' series.id %}">
             {{series}}
         </a></td>
         <td></td>

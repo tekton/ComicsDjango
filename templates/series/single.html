@@ -43,7 +43,7 @@
 {% block title %}{{comic.series}}{% endblock %}
 
 {% block main %}
-<div><a href="{% url 'issues.views.browse' comic.series.id %}">{{comic.series}}</a></div>
+<div><a href="{% url 'issues:browse' comic.series.id %}">{{comic.series}}</a></div>
 <div>{{comic}}</div>
 
 <div>
@@ -51,11 +51,11 @@
     <div style="clear: both;">
         <!--{{comic.id}} | {{comic.series.id}} | {{single.id}}-->
         <img src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
-    	<a href="{% url 'HomeComics.views.single_issue' single.id %}">{{single.name}}</a><br />
+    	<a href="{% url 'comics:single' single.id %}">{{single.name}}</a><br />
     	<a onClick="javascript:make_primary('{{comic.series.id}}', '{{comic.id}}', '{{single.id}}');">Make Primary</a><br />
     	<a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a><br />
     	<button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button><br />
-	Increment/Create series to: <a href="{% url 'HomeComics.views.new_series_from_data' single.id %}">{{single.comic_issue}}</a>
+	Increment/Create series to: <a href="{% url 'comics:new_series' single.id %}">{{single.comic_issue}}</a>
     	<div style="clear: both;">&nbsp;</div>
     </div>
 {% endfor %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from django.db.models import *
 from django.contrib.auth.decorators import login_required
@@ -23,11 +23,14 @@ import json
 @login_required
 def index(request):
     recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
-    #recentFiles = ComicFile.objects.filter(rootFolder=3).values()
+    # recentFiles = ComicFile.objects.filter(rootFolder=3).values()
     pulllist = PullList.objects.filter(
         user=request.user)  # .order_by('series')
     #
-    return render_to_response("dashboard/index.html", {"recentFiles": recentFiles, "series_list": pulllist}, context_instance=RequestContext(request))
+    return render(request,
+                  "dashboard/index.html",
+                  {"recentFiles": recentFiles, "series_list": pulllist},
+                  )
 
 
 def single_issue(request, id):
@@ -67,12 +70,16 @@ def search(request):
 
 def issue_search_issue(request, series, volume, number):
     comics = ComicFile.objects.all().order_by("-id")[:50].values()
-    return render_to_response("files_recent_by_id.html", {"recentFiles": comics}, context_instance=RequestContext(request))
+    return render_to_response("files_recent_by_id.html",
+                              {"recentFiles": comics},
+                              context_instance=RequestContext(request))
 
 
 def recent_by_id(request):
     comics = ComicFile.objects.all().order_by("-id")[:50].values()
-    return render_to_response("files_recent_by_id.html", {"recentFiles": comics}, context_instance=RequestContext(request))
+    return render_to_response("files_recent_by_id.html",
+                              {"recentFiles": comics},
+                              context_instance=RequestContext(request))
 
 
 def new_series_from_data(request, id):

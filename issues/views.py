@@ -13,30 +13,23 @@ import json
 
 def index(request):
     series_list = Series.objects.all()
-    return render_to_response("series/index.html", {"series_list": series_list}, context_instance=RequestContext(request))
+    return render_to_response("series/index.html",
+                              {"series_list": series_list},
+                              context_instance=RequestContext(request))
 
 
 def single(request, id):
     comic = Comic.objects.get(pk=id)
     possible = ComicFile.objects.filter(comic_name=comic.series.name, comic_issue=comic.number).values()
-    # print(possible)
-    return render_to_response("series/single.html", {"comic": comic, "possible": possible}, context_instance=RequestContext(request))
+    return render_to_response("series/single.html",
+                              {"comic": comic, "possible": possible},
+                              context_instance=RequestContext(request))
 
 
 def browse(request, id):
     # print("browse")
+    print(id)
     series = Series.objects.get(pk=id)
-    # issues = Comic.objects.filter(series=series).order_by("-number")  # V1
-    # connection = (Comic._meta.db_table, ComicReadAndOwn._meta.db_table, "id", "issue_id")
-    '''issues = Comic.objects.filter(series=series).order_by("-number").extra(select={"read": "comicFiles_comicreadandown.read",
-                                                                                   "own": "comicFiles_comicreadandown.own"},
-                                                                           where=["(comicFiles_comicreadandown.user_id = %s OR comicFiles_comicreadandown.user_id IS NULL)"],
-                                                                           params=[request.user.id]);
-    '''
-    # issues.query.join(connection,promote=True)
-    # issues = Comic.objects.raw("select * from issues_comic where series_id = %s order by number+0 desc",[series.id])###
-    # print(issues)
-
     issues = Comic.objects.raw('''
         SELECT  (comicFiles_comicreadandown.read) AS `read`,
                 (comicFiles_comicreadandown.own) AS `own`,
@@ -58,7 +51,7 @@ def browse(request, id):
                     ratings_userrating.user_id = %s)
                 WHERE (`issues_comic`.`series_id` = %s);
         ''',[request.user.id, request.user.id, series.id])
-    print(issues.query)
+    # print(issues.query)
     return render_to_response("series/browse.html", {"series": series, "comics": issues}, context_instance=RequestContext(request))
 
 
@@ -78,7 +71,7 @@ def incrementSeries(request, series_id):
         series = Series.objects.get(pk=series_id)
     except:
         print("Unable to find series...")
-        return redirect('issues.views.browse', series_id)
+        return redirect('issues:browse', series_id)
     max_comic = Comic.objects.filter(series=series).aggregate(Max('number'))
     # check the +1 comic for being beyond the series max
     if max_comic["number__max"] is not None:
@@ -89,14 +82,14 @@ def incrementSeries(request, series_id):
     if series.series_max is not None and series.series_max != '':
         if int(max_num) > int(series.series_max):
             print("New max is over the series max")
-            return redirect('issues.views.browse', series_id)
+            return redirect('issues:browse', series_id)
         else:
             pass
     else:
         pass
     issue = Comic(series=series, number=max_num)
     issue.save()
-    return redirect('issues.views.browse', series_id)
+    return redirect('issues:browse', series_id)
 
 
 def toggle_box(request, comic_id, box):

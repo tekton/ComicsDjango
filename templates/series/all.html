@@ -8,15 +8,15 @@
 <div class="thumbs">
 	{% for file in recentFiles %}
 		<!-- {{ file.name }}-->
-		<a href="{% url 'HomeComics.views.single_issue' file.id %}"><img src="/static/images/{{file.thumbnail|hexVert}}" width="160px" /></a>
+		<a href="{% url 'comics:single' file.id %}"><img src="/static/images/{{file.thumbnail|hexVert}}" width="160px" /></a>
 	{% endfor %}
 </div>
 <hr />
-<div class="thumbs"><a href="{% url 'HomeComics.views.possible_series_list' %}">Possible Series</a> | <a href="{% url 'HomeComics.views.new_series_from_data' 0 %}">Create Series</a></div>
+<div class="thumbs"><a href="{% url 'comics:possible' %}">Possible Series</a> | <a href="{% url 'comics:new_series' 0 %}">Create Series</a></div>
 <hr />
 <div>
     {% for series in series_list %}
-        <div><a href="{% url 'issues.views.browse' series.id %}">
+        <div><a href="{% url 'issues:browse' series.id %}">
             {{series}}
         </a></div>
     {% endfor %}
