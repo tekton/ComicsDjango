@@ -28,7 +28,7 @@ def index(request):
         user=request.user)  # .order_by('series')
     #
     return render(request,
-                  "dashboard/index.html",
+                  "dashboard/index_react.html",
                   {"recentFiles": recentFiles, "series_list": pulllist},
                   )
 

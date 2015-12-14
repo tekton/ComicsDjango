@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.db.models import *
 
+from Comics import json_encoder
+
 from issues.models import Series, Comic
 from comicFiles.models import PrimaryComics, ComicReadAndOwn
 from PullLists.models import PullList
@@ -30,7 +32,7 @@ def addToPullList(request, series_id):
     except Exception as e:
         rtn_dict["success"] = False
         rtn_dict["error"] = "Unable to save pull list"
-        rtn_dict["e"] = str(e)        
+        rtn_dict["e"] = str(e)
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
 
 
@@ -44,7 +46,9 @@ def recentPullListCovers(request):
         for pull in pulllist:  # this sadly can cause a lot of db hits; should probably sync this up in redis instead...
             primaries = PrimaryComics.objects.filter(series=pull.series.id)
             for item in primaries:
-                rtn_dict[item.series.name][item.comic.number] = {"name": item.comic.name, "image": item.comicFile.thumbnail,}
+                rtn_dict[item.series.name][item.comic.number] = {"name": item.comic.name,
+                                                                 "image": item.comicFile.thumbnail,
+                                                                 }
     else:
         rtn_dict["success"] = False
         rtn_dict["error"] = "Unable to get pull list for user"
@@ -54,7 +58,15 @@ def recentPullListCovers(request):
 
 def currentList(request):
     pulllist = PullList.objects.filter(user=request.user)  # .order_by('series')
-    return render_to_response("pulllist/index.html", {"series_list": pulllist}, context_instance=RequestContext(request))
+    return render_to_response("pulllist/index.html",
+                              {"series_list": pulllist},
+                              context_instance=RequestContext(request))
+
+
+def api_current_list(request):
+    pulllist = PullList.objects.filter(user=request.user).values("series__name", "id", "series")
+    rtn_list = json_encoder.serialize_to_json(pulllist)
+    return HttpResponse(rtn_list, content_type="application/json")
 
 
 def deleteList(request, pl_id):
