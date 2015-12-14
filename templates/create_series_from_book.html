@@ -2,7 +2,7 @@
 {% load text_tags %}
 
 {% block main %}
-<form action="{% url 'HomeComics.views.new_series_from_data' comic.id %}" method="post">
+<form action="{% url 'comics:new_series' comic.id %}" method="post">
     {% csrf_token %}
     <table>
     {{form}}

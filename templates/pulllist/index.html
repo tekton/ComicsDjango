@@ -6,15 +6,15 @@
 {{form.as_table}}
 
 <div class="thumbs">
-	<a href="{% url 'HomeComics.views.possible_series_list' %}">Possible Series</a> |
-	<a href="{% url 'HomeComics.views.new_series_from_data' 0 %}">Create Series</a>
+	<a href="{% url 'comics:possible' %}">Possible Series</a> |
+	<a href="{% url 'comics:new_series' 0 %}">Create Series</a>
 </div>
 <hr />
 <div>
     {% for series in series_list %}
         <div>
-        	<a href="{% url 'issues.views.browse' series.series.id %}">{{series.series}}</a> :: 
-        	<a href="{% url 'PullLists.views.deleteList' series.id %}">delete</a>
+        	<a href="{% url 'issues:browse' series.series.id %}">{{series.series}}</a> :: 
+        	<a href="{% url 'pulls:delete' series.id %}">delete</a>
         </div>
     {% endfor %}
 </div>

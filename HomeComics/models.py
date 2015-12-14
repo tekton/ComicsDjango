@@ -12,3 +12,6 @@ class HomeComic(models.Model):
 
     def __unicode__(self):
         return self.user.username + "'s " + self.comic.name
+
+    def __str__(self):
+        return self.__unicode__()

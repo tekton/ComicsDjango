@@ -2,7 +2,7 @@
 {% load text_tags %}
 
 {% block main %}
-<form action="{% url 'HomeComics.search.search_all' %}" method="post">
+<form action="{% url 'comics:search' %}" method="post">
     {% csrf_token %}
     <table>
     {{form}}
@@ -12,7 +12,7 @@
 
 <h3>Series</h3>
 {% for series in seri %}
-    <div><a href="{% url 'issues.views.browse' series.id%}">{{series.name}}</a></div>
+    <div><a href="{% url 'issues:browse' series.id%}">{{series.name}}</a></div>
 {% endfor %}
 
 <h3>Comics</h3>
@@ -22,12 +22,12 @@
 
 <h3>Files</h3>
 {% for file in files %}
-    <div><a href="{% url 'HomeComics.views.single_issue' file.id%}">{{file.name}}</a></div>
+    <div><a href="{% url 'comics:single' file.id%}">{{file.name}}</a></div>
 {% endfor %}
 
 <h3>Files By Path</h3>
 {% for file in file_by_dir %}
-    <div><a href="{% url 'HomeComics.views.single_issue' file.id%}">{{file.name}}</a></div>
+    <div><a href="{% url 'comics:single' file.id%}">{{file.name}}</a></div>
 {% endfor %}
 
 {% endblock %}

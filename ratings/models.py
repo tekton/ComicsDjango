@@ -12,3 +12,6 @@ class UserRating(models.Model):
 
     def __unicode__(self):
         return self.user.username + " - " + self.comic.name
+
+    def __str__(self):
+        return self.__unicode__()

@@ -11,12 +11,15 @@ class PullList(models.Model):
     '''
     user = models.ForeignKey(User)
     series = models.ForeignKey(Series)
-    
+
     class Meta:
         unique_together = ('user', 'series')
 
     def __unicode__(self):
         return self.user.username + " - " + self.series.name
+
+    def __str__(self):
+        return self.__unicode__()
 
     def username(self):
         return self.user.username

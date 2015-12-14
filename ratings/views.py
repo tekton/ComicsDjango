@@ -21,7 +21,7 @@ def set_user_rating(request, issue_id, category, val):
         comic = Comic.objects.get(pk=issue_id)
     except Exception as e:
         rtn_dict["get_comic_error"] = "Unable to find comic"
-        rtn_dict["e"] = str(e)        
+        rtn_dict["e"] = str(e)
 
     # check to see if this rating already exists!
     try:

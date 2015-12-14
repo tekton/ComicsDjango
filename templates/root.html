@@ -158,7 +158,7 @@
 </head>
 	<header id="siteheader">
 		<div class="wrapper">
-			<h1><a href="{% url 'HomeComics.views.index' %}">ComicRate</a></h1>
+			<h1><a href="{% url 'comics:index' %}">ComicRate</a></h1>
 			<nav id="sitenav">
 				<ul class="nav">
 					<li><a href="/pull">Pull List</a></li>
@@ -170,7 +170,7 @@
 			<div id="search" style="float: right;">
 				<ul class="nav">
 					<li>
-						<form action="{% url 'HomeComics.search.search_all' %}" method="POST">
+						<form action="{% url 'comics:search' %}" method="POST">
     	        			{% csrf_token %}
     	        			<label for="id_search_data">Search:</label>
     	        			<input type="text" name="search_data" id="id_search_data" />

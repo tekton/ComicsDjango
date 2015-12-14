@@ -19,7 +19,7 @@ class Series(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('issues.views.browse', [str(self.id)])
+        return ('issues:browse', [str(self.id)])
 
     def __unicode__(self):
         if self.volume:
@@ -33,6 +33,9 @@ class Series(models.Model):
         if self.marvel_now is True:
             rtn_str += "(Marvel NOW!)"
         return rtn_str
+
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Comic(models.Model):
@@ -55,6 +58,9 @@ class Comic(models.Model):
         if self.series.marvel_now is True:
             rtn_str += "(Marvel NOW!)"
         return rtn_str
+
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Ratings(models.Model):
