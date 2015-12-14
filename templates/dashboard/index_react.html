@@ -1,0 +1,96 @@
+{% extends "root.html" %}
+{% load staticfiles %}
+{% load compress %}
+{% load text_tags %}
+{% block main %}
+
+{{form.as_table}}
+
+<div class="thumbs">
+    {% for file in recentFiles %}
+        <!-- {{ file.name }}-->
+        <a href="{% url 'comics:single' file.id %}"><img src="/static/images/{{file.thumbnail|hexVert}}" width="160px" /></a>
+    {% endfor %}
+</div>
+<hr />
+<div class="thumbs"><a href="{% url 'comics:possible' %}">Possible Series</a> | <a href="{% url 'comics:new_series' 0 %}">Create Series</a></div>
+<hr />
+<div id="pullsContent"></div>
+
+    <script type="text/babel">
+      ReactDOM.render(
+        <PullsWrapper url="/pull/api/1.0/list" />,
+        document.getElementById('pullsContent')
+      );
+    </script>
+
+<hr />
+
+{% endblock %}
+
+<!--
+ [CR+][search bar]
+[[ X MOST RECENT ]]
+{...}[ Pull List Images ]{...}
+-->
+
+{% block head %}
+
+    {% compress js %}
+    <script src="{% static 'js/react.js' %}"></script>
+    <script src="{% static 'js/react-dom.js' %}"></script>
+    <script src="{% static 'js/babel.browser.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/marked.min.js' %}"></script>
+
+    <script type="text/jsx" src="{% static 'jsx/dashboard_list.jsx' %}"></script>
+    {% endcompress %}
+
+<script type="text/javascript">
+    function toggle_status(id,box) {
+        //$("#verses_linked").html("");
+        //alert(id+" - "+box);
+        $.getJSON(
+            "/issues/ajax/"+id+"/"+box,
+            function(data){
+                if (data["Success"] == "Updated!") {
+                    //alert(data[box]);
+                } else {
+                    alert("Error");
+                }                
+            }
+        );        
+    }
+    
+    function transfer_primaries(series) {
+        console.log("Calling transfer_primaries")
+        $.getJSON(
+            "/files/primary/transfer/"+series,
+            function(data){
+                console.log(data);              
+            }
+        );         
+    }
+
+    function transfer_unread_primaries(series, unread) {
+        console.log("Calling transfer_unread_primaries")
+        $.getJSON(
+            "/files/primary/transfer/"+series+"/"+unread,
+            function(data){
+                console.log(data);              
+            }
+        );         
+    }
+
+    function add_to_pull_list(series) {
+        console.log("Calling add_to_pull_list")
+        $.getJSON(
+            "/pull/add/"+series,
+            function(data){
+                console.log(data);              
+            }
+        );        
+    }
+
+</script>
+{% endblock %}
