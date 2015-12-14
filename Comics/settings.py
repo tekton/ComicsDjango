@@ -92,7 +92,7 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # 'compressor.finders.CompressorFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 IMG_ROOT = os.path.join(BASE_DIR, 'static', 'images')
@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_admin_bootstrapped',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -152,6 +153,7 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'stories',
     'auth2',
+    "compressor",
 )
 
 # A sample logging configuration. The only tangible logging
@@ -189,3 +191,8 @@ except ImportError:
     print("Can't import local settings for some reason...")
 
 print(DATABASES)
+
+COMPRESS_ENABLED = True
+COMPRESS_PRECOMPILERS = (
+    ('text/jsx', 'compress_react.ReactFilter'),
+)
