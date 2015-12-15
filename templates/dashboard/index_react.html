@@ -17,12 +17,14 @@
 <hr />
 <div id="pullsContent"></div>
 
-    <script type="text/babel">
+    {% compress js inline %}
+    <script type="text/jsx">
       ReactDOM.render(
         <PullsWrapper url="/pull/api/1.0/list" />,
         document.getElementById('pullsContent')
       );
     </script>
+    {% endcompress %}
 
 <hr />
 

@@ -1,12 +1,34 @@
-// tutorial4.js
+var TUP = React.createClass({
+  render: function() {
+    return <span onClick={this.props.onClick}>TUP</span>;
+  },
+  animate: function() {
+    console.log("Insert pretty animation here!");
+  }
+});
+
 var Series = React.createClass({
+  handleTUPClick: function(seriesID) {
+      $.ajax({
+        url: "/files/primary/transfer/"+seriesID+"/true",
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          console.log("Triggered transfer");
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error("/files/primary/transfer/"+seriesID+"/true", status, err.toString());
+        }.bind(this)
+      });    
+  },
   render: function() { 
+    var boundClick = this.handleTUPClick.bind(this, this.props.id);
     return (
         <div className="pullLine">
             <span><a href="/issues/{this.props.series}">{this.props.seriesName}</a></span>
             <span className="pull-right">
                 <a href={"/pull/delete/"+this.props.id}>Remove</a> |
-                <a onclick="javascript:transfer_unread_primaries('{this.props.id}', 'True');">Transfer Unread Primaries</a>
+                <TUP onClick={boundClick} />
             </span>
         </div>
     );
@@ -18,7 +40,7 @@ var PullsList = React.createClass({
   render: function() {
     var pullList = this.props.data.map(function(pulls) {
       return (
-        <Series seriesName={pulls.series__name} series={pulls.series} id={pulls.id} />
+        <Series seriesName={pulls.series__name} series={pulls.series} id={pulls.id} key={pulls.id} />
       );
     });
     return (
