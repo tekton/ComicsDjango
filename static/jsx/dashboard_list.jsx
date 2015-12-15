@@ -1,13 +1,4 @@
 var TUP = React.createClass({
-  render: function() {
-    return <span onClick={this.props.onClick}>TUP</span>;
-  },
-  animate: function() {
-    console.log("Insert pretty animation here!");
-  }
-});
-
-var Series = React.createClass({
   handleTUPClick: function(seriesID) {
       $.ajax({
         url: "/files/primary/transfer/"+seriesID+"/true",
@@ -21,14 +12,24 @@ var Series = React.createClass({
         }.bind(this)
       });    
   },
-  render: function() { 
+  render: function() {
     var boundClick = this.handleTUPClick.bind(this, this.props.id);
+    return <span onClick={boundClick}>TUP</span>;
+  },
+  animate: function() {
+    console.log("Insert pretty animation here!");
+  }
+});
+
+var Series = React.createClass({
+  render: function() { 
+    
     return (
         <div className="pullLine">
-            <span><a href="/issues/{this.props.series}">{this.props.seriesName}</a></span>
+            <span><a href={"/issues/"+this.props.series}>{this.props.seriesName}</a></span>
             <span className="pull-right">
                 <a href={"/pull/delete/"+this.props.id}>Remove</a> |
-                <TUP onClick={boundClick} />
+                <TUP id={this.props.id} />
             </span>
         </div>
     );
