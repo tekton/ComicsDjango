@@ -12,28 +12,14 @@
 </div>
 <hr />
 <div id="pullsIndex"></div>
-
-    {% compress js inline %}
-    <script type="text/jsx">
-      ReactDOM.render(
-        <PullsWrapper url="/pull/api/1.0/list" />,
-        document.getElementById('pullsIndex')
-      );
+    <script type=\"text/javascript\">
+        ReactDOM.render(
+            React.createElement(
+                PullsWrapper,
+                {url: "/pull/api/1.0/list"}
+            ),
+            document.getElementById('pullsIndex')
+        );
     </script>
-    {% endcompress %}
-
 <hr />
-
-{% endblock %}
-
-{% block head %}
-    {% compress js %}
-    <script src="{% static 'js/react.js' %}"></script>
-    <script src="{% static 'js/react-dom.js' %}"></script>
-    <script src="{% static 'js/babel.browser.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/marked.min.js' %}"></script>
-
-    <script type="text/jsx" src="{% static 'jsx/dashboard_list.jsx' %}"></script>
-    {% endcompress %}
 {% endblock %}

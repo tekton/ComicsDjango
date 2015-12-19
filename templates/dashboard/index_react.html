@@ -12,22 +12,23 @@
 <hr />
 <div id="pullsContent"></div>
 
-    {% compress js inline %}
-    <script type="text/jsx">
-      ReactDOM.render(
-        <PullsWrapper url="/pull/api/1.0/list" />,
-        document.getElementById('pullsContent')
-      );
-    </script>
+    <script type="text/javascript">
+        ReactDOM.render(
+            React.createElement(
+                PullsWrapper,
+                {url:"/pull/api/1.0/list"}
+            ),
+            document.getElementById('pullsContent')
+        );
 
-    <script type="text/jsx">
-      ReactDOM.render(
-        <PhotoStripWrapper url='/comics/api/1.0/thumbnails' />,
-        document.getElementById('thumbsContainer')
-      );
-    </script>
-    {% endcompress %}
-
+        ReactDOM.render(
+            React.createElement(
+                PhotoStripWrapper,
+                {url:"/comics/api/1.0/thumbnails"}
+            ),
+            document.getElementById('thumbsContainer')
+        );
+        </script>
 <hr />
 
 {% endblock %}
@@ -39,17 +40,6 @@
 -->
 
 {% block head %}
-
-    {% compress js %}
-    <script src="{% static 'js/react.js' %}"></script>
-    <script src="{% static 'js/react-dom.js' %}"></script>
-    <script src="{% static 'js/babel.browser.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/marked.min.js' %}"></script>
-
-    <script type="text/jsx" src="{% static 'jsx/dashboard_list.jsx' %}"></script>
-    <script type="text/jsx" src="{% static 'jsx/strip_photos.jsx' %}"></script>
-    {% endcompress %}
 
 <script type="text/javascript">
     function toggle_status(id,box) {

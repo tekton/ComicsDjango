@@ -1,12 +1,23 @@
 {% load staticfiles %}
+{% load compress %}
 <!doctype html>
 <html lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
     <link rel="stylesheet"  type="text/css" href="{% static 'css/jquery-ui.css' %}">
-    <script src="{% static 'js/jquery.raty.js' %}"></script>
+
+    {% compress js %}
+	    <script type="text/javascript" src="{% static 'js/react.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/react-dom.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/marked.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.raty.js' %}"></script>
+
+        <script type="text/jsx" src="{% static 'jsx/dashboard_list.jsx' %}"></script>
+        <script type="text/jsx" src="{% static 'jsx/strip_photos.jsx' %}"></script>
+    {% endcompress %}
+
     <title>{% block title %}{% endblock %}</title>
     {% block head %}{% endblock %}
 

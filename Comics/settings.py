@@ -1,11 +1,11 @@
 import os
-
+import ast
 import djcelery
 from datetime import timedelta
 
 # Django settings for Comics project.
 
-DEBUG = True
+DEBUG = ast.literal_eval(os.getenv("DEBUG", "True"))
 
 ALLOWED_HOSTS = ['*', ]
 
@@ -196,3 +196,4 @@ COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/jsx', 'compress_react.ReactFilter'),
 )
+COMPRESS_OFFLINE = True
