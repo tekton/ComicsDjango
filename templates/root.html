@@ -2,155 +2,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<style>
-
-		/*
-		 * Really, REALLY base reset
-		 */
-		html,
-		body {
-			margin: 0;
-			padding: 0;
-			font-size: 16px;
-			line-height: 1.5em;
-			font-family: Helvetica, Arial, sans-serif;
-			background: #123;
-		}
-
-		/*
-		 * Various helpers
-		 */
-		.pull-left {
-			float: left;
-		}
-		.pull-right {
-			float: right;
-		}
-		.ninja {
-			visibility: hidden;
-			color: black;
-			background-color: black;
-			display: none;
-		}
-
-		/*
-		 * Base Site Header Styles
-		 */
-		#siteheader {
-			height: 50px;
-			font-size: 1em;
-			line-height: 50px;
-		}
-		#siteheader a {
-			text-decoration: none;
-		}
-		#siteheader h1 {
-			margin: 0 1em;
-			padding: 0;
-			padding-left: .3em;
-			padding-right: .3em; 
-			font-size: 1em;
-			float: left;
-			background-color: #587c91;
-		}
-		#siteheader ul.nav,
-		#siteheader ul.nav ul {
-			margin: 0;
-			padding: 0;
-			list-style-type: none;
-		}
-		#siteheader ul.nav > li {
-			display: block;
-			float: left;
-		}
-		#siteheader ul.nav li a {
-			display: block;
-			padding: 0 1em;
-		}
-		#siteheader ul.nav li.dropdown {
-			position: relative;
-			min-width: 120px;
-		}
-		#siteheader ul.nav li.dropdown ul.dropdown-menu {
-			display: none;
-			position: absolute;
-			top: 50px;
-			left: 0;
-			right: 0;
-			background-color: #333;
-		}
-
-
-		i[class^="icon-"] {
-			font-size: .65em;
-			margin: 0 0 0 .5em;
-			padding: 0;
-			float: right;
-		}
-		i.icon-triangle-down:after {
-			content: '\25bc';
-		}
-
-		/*
-		 * Color Definitions
-		 */
-		#siteheader {
-			background-color: #000;
-		}
-		#siteheader,
-		#siteheader a {
-			color: #FFF;
-		}
-		ul.nav li a:hover {
-			background-color: #333;
-		}
-
-		/*
-		 * Custom additions
-		 */
-		#usernav ul.nav {
-			margin: 0 1em;
-		}
-
-		/*
-		 * Sets width for site header content
-		 * Leave margin as auto and just define width
-		 */
-		#siteheader .wrapper {
-			width: 960px;
-			margin: auto;
-		}
-		/*** old ***/
-    	
-    	#container, #head {
-    		width: 720px;
-    		margin: 1em auto;
-    		padding: 1em;
-    		border: 1px solid black;
-    		background: #eee;
-    		border-radius: 5px;
-    	}
-		
-    	.thumbs {
-    		width: 700px;
-    		margin: 0 auto;
-    		text-align: center;
-    	}
-
-		/* Gradient transparent - color - transparent :: stolen from http://css-tricks.com/examples/hrs/ */
-		hr {
-		    border: 0;
-		    height: 1px;
-		    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-		    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-		    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-		    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-		}
-	</style>
-
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <link rel="stylesheet"  type="text/css" href="{% static 'css/jquery-ui.css' %}">
     <script src="{% static 'js/jquery.raty.js' %}"></script>
     <title>{% block title %}{% endblock %}</title>
     {% block head %}{% endblock %}
@@ -203,7 +58,6 @@
     <footer id="sitefooter">
 		<div class="wrapper"></div>
 	</footer>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script>
 		$(function(){
 			/*

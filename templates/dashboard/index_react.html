@@ -6,12 +6,7 @@
 
 {{form.as_table}}
 
-<div class="thumbs">
-    {% for file in recentFiles %}
-        <!-- {{ file.name }}-->
-        <a href="{% url 'comics:single' file.id %}"><img src="/static/images/{{file.thumbnail|hexVert}}" width="160px" /></a>
-    {% endfor %}
-</div>
+<div id="thumbsContainer"></div>
 <hr />
 <div class="thumbs"><a href="{% url 'comics:possible' %}">Possible Series</a> | <a href="{% url 'comics:new_series' 0 %}">Create Series</a></div>
 <hr />
@@ -22,6 +17,13 @@
       ReactDOM.render(
         <PullsWrapper url="/pull/api/1.0/list" />,
         document.getElementById('pullsContent')
+      );
+    </script>
+
+    <script type="text/jsx">
+      ReactDOM.render(
+        <PhotoStripWrapper url='/comics/api/1.0/thumbnails' />,
+        document.getElementById('thumbsContainer')
       );
     </script>
     {% endcompress %}
@@ -46,6 +48,7 @@
     <script type="text/javascript" src="{% static 'js/marked.min.js' %}"></script>
 
     <script type="text/jsx" src="{% static 'jsx/dashboard_list.jsx' %}"></script>
+    <script type="text/jsx" src="{% static 'jsx/strip_photos.jsx' %}"></script>
     {% endcompress %}
 
 <script type="text/javascript">
