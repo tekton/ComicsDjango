@@ -41,17 +41,6 @@
 
 {% block head %}
 
-    {% compress js %}
-    <script src="{% static 'js/react.js' %}"></script>
-    <script src="{% static 'js/react-dom.js' %}"></script>
-    <script src="{% static 'js/babel.browser.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/marked.min.js' %}"></script>
-
-    <script type="text/jsx" src="{% static 'jsx/dashboard_list.jsx' %}"></script>
-    <script type="text/jsx" src="{% static 'jsx/strip_photos.jsx' %}"></script>
-    {% endcompress %}
-
 <script type="text/javascript">
     function toggle_status(id,box) {
         //$("#verses_linked").html("");
