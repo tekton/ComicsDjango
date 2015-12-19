@@ -1,6 +1,7 @@
- {% extends "root.html" %}
+{% extends "root.html" %}
 {% load text_tags %}
-
+{% load staticfiles %}
+{% load compress %}
 {% block main %}
 
 {{form.as_table}}
@@ -10,14 +11,29 @@
 	<a href="{% url 'comics:new_series' 0 %}">Create Series</a>
 </div>
 <hr />
-<div>
-    {% for series in series_list %}
-        <div>
-        	<a href="{% url 'issues:browse' series.series.id %}">{{series.series}}</a> :: 
-        	<a href="{% url 'pulls:delete' series.id %}">delete</a>
-        </div>
-    {% endfor %}
-</div>
+<div id="pullsIndex"></div>
+
+    {% compress js inline %}
+    <script type="text/jsx">
+      ReactDOM.render(
+        <PullsWrapper url="/pull/api/1.0/list" />,
+        document.getElementById('pullsIndex')
+      );
+    </script>
+    {% endcompress %}
+
 <hr />
 
+{% endblock %}
+
+{% block head %}
+    {% compress js %}
+    <script src="{% static 'js/react.js' %}"></script>
+    <script src="{% static 'js/react-dom.js' %}"></script>
+    <script src="{% static 'js/babel.browser.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/marked.min.js' %}"></script>
+
+    <script type="text/jsx" src="{% static 'jsx/dashboard_list.jsx' %}"></script>
+    {% endcompress %}
 {% endblock %}

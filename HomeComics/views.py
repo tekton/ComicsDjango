@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 # from collections import OrderedDict
 from django.http import HttpResponseRedirect, HttpResponse
 # from django.http import Http404
-
+from Comics import json_encoder
 from HomeComics.forms import *
 from comicFiles.models import *
 from issues.models import *
@@ -28,9 +28,15 @@ def index(request):
         user=request.user)  # .order_by('series')
     #
     return render(request,
-                  "dashboard/index.html",
+                  "dashboard/index_react.html",
                   {"recentFiles": recentFiles, "series_list": pulllist},
                   )
+
+
+def api_thumbnail_strip(request):
+    recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
+    rtn_list = json_encoder.serialize_to_json(recentFiles)
+    return HttpResponse(rtn_list, content_type="application/json")
 
 
 def single_issue(request, id):
