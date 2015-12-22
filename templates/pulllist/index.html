@@ -11,14 +11,14 @@
 	<a href="{% url 'comics:new_series' 0 %}">Create Series</a>
 </div>
 <hr />
-<div id="pullsContent"></div>
+<div id="pullsIndex"></div>
     <script type="text/javascript">
         ReactDOM.render(
             React.createElement(
                 PullsWrapper,
                 {url:"{% url 'pulls:api:1.0:list' %}"}
             ),
-            document.getElementById('pullsContent')
+            document.getElementById('pullsIndex')
         );
     </script>
 <hr />
