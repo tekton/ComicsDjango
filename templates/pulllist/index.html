@@ -1,7 +1,7 @@
 {% extends "root.html" %}
-{% load text_tags %}
 {% load staticfiles %}
 {% load compress %}
+{% load text_tags %}
 {% block main %}
 
 {{form.as_table}}
@@ -12,11 +12,11 @@
 </div>
 <hr />
 <div id="pullsIndex"></div>
-    <script type=\"text/javascript\">
+    <script type="text/javascript">
         ReactDOM.render(
             React.createElement(
                 PullsWrapper,
-                {url: "/pull/api/1.0/list"}
+                {url:"{% url 'pulls:api:1.0:list' %}"}
             ),
             document.getElementById('pullsIndex')
         );
