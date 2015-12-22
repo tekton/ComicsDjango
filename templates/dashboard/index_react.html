@@ -16,7 +16,7 @@
         ReactDOM.render(
             React.createElement(
                 PullsWrapper,
-                {url:"/pull/api/1.0/list"}
+                {url:"{% url 'pulls:api:1.0:list' %}"}
             ),
             document.getElementById('pullsContent')
         );
