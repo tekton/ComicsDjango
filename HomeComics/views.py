@@ -24,12 +24,17 @@ import json
 def index(request):
     recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
     # recentFiles = ComicFile.objects.filter(rootFolder=3).values()
-    pulllist = PullList.objects.filter(
-        user=request.user)  # .order_by('series')
-    #
+    rtn_thumbs_list = json_encoder.serialize_to_json(recentFiles)
+    pull_list = PullList.objects.filter(user=request.user).values("series__name", "id", "series")
+    rtn_pulls_list = json_encoder.serialize_to_json(pull_list)
     return render(request,
                   "dashboard/index_react.html",
-                  {"recentFiles": recentFiles, "series_list": pulllist},
+                  {
+                    "recentFiles": recentFiles,
+                    "series_list": pull_list,
+                    "json_thumbs": rtn_thumbs_list,
+                    "json_pulls": rtn_pulls_list
+                  },
                   )
 
 

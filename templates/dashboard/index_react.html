@@ -16,7 +16,10 @@
         ReactDOM.render(
             React.createElement(
                 PullsWrapper,
-                {url:"{% url 'pulls:api:1.0:list' %}"}
+                {
+                    url:"{% url 'pulls:api:1.0:list' %}",
+                    idata: {{json_pulls|safe}}
+                }
             ),
             document.getElementById('pullsContent')
         );
@@ -24,7 +27,10 @@
         ReactDOM.render(
             React.createElement(
                 PhotoStripWrapper,
-                {url:"/comics/api/1.0/thumbnails"}
+                {
+                    url:"/comics/api/1.0/thumbnails",
+                    idata: {{json_thumbs|safe}}
+                }
             ),
             document.getElementById('thumbsContainer')
         );

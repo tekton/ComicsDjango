@@ -28,7 +28,7 @@ var PhotoStripList = React.createClass({
 });
 
 var PhotoStripWrapper = React.createClass({
-    loadPullsFromServer: function() {
+    loadPhotosFromServer: function() {
       $.ajax({
         url: this.props.url,
         dataType: 'json',
@@ -42,10 +42,12 @@ var PhotoStripWrapper = React.createClass({
       });
     },
     getInitialState: function() {
-      return {data: []};
+      return {data: this.props.idata};
     },
     componentDidMount: function() {
-      this.loadPullsFromServer();
+      // since we want the dashboard to be quicker
+      // we just load from initial data
+      // this.loadPhotosFromServer();
     },
     render: function() {
       return (
