@@ -56,29 +56,31 @@ def recentPullListCovers(request):
     return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
 
 
-def currentList(request):
+def get_current_pull_list_for_request_user(request):
     pulllist = PullList.objects.filter(user=request.user).values("series__name", "id", "series")
     rtn_list = json_encoder.serialize_to_json(pulllist)
+    return rtn_list
+
+
+def currentList(request):
+    rtn_list = get_current_pull_list_for_request_user(request)
     return render_to_response("pulllist/index.html",
                               {"json_pulls": rtn_list},
                               context_instance=RequestContext(request))
 
 
 def api_current_list(request):
-    pulllist = PullList.objects.filter(user=request.user).values("series__name", "id", "series")
-    rtn_list = json_encoder.serialize_to_json(pulllist)
+    rtn_list = get_current_pull_list_for_request_user(request)
     return HttpResponse(rtn_list, content_type="application/json")
 
 
 def deleteList(request, pl_id):
-    #
+    # TODO: fix this to actually go to refering page instead
     try:
         PullList.objects.get(pk=pl_id).delete()
     except Exception as e:
         print(e)
-    # return redirect('PullList.views.currentList')
     return redirect('/pull')
-    # return render_to_response("pulllist/index.html", {"series_list": pulllist}, context_instance=RequestContext(request))
 
 
 def ownedSeriesList(request):
