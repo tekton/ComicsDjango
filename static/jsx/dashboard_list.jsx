@@ -67,7 +67,12 @@ var PullsWrapper = React.createClass({
       });
     },
     getInitialState: function() {
-      return {data: []};
+      if (this.props.hasOwnProperty("idata")) {
+        return {data: this.props.idata};
+      } else {
+        return {data: []};
+      }
+      
     },
     componentDidMount: function() {
       this.loadPullsFromServer();
