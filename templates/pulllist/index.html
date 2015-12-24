@@ -16,7 +16,10 @@
         ReactDOM.render(
             React.createElement(
                 PullsWrapper,
-                {url:"{% url 'pulls:api:1.0:list' %}"}
+                {
+                    url:"{% url 'pulls:api:1.0:list' %}",
+                    idata: {{json_pulls|safe}}
+                }
             ),
             document.getElementById('pullsIndex')
         );

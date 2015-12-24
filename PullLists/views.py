@@ -57,9 +57,10 @@ def recentPullListCovers(request):
 
 
 def currentList(request):
-    pulllist = PullList.objects.filter(user=request.user)  # .order_by('series')
+    pulllist = PullList.objects.filter(user=request.user).values("series__name", "id", "series")
+    rtn_list = json_encoder.serialize_to_json(pulllist)
     return render_to_response("pulllist/index.html",
-                              {"series_list": pulllist},
+                              {"json_pulls": rtn_list},
                               context_instance=RequestContext(request))
 
 
