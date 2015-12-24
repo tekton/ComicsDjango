@@ -187,7 +187,7 @@ def view_dir_paths_list(request):
     comic_dir_paths = ComicFile.objects.all().values(
         "dir_path").annotate(Count("dir_path"))
     print(comic_dir_paths)
-    return render_to_response("dir_paths.py",
+    return render_to_response("dir_paths.html",
                               {"recentFiles": comic_dir_paths},
                               context_instance=RequestContext(request))
 
