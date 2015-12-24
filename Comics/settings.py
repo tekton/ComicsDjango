@@ -196,4 +196,4 @@ COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/jsx', 'compress_react.ReactFilter'),
 )
-# COMPRESS_OFFLINE = True
+COMPRESS_OFFLINE = True
