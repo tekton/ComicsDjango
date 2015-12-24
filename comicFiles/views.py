@@ -12,18 +12,14 @@ from comicFiles.file_parsing import copy_file_to_transfer
 
 import json
 
-#from django.conf import settings
-#from django.http import HttpResponseRedirect
-#from django.http import Http404
-#from collections import OrderedDict
-#from forms import *
-# Create your views here.
-
 
 def view_by_comic_name(request, comic_name):
     comics = ComicFile.objects.filter(comic_name=comic_name).order_by("comic_issue").values()
-    #return render_to_response("comicFiles/comic_name_list.html", {"comics":comics}, context_instance=RequestContext(request))
-    return render_to_response("files_recent_by_id.html", {"recentFiles": comics}, context_instance=RequestContext(request))
+    return render_to_response("series/possible_list.html",
+                              {
+                                "recentFiles": comics,
+                                "comic_name": comic_name},
+                              context_instance=RequestContext(request))
 
 
 def makePrimary(request, series_id, comic_id, file_id):
@@ -63,6 +59,7 @@ def makePrimary(request, series_id, comic_id, file_id):
     print(rtn_dict)
 
     return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+
 
 def transferPrimaries(request, series_id, unread=False):
     print("Calling transferPrimaries")

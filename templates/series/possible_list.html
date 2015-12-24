@@ -1,0 +1,32 @@
+{% extends "root.html" %}
+{% load text_tags %}
+
+{% block main %}
+<style>
+    table td {
+        border-bottom: 1px solid gray;
+        padding: 10px;
+    }
+
+    #container {
+        width: 90%;
+    }
+</style>
+<div>
+    <h2>{{comic_name}}</h2>
+    <table cellspacing="0">
+    {% for file in recentFiles %}
+        <!-- {{ file.name }}-->
+        <tr>            
+            <td>
+                <a href="{% url 'comics:new_series' file.id  %}">{{file.comic_issue}}</a>
+            </td>
+            <td>
+                <a href="{% url 'comics:single' file.id  %}">{{file.name}}</a>
+            </td>
+            <td><a href="{% url 'comics:dirpath' %}?dir_path={{file.dir_path}}">{{file.dir_path}}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}
