@@ -195,7 +195,7 @@ def view_dir_paths_list(request):
 def possible_series_list(request):
     print("trying to find all the comics...")
     possible_series = ComicFile.objects.all().values("comic_name").annotate(
-        Count("comic_name"), Max("comic_issue")).order_by()
+        Count("comic_name"), Max("comic_issue")).order_by("-comic_name__count")
     return render_to_response("possible_series.html",
                               {"possible_series": possible_series},
                               context_instance=RequestContext(request))

@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'^primary/(\d+)/(\d+)/(\d+)$', views.makePrimary, name="primary"),
     url(r'^primary/transfer/(\d+)$', views.transferPrimaries, name="tp"),
     url(r'^primary/transfer/(\d+)/(.*)$', views.transferPrimaries, name="tup"),
-    url(r'^', hcViews.index, name="index"),
     url(r'^(.*)$', views.view_by_comic_name, name="by_name"),
+    url(r'^', hcViews.index, name="index"),
 ]
