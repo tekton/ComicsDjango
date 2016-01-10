@@ -1,8 +1,12 @@
 from django.shortcuts import render_to_response, redirect
+from django.conf import settings
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.db.models import *
-from collections import OrderedDict
+import datetime
+import requests
+import logging
+import operator
 
 from comicFiles.models import *
 from issues.models import *
@@ -10,6 +14,8 @@ from PullLists.models import *
 from ratings.models import *
 
 import json
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -155,12 +161,19 @@ def cv_results_by_year(res, name):
                              "name": itm["name"],
                              "start_year": itm["start_year"]})
             print(itm["name"], itm["id"], itm["start_year"])
+    print(rtn_list)
+    return rtn_list
 
 
-def possible_series_list_by_date(series_name, pub_year=None, pub_month=None):
-    # do api call to comic vine
-    j = {"results": []}
-    year_list = cv_results_by_year(j["results"], series_name)
+def possible_series_list_by_date(series_name=None, pub_year=None, pub_month=None, data=None):
+    if not data or not series_name:
+        return False
+    if not pub_year:
+        pub_year = datetime.datetime.now().year
+    if not pub_month:
+        pub_month = datetime.datetime.now().month
+    pub_year = int(pub_year)  # Just make sure, just in case...
+    year_list = cv_results_by_year(data["results"], series_name)
     # remove all the items that are "after" the current pub_year
     year_list[:] = [x for x in year_list if int(x["start_year"]) <= pub_year]
     # compute the difference for all other returns
@@ -173,6 +186,49 @@ def possible_series_list_by_date(series_name, pub_year=None, pub_month=None):
     year_list[:] = [x for x in year_list if not x["diff"] > diff]
     # if two come out as viable candidates, then go in and investiagte them further for issue dates...
     if len(year_list) > 1:
-        pass
+        print("More than one...")
     else:
-        pass
+        print(year_list)
+
+
+def cv_api_request(url):
+    try:
+        r = requests.get(url)
+        return r
+    except Exception as e:
+        logger.error(e)
+
+
+def construct_cv_url(url_dict):
+    if "ids" in url_dict:
+        if url_dict["ids"]:
+            url = "http://www.comicvine.com/api/{}/{}/".format(url_dict["type"], url_dict["ids"])
+        else:
+            url = "http://www.comicvine.com/api/{}/".format(url_dict["type"])
+    if "qs" in url_dict:
+        if url_dict["qs"]:
+            url += "?"
+            for key in url_dict["qs"]:
+                url += "&{}={}".format(key, url_dict["qs"][key])
+    return url
+
+
+def api_volumes_get_search_comicvine(volume_name=None, api_type="search"):
+    if not settings.COMICVINE_API_KEY:
+        return False
+    url_dict = {
+        "qs": {
+            "resources": "volume",
+            "query": volume_name,
+            "format": "json",
+            "api_key": settings.COMICVINE_API_KEY,
+        },
+        "type": api_type,
+        "ids": None,
+    }
+    # construct URL
+    url = construct_cv_url(url_dict)
+    # print(url)
+    # make call...
+    res = cv_api_request(url)
+    return res

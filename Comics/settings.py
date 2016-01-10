@@ -197,3 +197,5 @@ COMPRESS_PRECOMPILERS = (
     ('text/jsx', 'compress_react.ReactFilter'),
 )
 COMPRESS_OFFLINE = True
+
+COMICVINE_API_KEY = os.getenv("COMICVINE_API_KEY", None)

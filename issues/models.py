@@ -16,6 +16,9 @@ class Series(models.Model):
     front_page = models.BooleanField(default=False)
     alt_search_text = models.TextField(blank=True, null=True)
     thumbnail = models.CharField(max_length=255, blank=True, null=True)
+    # ComicVine Support
+    cv_api_id = models.CharField(max_length=255, blank=True, null=True)
+    cv_api_url = models.CharField(max_length=255, blank=True, null=True)
 
     @models.permalink
     def get_absolute_url(self):
