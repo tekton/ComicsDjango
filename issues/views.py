@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.db.models import *
+from collections import OrderedDict
 
 from comicFiles.models import *
 from issues.models import *
@@ -42,26 +43,33 @@ def browse(request, id):
                 (ratings_userrating.art) as `art`,
                 (ratings_userrating.story) as `story`,
                 (ratings_userrating.overall) as `overall`
-                FROM `issues_comic` 
+                FROM `issues_comic`
                 LEFT OUTER JOIN `comicFiles_comicreadandown`
-                ON (`issues_comic`.`id` = `comicFiles_comicreadandown`.`issue_id` AND 
+                ON (`issues_comic`.`id` = `comicFiles_comicreadandown`.`issue_id` AND
                     comicFiles_comicreadandown.user_id = %s)
                 LEFT OUTER JOIN `ratings_userrating`
-                ON (`issues_comic`.`id` = `ratings_userrating`.`comic_id` AND 
+                ON (`issues_comic`.`id` = `ratings_userrating`.`comic_id` AND
                     ratings_userrating.user_id = %s)
                 WHERE (`issues_comic`.`series_id` = %s);
-        ''',[request.user.id, request.user.id, series.id])
+        ''', [request.user.id, request.user.id, series.id])
     # print(issues.query)
-    return render_to_response("series/browse.html", {"series": series, "comics": issues}, context_instance=RequestContext(request))
+    return render_to_response("series/browse.html",
+                              {"series": series,
+                               "comics": issues},
+                              context_instance=RequestContext(request))
 
 
 def browseUnread(request, id):
     # print("browse")
     series = Series.objects.get(pk=id)
     issues = Comic.objects.filter(series=series, primary=True, read=False).order_by("-number")
-    # issues = Comic.objects.raw("select * from issues_comic where series_id = %s order by number+0 desc",[series.id])###
+    # issues = Comic.objects.raw("select * from issues_comic where series_id = %s order by number+0 desc",[series.id])##
     # print(issues)
-    return render_to_response("series/browse.html", {"series": series, "comics": issues}, context_instance=RequestContext(request))
+    return render_to_response("series/browse.html",
+                              {
+                                "series": series,
+                                "comics": issues
+                              }, context_instance=RequestContext(request))
 
 
 def incrementSeries(request, series_id):
@@ -99,7 +107,7 @@ def toggle_box(request, comic_id, box):
         comic = Comic.objects.get(pk=comic_id)
     except Exception as e:
         rtn_dict["comic_error"] = "Unable to get comic"
-        rtn_dict["get_error"] = str(e)        
+        rtn_dict["get_error"] = str(e)
 
     try:
         issue, created = ComicReadAndOwn.objects.get_or_create(issue=comic, user=request.user)
@@ -137,3 +145,34 @@ def toggle_box(request, comic_id, box):
         rtn_dict["Success"] = "False"
         rtn_dict["error"] = "Issue not obtained"
     return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
+
+
+def cv_results_by_year(res, name):
+    rtn_list = []
+    for itm in res:
+        if itm["name"] == name:
+            rtn_list.append({"id": [itm["id"]],
+                             "name": itm["name"],
+                             "start_year": itm["start_year"]})
+            print(itm["name"], itm["id"], itm["start_year"])
+
+
+def possible_series_list_by_date(series_name, pub_year=None, pub_month=None):
+    # do api call to comic vine
+    j = {"results": []}
+    year_list = cv_results_by_year(j["results"], series_name)
+    # remove all the items that are "after" the current pub_year
+    year_list[:] = [x for x in year_list if int(x["start_year"]) <= pub_year]
+    # compute the difference for all other returns
+    for itm in year_list:
+        itm["diff"] = pub_year - int(itm["start_year"])
+    # sort the list by the differences
+    year_list.sort(key=operator.itemgetter("diff"))
+    # get the nearest diff, then remove all other
+    diff = year_list[0]["diff"]
+    year_list[:] = [x for x in year_list if not x["diff"] > diff]
+    # if two come out as viable candidates, then go in and investiagte them further for issue dates...
+    if len(year_list) > 1:
+        pass
+    else:
+        pass
