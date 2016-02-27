@@ -13,5 +13,12 @@ At some point there will be installation instructions, just not today since it's
 
 Django was chose due to its admin arena being great for rapid prototyping and python's small overhead and portability.
 
+apt notes
+---------
+
+Most development is done in ubuntu/mint, so to get started here's a couple things that may be missing.
+
+``apt-get install libjpeg8-dev zlib1g-dev python3-dev``
+
 .. license: http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 .. CC BY-NC-SA 3.0: http://creativecommons.org/licenses/by-nc-sa/3.0/us/
