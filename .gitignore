@@ -15,3 +15,4 @@ uwsgi.ini
 settings_local.py
 VENV
 VENV-OLD
+.idea
