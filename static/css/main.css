@@ -179,6 +179,10 @@ hr {
     overflow: hidden;
 }
 
+.issue.duplicate_container {
+    opacity: 0.4;
+}
+
 .primary_img {
     padding: 10px;
     border: 1px solid black;

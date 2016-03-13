@@ -64,7 +64,7 @@
 
 <div>
 {% for single in primary %}
-    <div style="clear: both;">
+    <div style="clear: both;" class="issue primary_container">
         <!--{{comic.id}} | {{comic.series.id}} | {{single.id}}-->
         <img class="issue primary_img" src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
 		<div class="issue primary">
@@ -77,7 +77,7 @@
 {% endfor %}
 	<hr />
 {% for single in possible %}
-    <div style="clear: both;">
+    <div style="clear: both;" class="issue possible_container">
         <!--{{comic.id}} | {{comic.series.id}} | {{single.id}}-->
         <img class="issue primary_img" src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
 		<div class="issue possible">
@@ -85,6 +85,20 @@
 			<div><button onClick="javascript:make_primary('{{comic.series.id}}', '{{comic.id}}', '{{single.id}}');">Make Primary</button></div>
 			<div><button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button></div>
             <div><button onClick="javascript:make_duplicate('{{comic.series.id}}', '{{comic.id}}', '{{single.id}}');">Add to Duplicates</button></div>
+            <div><a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a></div>
+		Increment/Create series to: <a href="{% url 'comics:new_series' single.id %}">{{single.comic_issue}}</a>
+			<div style="clear: both;">&nbsp;</div>
+		</div>
+    </div>
+{% endfor %}
+    	<hr />
+{% for single in duplicate %}
+    <div style="clear: both;" class="issue duplicate_container">
+        <!--{{comic.id}} | {{comic.series.id}} | {{single.id}}-->
+        <img class="issue primary_img" src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
+		<div class="issue possible">
+			<div class="issue name"><a href="{% url 'comics:single' single.id %}"><span>{{single.name}}</span></a></div>
+			<div><button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button></div>
             <div><a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a></div>
 		Increment/Create series to: <a href="{% url 'comics:new_series' single.id %}">{{single.comic_issue}}</a>
 			<div style="clear: both;">&nbsp;</div>

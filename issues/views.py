@@ -22,11 +22,12 @@ def single(request, id):
     comic = Comic.objects.get(pk=id)
     # show primaries
     primary = ComicFile.objects.filter(comic_name=comic.series.name, comic_issue=comic.number, primary=True).values()
+    duplicate = ComicFile.objects.filter(comic_name=comic.series.name, comic_issue=comic.number, duplicate=True).values()
     # show possible items
     # # add in a filter for last date if the series has one...
-    possible = ComicFile.objects.filter(comic_name=comic.series.name, comic_issue=comic.number, primary=False).values()
+    possible = ComicFile.objects.filter(comic_name=comic.series.name, comic_issue=comic.number, primary=False, duplicate=False).values()
     return render_to_response("series/single.html",
-                              {"comic": comic, "possible": possible, "primary": primary},
+                              {"comic": comic, "possible": possible, "primary": primary, "duplicate": duplicate},
                               context_instance=RequestContext(request))
 
 
