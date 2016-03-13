@@ -55,6 +55,7 @@ class ComicFile(models.Model):
     ads = models.BooleanField(default=True)
     # for UI filtering
     primary = models.BooleanField(default=False)
+    duplicate = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('name', 'dir_path')

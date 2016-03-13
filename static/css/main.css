@@ -114,6 +114,7 @@ ul.nav li a:hover {
     width: 960px;
     margin: auto;
 }
+
 /*** old ***/
 
 #container, #head {
@@ -139,4 +140,47 @@ hr {
     background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
     background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
     background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+}
+
+/*
+    issues
+*/
+.issue_single_series {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.issue_single_issue {
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.issue a {
+    text-decoration: none;
+    color: blue;
+}
+
+.issue.primary {
+    padding-top: 10px;
+}
+
+.issue.possible {
+    padding-top: 10px;
+    border-bottom: 1px solid grey;
+}
+
+.issue.name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.primary_img {
+    padding: 10px;
+    border: 1px solid black;
+    margin: 10px;
 }

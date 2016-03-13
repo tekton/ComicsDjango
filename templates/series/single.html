@@ -11,7 +11,7 @@
             "/issues/ajax/transfer/"+comic,
             function(data){
             	//alert(data);
-                if (data["added"] == True) {
+                if (data["added"] == true) {
                     //alert(data[box]);
                 } else {
                     alert("Error");
@@ -26,8 +26,8 @@
             "/files/primary/"+series+"/"+comic+"/"+file,
             function(data){
                 console.log(data);
-                if (data["success"] == True) {
-                    conosle.log("Success!");
+                if (data["success"] == true) {
+                    console.log("Success!");
                     console.log(data);
                 } else {
                     alert("Error");
@@ -37,26 +37,58 @@
         ); 
     }
 
+    function make_duplicate(series, comic, file) {
+        console.log("make_duplicate called");
+        $.getJSON(
+            "/files/duplicate/"+series+"/"+comic+"/"+file,
+            function(data){
+                //console.log(data);
+                if (data["success"] == true) {
+                    console.log("Success!");
+                    console.log(data);
+                } else {
+                    alert(data.msg);
+                    console.log(data);
+                }
+            }
+        );
+    }
 </script>
 {% endblock %}
 
 {% block title %}{{comic.series}}{% endblock %}
 
 {% block main %}
-<div><a href="{% url 'issues:browse' comic.series.id %}">{{comic.series}}</a></div>
-<div>{{comic}}</div>
+<div class="issue issue_single_series"><a href="{% url 'issues:browse' comic.series.id %}">{{comic.series}}</a></div>
+<div class="issue issue_single_issue">{{comic}}</div>
 
 <div>
+{% for single in primary %}
+    <div style="clear: both;">
+        <!--{{comic.id}} | {{comic.series.id}} | {{single.id}}-->
+        <img class="issue primary_img" src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
+		<div class="issue primary">
+    		<a href="{% url 'comics:single' single.id %}">{{single.name}}</a><br />
+    		<a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a><br />
+    		<button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button><br />
+    		<div style="clear: both;">&nbsp;</div>
+		</div>
+    </div>
+{% endfor %}
+	<hr />
 {% for single in possible %}
     <div style="clear: both;">
         <!--{{comic.id}} | {{comic.series.id}} | {{single.id}}-->
-        <img src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
-    	<a href="{% url 'comics:single' single.id %}">{{single.name}}</a><br />
-    	<a onClick="javascript:make_primary('{{comic.series.id}}', '{{comic.id}}', '{{single.id}}');">Make Primary</a><br />
-    	<a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a><br />
-    	<button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button><br />
-	Increment/Create series to: <a href="{% url 'comics:new_series' single.id %}">{{single.comic_issue}}</a>
-    	<div style="clear: both;">&nbsp;</div>
+        <img class="issue primary_img" src="/static/images/{{single.thumbnail|hexVert}}" style="float: left;"/>
+		<div class="issue possible">
+			<div class="issue name"><a href="{% url 'comics:single' single.id %}"><span>{{single.name}}</span></a></div>
+			<div><button onClick="javascript:make_primary('{{comic.series.id}}', '{{comic.id}}', '{{single.id}}');">Make Primary</button></div>
+			<div><button onClick='javascript:to_transfer("{{single.id}}")'>Add to transfer</button></div>
+            <div><button onClick="javascript:make_duplicate('{{comic.series.id}}', '{{comic.id}}', '{{single.id}}');">Add to Duplicates</button></div>
+            <div><a href="/comic_files_static{{single.dir_path}}/{{single.name}}">Download</a></div>
+		Increment/Create series to: <a href="{% url 'comics:new_series' single.id %}">{{single.comic_issue}}</a>
+			<div style="clear: both;">&nbsp;</div>
+		</div>
     </div>
 {% endfor %}
 </div>

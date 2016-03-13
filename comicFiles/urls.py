@@ -5,6 +5,7 @@ from HomeComics import views as hcViews
 
 urlpatterns = [
     url(r'^primary/(\d+)/(\d+)/(\d+)$', views.makePrimary, name="primary"),
+    url(r'^duplicate/(\d+)/(\d+)/(\d+)$', views.api_addToDuplicates, name="duplicate"),
     url(r'^primary/transfer/(\d+)$', views.transferPrimaries, name="tp"),
     url(r'^primary/transfer/(\d+)/(.*)$', views.transferPrimaries, name="tup"),
     url(r'^(.*)$', views.view_by_comic_name, name="by_name"),
