@@ -16,6 +16,7 @@ class Series(models.Model):
     front_page = models.BooleanField(default=False)
     alt_search_text = models.TextField(blank=True, null=True)
     thumbnail = models.CharField(max_length=255, blank=True, null=True)
+    series_max_date = models.DateField(null=True, blank=True)
 
     @models.permalink
     def get_absolute_url(self):

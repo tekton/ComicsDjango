@@ -63,7 +63,7 @@ def to_transfer_single_issue(request, id):
         rtn_dict["added"] = True
     except Exception as e:
         rtn_dict["error_celery"] = e
-    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
 
 
 def search(request):

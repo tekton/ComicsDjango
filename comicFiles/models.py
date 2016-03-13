@@ -48,10 +48,13 @@ class ComicFile(models.Model):
         OR just use a general "tag" style,  with a parent|name|val setup? or just db.covers['parent', 'val']
     '''
     comic = models.ForeignKey(Comic, blank=True, null=True)
+    series = models.ForeignKey(Series, blank=True, null=True)
     thumbnail = models.CharField(max_length=255, blank=True, null=True)
     # ratings
     scan_quallity = models.IntegerField(blank=True, null=True)
     ads = models.BooleanField(default=True)
+    # for UI filtering
+    primary = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('name', 'dir_path')

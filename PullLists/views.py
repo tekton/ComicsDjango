@@ -33,7 +33,7 @@ def addToPullList(request, series_id):
         rtn_dict["success"] = False
         rtn_dict["error"] = "Unable to save pull list"
         rtn_dict["e"] = str(e)
-    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
 
 
 def recentPullListCovers(request):

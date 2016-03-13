@@ -43,7 +43,7 @@ def getSeriesList(request):
         Possibly not needed as it's really easier to just have this pulled at the begining
     '''
     series = Series.objects.all().values()
-    return HttpResponse(json.dumps(list(series)), mimetype="application/json")
+    return HttpResponse(json.dumps(list(series)), content_type="application/json")
 
 
 def getComicsFromSeries(request, series):
@@ -58,4 +58,4 @@ def getComicsFromSeries(request, series):
         });
     '''
     comics = Comic.objects.filter(series=series).values()
-    return HttpResponse(json.dumps(list(comics)), mimetype="application/json")
+    return HttpResponse(json.dumps(list(comics)), content_type="application/json")

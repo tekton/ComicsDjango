@@ -42,13 +42,12 @@ def makePrimary(request, series_id, comic_id, file_id):
         rtn_dict["success"] = "False"
         rtn_dict["file"] = e
 
-    primary = PrimaryComics()
-    primary.series = series
-    primary.comic = comic
-    primary.comicFile = comicfile
+    comicfile.primary = True
+    comicfile.comic = comic
+    comicfile.series = series
     try:
-        primary.save()
-        rtn_dict["primary"] = primary.id
+        comicfile.save()
+        rtn_dict["primary"] = comicfile.id
     # except IntegrityError as e:
     #     rtn_dict["success"] = False
     #     rtn_dict["primary"] = "Integrity Error"
@@ -58,7 +57,7 @@ def makePrimary(request, series_id, comic_id, file_id):
 
     print(rtn_dict)
 
-    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
 
 
 def transferPrimaries(request, series_id, unread=False):
@@ -76,4 +75,4 @@ def transferPrimaries(request, series_id, unread=False):
             copy_file_to_transfer.delay(issue.comicFile)
             rtn_dict[issue.id] = "added to queue :: " + str(issue.comicFile)
     print(rtn_dict)
-    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")

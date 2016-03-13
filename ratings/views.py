@@ -48,4 +48,4 @@ def set_user_rating(request, issue_id, category, val):
             rtn_dict["save_error"] = "Unable to save rating"
             rtn_dict["save_e"] = str(e)
 
-    return HttpResponse(json.dumps(rtn_dict), mimetype="application/json")
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
