@@ -12,17 +12,13 @@ ALLOWED_HOSTS = ['*', ]
 LOGIN_URL = '/accounts/login/'
 
 # CELERY SETTINGS
-djcelery.setup_loader()
-# BROKER_URL = "django://"
-# BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
-BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = "redis://"
-CELERY_IMPORTS = ("comicFiles.file_parsing", "comicFiles.images")
-CELERYBEAT_SCHEDULE = {'parse_primaries': {
-        'task': 'comicFiles.file_parsing.parsePrimaryFolder',
-                'schedule': timedelta(seconds=3600)
-    },
-}
+# BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_IMPORTS = ("comicFiles.file_parsing", "comicFiles.images")
+# CELERYBEAT_SCHEDULE = {'parse_primaries': {
+#         'task': 'comicFiles.file_parsing.parsePrimaryFolder',
+#                 'schedule': timedelta(seconds=3600)
+#     },
+# }
 # END CELERY SETTINS
 
 
