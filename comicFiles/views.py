@@ -67,17 +67,18 @@ def makePrimary(request, series_id, comic_id, file_id):
 def transferPrimaries(request, series_id, unread=False):
     print("Calling transferPrimaries")
     rtn_dict = {}
-    primaries = PrimaryComics.objects.filter(series=series_id)
+    # primaries = PrimaryComics.objects.filter(series=series_id)
+    primaries = ComicFile.objects.filter(primary=True, series=series_id)
     for issue in primaries:
         if unread:
             if issue.comic.read:
-                rtn_dict[issue.id] = "Did not add a comic as it was already read - " + str(issue.comicFile.id)
+                rtn_dict[issue.id] = "Did not add a comic as it was already read - " + str(issue.id)
             else:
-                copy_file_to_transfer.delay(issue.comicFile)
-                rtn_dict[issue.id] = "Adding unread comic to queue :: " + str(issue.comicFile.id)
+                copy_file_to_transfer.delay(issue)
+                rtn_dict[issue.id] = "Adding unread comic to queue :: " + str(issue.id)
         else:
-            copy_file_to_transfer.delay(issue.comicFile)
-            rtn_dict[issue.id] = "added to queue :: " + str(issue.comicFile)
+            copy_file_to_transfer.delay(issue)
+            rtn_dict[issue.id] = "added to queue :: " + str(issue)
     print(rtn_dict)
     return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
 
