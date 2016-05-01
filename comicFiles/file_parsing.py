@@ -68,11 +68,8 @@ def parse_file(FOLDER, FILE, rootFolder, date="", check_override=False):
     # CHECK TO SEE IF FILE IS IN DB!
     extension = os.path.splitext(FILE)[1][1:]
     # print(extension)
-    if extension == "txt":
-        return False
-    elif extension == "com":
-        return False
-    elif extension == "com.txt":
+    ignore_ext_set = set(["txt", "com", "com.txt", "part"])
+    if extension in ignore_ext_set:
         return False
     '''
         Check the DB to see if we already parsed this one; don't if we already have
