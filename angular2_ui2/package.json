@@ -1,5 +1,5 @@
 {
-  "name": "angular2-quickstart",
+  "name": "comics-angular2-ui2",
   "version": "1.0.0",
   "scripts": {
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
@@ -9,7 +9,7 @@
     "tsc:w": "tsc -w",
     "typings": "typings"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "angular2": "2.0.0-beta.17",
     "systemjs": "0.19.26",

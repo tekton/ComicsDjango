@@ -2,7 +2,8 @@ from django.conf.urls import *
 from PullLists import views
 
 api_1_0 = [
-    url(r"^list", views.api_current_list, name="list")
+    url(r"^list", views.api_current_list, name="list"),
+    url(r"^remove/(\d+)", views.api_remove_pull, name="remove")
 ]
 
 apis = [

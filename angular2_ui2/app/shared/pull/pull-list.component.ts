@@ -20,9 +20,27 @@ export class PullListComponent implements OnInit {
     }
 
     getList(){
+        console.log("getList");
         this._pullService.getList()
             .subscribe(list => this.pullList = list,
                        error => this.errorMessage = <any>error);
+    }
+
+    tup(series: number) {
+        console.log(series);
+        alert("TODO: Queue Transfer Primaries");
+    }
+
+    removePull(pullId: number) {
+        // call the service to remove the thing...
+        this._pullService.remove(pullId)
+            .subscribe(data => this.handleData(data),
+                       error => this.errorMessage = <any>error,
+                       () => this.getList());
+    }
+
+    handleData(data: any) {
+        console.log("hd", data);
     }
 
     goBack() {

@@ -83,6 +83,17 @@ def deleteList(request, pl_id):
     return redirect('/pull')
 
 
+def api_remove_pull(request, pull_id):
+    rtn_dict = {"status": False}
+    try:
+        PullList.objects.get(pk=pull_id).delete()
+        rtn_dict["status"] = True
+    except Exception as e:
+        print(e)
+    return HttpResponse(json.dumps(rtn_dict), content_type="application/json")
+
+
+
 def ownedSeriesList(request):
     serieses = ComicReadAndOwn.objects.filter(user=request.user).values("issue__series__name").annotate(c=Count("issue__series__name"))
     print(serieses)

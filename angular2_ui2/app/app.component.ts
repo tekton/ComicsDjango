@@ -34,13 +34,13 @@ import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: DashboardComponent,
-        useAsDefault: true
+        component: DashboardComponent
     },
     {
         path: '/pulls',
         name: 'Pulls',
-        component: PullListComponent
+        component: PullListComponent,
+        useAsDefault: true
     },
     {
         path: '/detail/:id',
@@ -49,5 +49,5 @@ import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
     }
 ])
 export class AppComponent {
-    title = 'Tour of Heroes';
+    title = 'Angular UI Test Title Area';
 }

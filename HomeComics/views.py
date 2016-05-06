@@ -42,8 +42,8 @@ def index(request):
                   )
 
 
-def api_thumbnail_strip(request):
-    recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()
+def api_thumbnail_strip(request, slice_count=4):
+    recentFiles = ComicFile.objects.all().order_by("-id")[:int(slice_count)].values()
     rtn_list = json_encoder.serialize_to_json(recentFiles)
     return HttpResponse(rtn_list, content_type="application/json")
 

@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'possible',  views.possible_series_list, name="possible"),
     url(r'ajax/transfer/(\d+)',  views.to_transfer_single_issue, name="transfer"),
     url(r'series/all', views.known_series_list, name="series_all"),
+    url(r'api/1.0/thumbnails/(\d+)$', views.api_thumbnail_strip, name="thumbs"),
     url(r'api/1.0/thumbnails', views.api_thumbnail_strip, name="thumbs"),
     url(r'^angular', views.angular_test, name="angular"),
     url(r'^', views.index, name="index"),

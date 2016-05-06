@@ -9,7 +9,7 @@ var assetsProd = '../static/src/';
 
 var appDev = 'app/';
 var appProd = '../static/app/';
-var templatesProd = '../static/app'
+var templatesProd = '../static/app';
 
 /* Mixed */
 var ext_replace = require('gulp-ext-replace');
@@ -33,7 +33,7 @@ var tsProject = typescript.createProject('tsconfig.json');
 gulp.task('build-css', function () {
     return gulp.src(assetsDev + 'scss/*.scss')
         .pipe(sass({
-            includePaths: [bowerDir + '/bootstrap-sass/assets/stylesheets'],
+            includePaths: [bowerDir + '/bootstrap-sass/assets/stylesheets']
         }))
         .pipe(sourcemaps.init())
         .pipe(postcss([precss, autoprefixer, cssnano]))
@@ -95,6 +95,7 @@ gulp.task('watch', function () {
     gulp.watch(assetsDev + 'scss/**/*.scss', ['build-css']);
     gulp.watch(assetsDev + 'img/*', ['build-img']);
     gulp.watch(appDev + '**/*.html', ['build-html']);
+    gulp.watch('assets/*.css', ['copy-lib-css']);
 });
 
 gulp.task('default', ['watch', 'build-ts', 'build-css',

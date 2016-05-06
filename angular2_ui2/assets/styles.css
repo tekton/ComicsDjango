@@ -2,13 +2,12 @@
     background-color: #CFD8DC !important;
     color: white;
 }
-.heroes {
+.pulls {
     margin: 0 0 2em 0;
     list-style-type: none;
     padding: 0;
-    width: 15em;
 }
-.heroes li {
+.pulls li {
     cursor: pointer;
     position: relative;
     left: 0;
@@ -18,20 +17,25 @@
     height: 1.6em;
     border-radius: 4px;
 }
-.heroes li.selected:hover {
+.pulls li.selected:hover {
     background-color: #BBD8DC !important;
     color: white;
 }
-.heroes li:hover {
+.pulls li:hover {
+    background-color: #DDD;
+    left: .1em;
+}
+.pulls .text {
+    position: relative;
+    top: -3px;
+}
+
+.pulls .text:hover {
     color: #607D8B;
     background-color: #DDD;
     left: .1em;
 }
-.heroes .text {
-    position: relative;
-    top: -3px;
-}
-.heroes .badge {
+.pulls .badge {
     display: inline-block;
     font-size: small;
     color: white;
@@ -44,4 +48,64 @@
     height: 1.8em;
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
+}
+
+.pulls .controls {
+    display: inline-block;
+    float: right;
+}
+
+.pulls .remove {
+    display: inline-block;
+    background-color: #ccc;
+    position: relative;
+    height: 1.8em;
+    border-radius: 0px 4px 4px 0px;
+    padding: 0.8em 0.7em 0 0.7em;
+    right: -1px;
+    top: -4px;
+    font-size: small;
+    line-height: 1em;
+}
+
+.pulls .remove:hover {
+    background-color: #ff2f54;
+    color: black;
+}
+
+.pulls .tup {
+    background-color: #40a940;
+    position: relative;
+    height: 1.8em;
+    border-radius: 4px 0px 0px 4px;
+    padding: 0.8em 0.7em 0.5em 0.7em;
+    right: -1px;
+    top: -2px;
+    font-size: small;
+    line-height: 1em;
+}
+
+.pulls .tup:hover {
+    color: white;
+}
+
+#ajaxloader
+{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 8px solid #000;
+    border-right-color: transparent;
+    border-radius: 50%;
+    box-shadow: 0 0 25px 2px #ccc;
+    animation: spin 1s linear infinite;
+    clear: both;
+    text-align: center;
+}
+
+@keyframes spin
+{
+    from { transform: rotate(0deg);   opacity: 0.2; }
+    50%  { transform: rotate(180deg); opacity: 1.0; }
+    to   { transform: rotate(360deg); opacity: 0.2; }
 }
