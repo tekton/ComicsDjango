@@ -17,3 +17,7 @@ VENV
 VENV-OLD
 .idea
 logs/*
+static/app/*
+static/src/*
+*node_modules*
+angular2_ui2/typings/*

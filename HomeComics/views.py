@@ -20,6 +20,10 @@ from comicFiles.file_parsing import copy_file_to_transfer
 import json
 
 
+def angular_test(request):
+    return render_to_response("angular.html", {}, context_instance=RequestContext(request))
+
+
 @login_required
 def index(request):
     recentFiles = ComicFile.objects.all().order_by("-id")[:4].values()

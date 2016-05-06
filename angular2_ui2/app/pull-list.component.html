@@ -1,0 +1,8 @@
+<h2>My Pull List</h2>
+<ul class="heroes">
+    <li *ngFor="let pull of pullList"
+        [class.selected]="pull === selectedPull"
+        (click)="onSelect(hero)">
+        <span class="badge">{{pull.id}}</span> {{pull.series__name}} {{pull.series}}
+    </li>
+</ul>

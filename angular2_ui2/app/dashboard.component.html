@@ -1,0 +1,10 @@
+<h3>Top Heroes</h3>
+<div class="grid grid-pad">
+    <ul class="heroes">
+        <li *ngFor="let hero of heroes"
+            [class.selected]="hero === selectedHero"
+            (click)="gotoDetail(hero)">
+            <span class="badge">{{hero.id}}</span> {{hero.name}}
+        </li>
+    </ul>
+</div>

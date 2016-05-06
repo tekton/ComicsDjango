@@ -1,0 +1,37 @@
+<html>
+<head>
+    <base href="/comics/angular">
+    <title>Angular 2 QuickStart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/src/css/styles.css">
+    <!-- 1. Load libraries -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="/static/src/js/es6-shim.min.js"></script>
+    <script src="/static/src/js/system-polyfills.js"></script>
+    <script src="/static/src/js/shims_for_IE.js"></script>
+    <script src="/static/src/js/angular2-polyfills.js"></script>
+    <script src="/static/src/js/system.src.js"></script>
+    <script src="/static/src/js/Rx.js"></script>
+    <script src="/static/src/js/angular2.js"></script>
+    <script src="/static/src/js/http.js"></script>
+    <script src="/static/src/js/router.dev.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script>
+        System.config({
+            packages: {
+                "/static/app": {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('/static/app/main')
+                .then(null, console.error.bind(console));
+    </script>
+</head>
+
+<!-- 3. Display the application -->
+<body>
+<my-app>Loading...</my-app>
+</body>
+</html>
