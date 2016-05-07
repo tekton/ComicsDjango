@@ -1,9 +1,9 @@
-import { Component }       from 'angular2/core';
+import { Component }       from '@angular/core';
 import { HeroService }     from './shared/heroes/hero.service';
 import { HeroesComponent } from './shared/heroes/heroes.component';
 import {PullListComponent} from "./shared/pull/pull-list.component";
 import {PullService} from "./shared/pull/pull.service";
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {DashboardComponent} from "./dashboard.component";
 import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
 
@@ -34,7 +34,7 @@ import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: DashboardComponent
+        component: PullListComponent
     },
     {
         path: '/pulls',

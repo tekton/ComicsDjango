@@ -1,7 +1,7 @@
 html,
 body {
   background-color: #181A1C;
-  background-image: url({% static "theme/assets/img/login_bg.png" %}); }
+  background-image: url("/static/theme/assets/img/login_bg.png"); }
 
 body {
   font-family: Arial, sans-serif; }
@@ -30,7 +30,7 @@ p {
   -moz-box-shadow:  0px 1px 14px #111111;
   box-shadow:  0px 1px 14px #111111;
   padding: 140px 40px 0;
-  background-image: url({% static "theme/assets/img/login_logo.png" %});
+  background-image: url("/static/theme/assets/img/login_logo.png");
   background-repeat: no-repeat;
   background-position: center 38px; }
 
@@ -60,7 +60,7 @@ p {
   border: 2px solid #e3e3e3;
   border-radius: 6px;
   padding: 0 10px 0 54px;
-  background-image: url({% static "theme/assets/img/login_fieldbg.png" %}) !important;
+  background-image: url("/static/theme/assets/img/login_fieldbg.png") !important;
   background-repeat: no-repeat; }
 
 #account-loginform input:focus {

@@ -1,5 +1,5 @@
-import { Component, OnInit } from 'angular2/core';
-import { Router } from 'angular2/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router-deprecated';
 
 import { Hero } from './shared/heroes/hero';
 import { HeroService } from './shared/heroes/hero.service';

@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from 'angular2/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Thumb} from './thumb';
 import { ThumbService } from './thumbs.service';
-import {RouteParams} from "angular2/router";
+import {RouteParams} from "@angular/router-deprecated";
 
 @Component({
     selector: 'thumb-strip',

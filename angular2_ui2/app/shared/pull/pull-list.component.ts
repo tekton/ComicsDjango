@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from 'angular2/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Pull} from './pull';
 import { PullService } from './pull.service';
-import {RouteParams} from "angular2/router";
+import {RouteParams} from "@angular/router-deprecated";
 
 @Component({
     selector: 'pull-list-detail',
-    templateUrl: '/static/app/pull-list.component.html'
+    templateUrl: '/static/app/shared/pull/pull-list.component.html'
 })
 export class PullListComponent implements OnInit {
     pullList: Pull[];
