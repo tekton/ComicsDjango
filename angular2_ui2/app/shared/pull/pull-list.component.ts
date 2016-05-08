@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Pull} from './pull';
 import { PullService } from './pull.service';
 import {RouteParams} from "@angular/router-deprecated";
+import {ThumbStripComponent} from "../thumbs/thumbs.component";
 
 @Component({
     selector: 'pull-list-detail',

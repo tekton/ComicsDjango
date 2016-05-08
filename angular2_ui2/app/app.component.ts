@@ -3,6 +3,8 @@ import { HeroService }     from './shared/heroes/hero.service';
 import { HeroesComponent } from './shared/heroes/heroes.component';
 import {PullListComponent} from "./shared/pull/pull-list.component";
 import {PullService} from "./shared/pull/pull.service";
+import {ThumbService} from "./shared/thumbs/thumbs.service";
+import {ThumbStripComponent} from "./shared/thumbs/thumbs.component";
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {DashboardComponent} from "./dashboard.component";
 import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
@@ -13,7 +15,6 @@ import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
         <h1>{{title}}</h1>
         <nav>
             <a [routerLink]="['Dashboard']">Dashboard</a>
-            <a [routerLink]="['Heroes']">Heroes</a>
             <a [routerLink]="['Pulls']">Pulls</a>
         </nav>
         <router-outlet></router-outlet>
@@ -22,7 +23,8 @@ import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
     providers: [
         ROUTER_PROVIDERS,
         HeroService,
-        PullService
+        PullService,
+        ThumbService
     ]
 })
 @RouteConfig([
@@ -34,7 +36,7 @@ import {HeroDetailComponent} from "./shared/heroes/hero-detail.component";
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: PullListComponent
+        component: ThumbStripComponent
     },
     {
         path: '/pulls',

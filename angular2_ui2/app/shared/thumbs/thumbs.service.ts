@@ -19,7 +19,7 @@ export class ThumbService {
         if (res.status < 200 || res.status >= 300) {
             throw new Error('Bad response status: ' + res.status);
         } else {
-            console.log("resp", res);
+            console.log("thumb resp", res);
         }
         let body = res.json();
         console.log(body);

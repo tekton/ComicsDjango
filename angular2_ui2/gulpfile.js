@@ -127,7 +127,7 @@ gulp.task('watch', function() {
     watchTs.on('change', onChanged);
     watchScss.on('change', onChanged);
     watchHtml.on('change', onChanged);
-    watchImages.on('change', onChanged);
+    // watchImages.on('change', onChanged);
     watchCss.on('change', onChanged);
 });
 

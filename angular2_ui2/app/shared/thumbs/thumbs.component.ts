@@ -5,7 +5,7 @@ import {RouteParams} from "@angular/router-deprecated";
 
 @Component({
     selector: 'thumb-strip',
-    templateUrl: '/static/app/thumb-strip.component.html'
+    templateUrl: '/static/app/shared/thubs/thumb-strip.component.html'
 })
 export class ThumbStripComponent implements OnInit {
     thumbList: Thumb[];
@@ -13,14 +13,17 @@ export class ThumbStripComponent implements OnInit {
 
     constructor(
         private _pullService: ThumbService,
-        private _routeParams: RouteParams){};
+        private _routeParams: RouteParams){
+        console.log("oh hai thumbs");
+    };
 
     ngOnInit() {
+        console.log("thumb init");
         this.getList();
     }
 
     getList(){
-        console.log("getList");
+        console.log("getThumbList");
         this._pullService.getList()
             .subscribe(list => this.thumbList = list,
                        error => this.errorMessage = <any>error);
