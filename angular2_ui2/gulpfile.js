@@ -1,102 +1,154 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var bower = require('gulp-bower');
+var gulp = require('gulp'),
+    concat = require('gulp-concat'),
 
-var bowerDir = './bower_components';
+    tsc = require('gulp-typescript'),
+    mocha = require('gulp-mocha'),
+    jsMinify = require('gulp-uglify'),
+    imagemin = require('gulp-imagemin'),
 
-var assetsDev = 'assets/';
-var assetsProd = '../static/src/';
+    scssLint = require('gulp-scss-lint'),
+    sass = require('gulp-sass'),
+    cssPrefixer = require('gulp-autoprefixer'),
+    cssMinify = require('gulp-cssnano'),
 
-var appDev = 'app/';
-var appProd = '../static/app/';
-var templatesProd = '../static/app';
+    del = require('del'),
+    merge = require('merge-stream'),
+    SystemBuilder = require('systemjs-builder');
 
-/* Mixed */
-var ext_replace = require('gulp-ext-replace');
+var appProd = '../static/app';
+var assetsProd = '../static/src';
 
-/* CSS */
-var postcss = require('gulp-postcss');
-var sourcemaps = require('gulp-sourcemaps');
-var autoprefixer = require('autoprefixer');
-var precss = require('precss');
-var cssnano = require('cssnano');
-
-/* JS & TS */
-var jsuglify = require('gulp-uglify');
-var typescript = require('gulp-typescript');
-
-/* Images */
-var imagemin = require('gulp-imagemin');
-
-var tsProject = typescript.createProject('tsconfig.json');
-
-gulp.task('build-css', function () {
-    return gulp.src(assetsDev + 'scss/*.scss')
-        .pipe(sass({
-            includePaths: [bowerDir + '/bootstrap-sass/assets/stylesheets']
-        }))
-        .pipe(sourcemaps.init())
-        .pipe(postcss([precss, autoprefixer, cssnano]))
-        .pipe(sourcemaps.write())
-        .pipe(ext_replace('.css'))
-        .pipe(gulp.dest(assetsProd + 'css/'));
+gulp.task('clean', ['clean-assets'], function() {
+    return del(appProd);
 });
 
-gulp.task('build-ts', function () {
-    return gulp.src(appDev + '**/*.ts')
-        .pipe(sourcemaps.init())
-        .pipe(typescript(tsProject))
-        .pipe(sourcemaps.write())
-        //.pipe(jsuglify())
+gulp.task("clean-assets", function(){
+    return del(assetsProd);
+});
+
+gulp.task('shims', function() {
+    return gulp.src([
+            "node_modules/systemjs/dist/system-polyfills.js",
+            "node_modules/systemjs/dist/system.src.js",
+            'node_modules/zone.js/dist/zone.js',
+            'node_modules/reflect-metadata/Reflect.js',
+            "node_modules/es6-shim/es6-shim.min.js"
+        ])
+        .pipe(concat('shims.js'))
+        .pipe(gulp.dest(assetsProd+'/js/'));
+});
+
+gulp.task('system-build', [ 'tsc' ], function() {
+    var builder = new SystemBuilder();
+
+    return builder.loadConfig('system.config.js')
+        .then(function() {builder.buildStatic('app', assetsProd+'/js/bundle.js')});
+        // .then(function() {del('build')});
+});
+
+gulp.task('tsc', function() {
+    var tsProject = tsc.createProject('tsconfig.json'),
+        tsResult = tsProject.src().pipe(tsc(tsProject));
+
+    return tsResult.js.pipe(gulp.dest(appProd));
+});
+
+gulp.task('html', function() {
+    return gulp.src('app/**/**.html')
         .pipe(gulp.dest(appProd));
 });
 
-gulp.task('build-img', function () {
-    return gulp.src(assetsDev + 'img/**/*')
-        .pipe(imagemin({
-            progressive: true
+gulp.task('css', function() {
+    return gulp.src('assets/**/**.css')
+        .pipe(gulp.dest(assetsProd+"/css/"));
+});
+
+gulp.task('images', function() {
+    return gulp.src('assets/images/**/*.*')
+        .pipe(imagemin())
+        .pipe(gulp.dest(assetsProd+'/images/'));
+});
+
+gulp.task('lintScss', function() {
+    return gulp.src('assets/scss/**/*.scss')
+        .pipe(scssLint({ config: 'lint.yml' }));
+});
+
+gulp.task('scss', function() {
+    return gulp.src('assets/scss/main.scss')
+        .pipe(sass({
+            precision: 10,
+            includePaths: 'node_modules/node-normalize-scss'
         }))
-        .pipe(gulp.dest(assetsProd + 'img/'));
+        .pipe(concat('styles.css'))
+        .pipe(cssPrefixer())
+        .pipe(gulp.dest(assetsProd+'/css/'));
 });
 
-gulp.task('build-html', function () {
-    return gulp.src(appDev + '**/*.html')
-        .pipe(gulp.dest(templatesProd));
+gulp.task('test-tsc', function() {
+    var tsProject = tsc.createProject('tsconfig.json');
+
+    return tsProject.src()
+        .pipe(tsc(tsProject))
+        .pipe(gulp.dest('test/js/'));
 });
 
-// don'pt want to have to build node on deploys
-gulp.task('copy-libs', function() {
-    return gulp.src([
-            "node_modules/es6-shim/es6-shim.min.js",
-            "node_modules/systemjs/dist/system-polyfills.js",
-            "node_modules/angular2/es6/dev/src/testing/shims_for_IE.js",
-            "node_modules/angular2/bundles/angular2-polyfills.js",
-            "node_modules/systemjs/dist/system.src.js",
-            "node_modules/rxjs/bundles/Rx.js",
-            "node_modules/angular2/bundles/angular2.js",
-            "node_modules/angular2/bundles/router.dev.js",
-            "node_modules/angular2/bundles/http.js",
-            "node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js",
-            "node_modules/moment/moment.js"
-        ])
-        .pipe(gulp.dest(assetsProd + 'js/'))
+gulp.task('test-run', [ 'test-tsc' ], function() {
+    return gulp.src('test/**/*.spec.js')
+        .pipe(mocha());
 });
 
-gulp.task('copy-lib-css', function() {
-    return gulp.src([
-            "node_modules/nvd3/build/*.css",
-            "assets/*.css"
-        ])
-        .pipe(gulp.dest(assetsProd + 'css/'))
+gulp.task('test', [ 'test-run' ], function() {
+    return del('test/js');
 });
 
-gulp.task('watch', function () {
-    gulp.watch(appDev + '**/*.ts', ['build-ts']);
-    gulp.watch(assetsDev + 'scss/**/*.scss', ['build-css']);
-    gulp.watch(assetsDev + 'img/*', ['build-img']);
-    gulp.watch(appDev + '**/*.html', ['build-html']);
-    gulp.watch('assets/*.css', ['copy-lib-css']);
+gulp.task('minify', function() {
+    var js = gulp.src(assetsProd+'/js/bundle.js')
+        .pipe(jsMinify())
+        .pipe(gulp.dest(assetsProd+'/js/'));
+
+    var css = gulp.src(assetsProd+'/css/styles.css')
+        .pipe(cssMinify())
+        .pipe(gulp.dest(assetsProd+'/css/'));
+    return merge(js, css);
 });
 
-gulp.task('default', ['watch', 'build-ts', 'build-css',
-    'build-html', 'copy-libs', 'copy-lib-css']);
+gulp.task('watch', function() {
+    var watchTs = gulp.watch('app/**/**.ts', [ 'system-build' ]),
+        watchScss = gulp.watch('assets/**/*.scss', [ 'lintScss', 'scss' ]),
+        watchHtml = gulp.watch('app/**/*.html', [ 'html' ]),
+        watchCss = gulp.watch('assets/**/**.css', [ 'css' ]);
+    // watchImages = gulp.watch('src/images/**/*.*', [ 'images' ]),
+
+    onChanged = function(event) {
+        console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
+    };
+
+    watchTs.on('change', onChanged);
+    watchScss.on('change', onChanged);
+    watchHtml.on('change', onChanged);
+    watchImages.on('change', onChanged);
+    watchCss.on('change', onChanged);
+});
+
+gulp.task('watchtests', function() {
+    var watchTs = gulp.watch('app/**/**.ts', [ 'test-run' ]),
+        watchTests = gulp.watch('test/**/*.spec.js', [ 'test-run' ]),
+
+    onChanged = function(event) {
+        console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
+    };
+
+    watchTs.on('change', onChanged);
+    watchTests.on('change', onChanged);
+});
+
+gulp.task('default', [
+    'shims',
+    'system-build',
+    'html',
+    'images',
+    'lintScss',
+    'scss',
+    'css'
+]);
