@@ -7,7 +7,7 @@ import {Observable}     from 'rxjs/Observable';
 @Injectable()
 export class ThumbService {
     constructor (private http: Http) {}
-    private _thumbsUrl = "/comics/api/1.0/thumbnails";
+    private _thumbsUrl = "/comics/api/1.0/thumbnails/4";
 
     getList (): Observable<Thumb[]> {
         return this.http.get(this._thumbsUrl+"/10")

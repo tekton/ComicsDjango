@@ -9,52 +9,7 @@
     <script src="/static/src/js/shims.js"></script>
 </head>
 <body>
-<header id="siteheader">
-    <div class="wrapper">
-        <h1><a href="/">ComicRate</a></h1>
-        <nav id="sitenav">
-            <ul class="nav">
-                <li><a href="/pull">Pull List</a></li>
-                <li><a href="/comics/series/all">Series</a></li>
-                <li><a href="#">Page 3</a></li>
-                <li><a href="/admin">Admin</a></li>
-            </ul>
-        </nav>
-        <div id="search" style="float: right;">
-            <ul class="nav">
-                <li>
-                    <form action="{% url 'comics:search' %}" method="POST">
-                        {% csrf_token %}
-                        <label for="id_search_data">Search:</label>
-                        <input type="text" name="search_data" id="id_search_data" />
-                        <input type="Submit" />
-                    </form>
-                </li>
-            </ul>
-        </div>
-        <div id="usernav">
-            <ul class="nav pull-right">
-                <li class="dropdown">
-                    <a href="#">{{user}} <i class="icon-triangle-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/accounts/settings">Settings</a></li>
-                        <li><a href="/accounts/logout/?next=/">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</header>
-
-<div id="container">
-    <div class="wrapper">
-        <my-app><div id="ajaxloader">&nbsp;</div></my-app>
-    </div>
-</div>
-
-<footer id="sitefooter">
-    <div class="wrapper"></div>
-</footer>
+<my-app><div id="ajaxloader">&nbsp;</div></my-app>
 </body>
 <script src="/static/src/js/bundle.js"></script>
 </html>

@@ -4,21 +4,18 @@ import { Router } from '@angular/router-deprecated';
 import { Hero } from './shared/heroes/hero';
 import { HeroService } from './shared/heroes/hero.service';
 
+import {ThumbStripComponent} from "./shared/thumbs/thumbs.component";
+import {PullListComponent} from "./shared/pull/pull-list.component"
+
 @Component({
     selector: 'my-dashboard',
-    templateUrl: '/static/app/dashboard.component.html'
+    templateUrl: '/static/app/dashboard.component.html',
+    directives: [ThumbStripComponent, PullListComponent]
 })
 export class DashboardComponent implements OnInit {
-    heroes: Hero[] = [];
     constructor(
-        private _router: Router,
-        private _heroService: HeroService) { }
+        private _router: Router) { }
     ngOnInit() {
-        this._heroService.getHeroes()
-            .then(heroes => this.heroes = heroes.slice(1,5));
-    }
-    gotoDetail(hero: Hero){
-        let link = ['HeroDetail', { id: hero.id }];
-        this._router.navigate(link);
+        console.log("dashboard...");
     }
 }

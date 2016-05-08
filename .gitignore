@@ -21,3 +21,5 @@ static/app/*
 static/src/*
 *node_modules*
 angular2_ui2/typings/*
+angular2_ui2/build/*
+npm-debug.log

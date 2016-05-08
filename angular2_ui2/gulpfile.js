@@ -50,7 +50,7 @@ gulp.task('tsc', function() {
     var tsProject = tsc.createProject('tsconfig.json'),
         tsResult = tsProject.src().pipe(tsc(tsProject));
 
-    return tsResult.js.pipe(gulp.dest(appProd));
+    return tsResult.js.pipe(gulp.dest("build")); //need a temp spot for files
 });
 
 gulp.task('html', function() {

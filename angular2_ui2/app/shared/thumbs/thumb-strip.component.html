@@ -1,6 +1,9 @@
-<h1>Thumbs</h1>
-<ul class="pulls">
-    <li *ngFor="let thumb of thumbList">
-        <span class="text">{{thumb}}</span>
-    </li>
-</ul>
+<div id="thumbsContainer">
+<div class="thumbLists">
+<div class="thumbs">
+    <span *ngFor="let thumb of thumbList">
+        <a href="/comics/{{thumb.id}}"><img src="/static/images/{{thumb.thumbnail}}" width="160px" /></a>
+    </span>
+</div>
+</div>
+</div>

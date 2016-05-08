@@ -5,8 +5,8 @@ import {RouteParams} from "@angular/router-deprecated";
 
 @Component({
     selector: 'thumb-strip',
-    templateUrl: '/static/app/shared/thubs/thumb-strip.component.html'
-})
+    templateUrl: '/static/app/shared/thumbs/thumb-strip.component.html'
+}) //hope
 export class ThumbStripComponent implements OnInit {
     thumbList: Thumb[];
     errorMessage: string;
