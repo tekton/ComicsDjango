@@ -212,3 +212,15 @@ def known_series_list(request):
                               {"recentFiles": recentFiles,
                                "series_list": series_list},
                               context_instance=RequestContext(request))
+
+
+def api_known_series_list(request):
+    series_list = Series.objects.all().order_by("name").values()
+    rtn_list = json_encoder.serialize_to_json(series_list)
+    return HttpResponse(rtn_list, content_type="application/json")
+
+
+def api_series_overview(request, id):
+    series_list = Series.objects.filter(pk=id).values()
+    rtn_list = json_encoder.serialize_to_json(series_list[0])
+    return HttpResponse(rtn_list, content_type="application/json")

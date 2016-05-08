@@ -1,24 +1,22 @@
 ///<reference path="../../../typings/browser.d.ts"/>
 import {Injectable} from "@angular/core";
 import {Http, Response} from '@angular/http';
-import {Pull} from "./pull";
+import {Series} from "./series";
 import {Observable}     from 'rxjs/Observable';
 
 @Injectable()
-export class PullService {
+export class SeriesService {
     constructor (private http: Http) {}
+    private _seriesUrl = "/_comics/api/1.0/series";
 
-    private _pullListUrl = '/_pull/api/1.0/list';  // URL to web api
-    private _removeUrl = "/_pull/api/1.0/remove";
-
-    getList (): Observable<Pull[]> {
-        return this.http.get(this._pullListUrl)
-                        .map(this.extractData)
-                        .catch(this.handleError);
+    getList (): Observable<Series[]> {
+        return this.http.get(this._seriesUrl)
+            .map(this.extractData)
+            .catch(this.handleError);
     }
 
-    remove(pullId: number): Observable<any> {
-        return this.http.get(this._removeUrl+"/"+pullId)
+    getSeries(id: number):Observable<Series> {
+        return this.http.get(this._seriesUrl + "/" + id)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -27,7 +25,7 @@ export class PullService {
         if (res.status < 200 || res.status >= 300) {
             throw new Error('Bad response status: ' + res.status);
         } else {
-            console.log("resp", res);
+            console.log("series resp", res);
         }
         let body = res.json();
         console.log(body);

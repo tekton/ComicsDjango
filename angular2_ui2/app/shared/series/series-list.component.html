@@ -1,0 +1,12 @@
+<h2 (click)="getList()">Series List</h2>
+<ul class="pulls">
+    <li *ngFor="let series of seriesList" (click)="gotoOverview(series)">
+        <span class="badge">{{series.id}}</span>
+        <span class="text">{{series.name}}</span>
+        <span class="controls">
+        <span class="tup">Transfer Unread
+        </span>
+        <span class="remove">Remove</span>
+        </span>
+    </li>
+</ul>

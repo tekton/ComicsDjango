@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
-
-import { Hero } from './shared/heroes/hero';
-import { HeroService } from './shared/heroes/hero.service';
-
+//
 import {ThumbStripComponent} from "./shared/thumbs/thumbs.component";
 import {PullListComponent} from "./shared/pull/pull-list.component"
 

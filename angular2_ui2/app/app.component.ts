@@ -4,6 +4,9 @@ import {PullService} from "./shared/pull/pull.service";
 import {ThumbService} from "./shared/thumbs/thumbs.service";
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {DashboardComponent} from "./dashboard.component";
+import {SeriesListComponent} from "./shared/series/series-list.component";
+import {SeriesService} from "./shared/series/series.service";
+import {SeriesOverviewComponent} from "./shared/series/series-overview.component";
 
 @Component({
     selector: 'my-app',
@@ -12,7 +15,8 @@ import {DashboardComponent} from "./dashboard.component";
     providers: [
         ROUTER_PROVIDERS,
         PullService,
-        ThumbService
+        ThumbService,
+        SeriesService
     ]
 })
 @RouteConfig([
@@ -26,6 +30,16 @@ import {DashboardComponent} from "./dashboard.component";
         path: '/pulls',
         name: 'Pulls',
         component: PullListComponent
+    },
+    {
+        path: '/series',
+        name: 'Series',
+        component: SeriesListComponent
+    },
+    {
+        path: '/series/:id',
+        name: 'SeriesOverview',
+        component: SeriesOverviewComponent
     }
 ])
 export class AppComponent {
