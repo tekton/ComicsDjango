@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Series} from './series';
 import { SeriesService } from './series.service';
 import {RouteParams} from "@angular/router-deprecated";
+import {Issue} from "../issues/issue";
 
 @Component({
     selector: 'series-list-detail',
@@ -9,6 +10,7 @@ import {RouteParams} from "@angular/router-deprecated";
 })
 export class SeriesOverviewComponent implements OnInit {
     series: Series;
+    issueList: Issue[];
     errorMessage: string;
 
     constructor(
@@ -27,6 +29,10 @@ export class SeriesOverviewComponent implements OnInit {
             .subscribe(series => this.series = series,
                        error => this.errorMessage = <any>error,
                        () => this.handleData(this.series));
+        this._seriesService.getIssueList(id)
+            .subscribe(issueList => this.issueList = issueList,
+                error => this.errorMessage = <any>error,
+                () => this.handleData(this.issueList));
     }
 
     handleData(data: any) {

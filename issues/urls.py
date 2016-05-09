@@ -7,6 +7,7 @@ from ratings import views as ratingViews
 
 urlpatterns = [  # /series
     url(r'issue/(.*)', views.single, name="single"),
+    url(r'^api/1.0/series_issues/(\d+)', views.api_series_issues, name="api_series_issues"),
     url(r'^(\d+)$', views.browse, name="browse"),
     url(r'increment/(\d+)', views.incrementSeries, name="increment"),
     url(r'ajax/series/all', storyViews.getSeriesList, name="series_all"),

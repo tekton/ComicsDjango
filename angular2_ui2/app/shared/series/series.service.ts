@@ -3,11 +3,13 @@ import {Injectable} from "@angular/core";
 import {Http, Response} from '@angular/http';
 import {Series} from "./series";
 import {Observable}     from 'rxjs/Observable';
+import {Issue} from "../issues/issue";
 
 @Injectable()
 export class SeriesService {
     constructor (private http: Http) {}
     private _seriesUrl = "/_comics/api/1.0/series";
+    private _issuesUrl = "/_issues/api/1.0/series_issues";
 
     getList (): Observable<Series[]> {
         return this.http.get(this._seriesUrl)
@@ -17,6 +19,12 @@ export class SeriesService {
 
     getSeries(id: number):Observable<Series> {
         return this.http.get(this._seriesUrl + "/" + id)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    getIssueList(id: number):Observable<Issue[]> {
+        return this.http.get(this._issuesUrl + "/" + id)
             .map(this.extractData)
             .catch(this.handleError);
     }

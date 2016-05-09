@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Pull} from './pull';
 import { PullService } from './pull.service';
 import {RouteParams} from "@angular/router-deprecated";
+import {Router} from "@angular/router-deprecated";
 import {ThumbStripComponent} from "../thumbs/thumbs.component";
 
 @Component({
@@ -14,6 +15,7 @@ export class PullListComponent implements OnInit {
 
     constructor(
         private _pullService: PullService,
+        private _router: Router,
         private _routeParams: RouteParams){};
 
     ngOnInit() {
@@ -38,6 +40,11 @@ export class PullListComponent implements OnInit {
             .subscribe(data => this.handleData(data),
                        error => this.errorMessage = <any>error,
                        () => this.getList());
+    }
+
+    gotoOverview(series: number) {
+        let link = ['SeriesOverview', { id: series }];
+        this._router.navigate(link);
     }
 
     handleData(data: any) {

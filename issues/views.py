@@ -8,6 +8,7 @@ from issues.models import *
 from PullLists.models import *
 from ratings.models import *
 
+from Comics import json_encoder
 import json
 
 
@@ -58,6 +59,39 @@ def browse(request, id):
         ''',[request.user.id, request.user.id, series.id])
     # print(issues.query)
     return render_to_response("series/browse.html", {"series": series, "comics": issues}, context_instance=RequestContext(request))
+
+
+def api_series_issues(request, id):
+    print("WAT")
+    issues = Comic.objects.raw('''
+        SELECT  (comicFiles_comicreadandown.read) AS `read`,
+                (comicFiles_comicreadandown.own) AS `own`,
+                `issues_comic`.`id`, `issues_comic`.`name`,
+                `issues_comic`.`number`,
+                `issues_comic`.`year`,
+                `issues_comic`.`series_id`,
+                `issues_comic`.`annual`,
+                `issues_comic`.`annual_number`,
+                (ratings_userrating.art) as `art`,
+                (ratings_userrating.story) as `story`,
+                (ratings_userrating.overall) as `overall`
+                FROM `issues_comic`
+                LEFT OUTER JOIN `comicFiles_comicreadandown`
+                ON (`issues_comic`.`id` = `comicFiles_comicreadandown`.`issue_id` AND
+                    comicFiles_comicreadandown.user_id = %s)
+                LEFT OUTER JOIN `ratings_userrating`
+                ON (`issues_comic`.`id` = `ratings_userrating`.`comic_id` AND
+                    ratings_userrating.user_id = %s)
+                WHERE (`issues_comic`.`series_id` = %s);
+        ''',[request.user.id, request.user.id, id])
+    print(issues)
+    rtn_list = []
+    for itm in issues:
+        _x = itm.__dict__
+        _x.pop("_state")
+        rtn_list.append(_x)
+    rtn_list = json_encoder.serialize_to_json(rtn_list)
+    return HttpResponse(rtn_list, content_type="application/json")
 
 
 def browseUnread(request, id):

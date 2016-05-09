@@ -3,7 +3,7 @@
     <li *ngFor="let pull of pullList"
         [class.selected]="pull === selectedPull">
         <span class="badge">{{pull.series}}</span>
-        <span class="text">{{pull.series__name}}</span>
+        <span class="text" (click)="gotoOverview(pull.series)">{{pull.series__name}}</span>
         <span class="controls">
         <span class="tup" (click)="tup(pull.series)">Transfer Unread
         </span>

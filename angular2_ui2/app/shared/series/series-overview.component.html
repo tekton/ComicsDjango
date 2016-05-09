@@ -1,7 +1,19 @@
 <div *ngIf="series">
 
 <h1>{{series.name}}</h1>
-<div>
-    CONTROLS GO HERE
+<ul class="seriesControls">
+    <li class="seriesControl atp">Add to Pull List</li>
+    <li class="seriesControl tp">Transfer Primaries</li>
+    <li class="seriesControl tup">Transfer Unread Primaries</li>
+    <li class="seriesControl inc">++</li>
+</ul>
+
+    <ul>
+        <li *ngFor="let issue of issueList">
+            <span>{{issue.id}}</span>
+            <span>{{issue.number}}</span>
+            <span>{{issue.read}}</span>
+            <span>{{issue.own}}</span>
+        </li>
+    </ul>
 </div>
-    </div>

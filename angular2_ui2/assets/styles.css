@@ -89,6 +89,57 @@
     color: white;
 }
 
+.seriesControls {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+.seriesControls .seriesControl {
+    display: inline-block;
+    padding: 10px;
+    margin: 0px;
+    margin-left: -4px;
+}
+
+.seriesControls .tp {
+    background-color: #2a62bc;
+}
+
+.seriesControls .tp:hover {
+    color: white;
+    background-color: #3D97F5;
+}
+
+.seriesControls .tup {
+    background-color: #40a940;
+}
+
+.seriesControls .tup:hover {
+    color: black;
+    background-color: #40ff40;
+}
+
+.seriesControls .inc {
+    border-radius: 0 4px 4px 0;
+    background-color: dodgerblue;
+}
+
+.seriesControls .inc:hover {
+    color: white;
+    background-color: darkblue;
+}
+
+.seriesControls .atp {
+    border-radius: 4px 0 0 4px;
+    background-color: purple;
+}
+
+.seriesControls .atp:hover {
+    color: black;
+    background-color: rebeccapurple;
+}
+
 #ajaxloader
 {
     position: absolute;
