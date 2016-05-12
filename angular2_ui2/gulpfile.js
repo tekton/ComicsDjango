@@ -32,7 +32,8 @@ gulp.task('shims', function() {
             "node_modules/systemjs/dist/system.src.js",
             'node_modules/zone.js/dist/zone.js',
             'node_modules/reflect-metadata/Reflect.js',
-            "node_modules/es6-shim/es6-shim.min.js"
+            "node_modules/es6-shim/es6-shim.min.js",
+            "node_modules/bootstrap/dist/js/bootstrap.min.js"
         ])
         .pipe(concat('shims.js'))
         .pipe(gulp.dest(assetsProd+'/js/'));
@@ -59,7 +60,12 @@ gulp.task('html', function() {
 });
 
 gulp.task('css', function() {
-    return gulp.src('assets/**/**.css')
+    return gulp.src([
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
+            'assets/**/**.css',
+            ])
+        .pipe(concat('css.css'))
         .pipe(gulp.dest(assetsProd+"/css/"));
 });
 

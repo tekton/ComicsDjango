@@ -3,10 +3,13 @@ import {Series} from './series';
 import { SeriesService } from './series.service';
 import {RouteParams} from "@angular/router-deprecated";
 import {Router} from "@angular/router-deprecated";
+import {DataTableDirectives} from 'angular2-datatable/datatable';
+
 
 @Component({
     selector: 'series-list-detail',
-    templateUrl: '/static/app/shared/series/series-list.component.html'
+    templateUrl: '/static/app/shared/series/series-list.component.html',
+    directives: [DataTableDirectives]
 })
 export class SeriesListComponent implements OnInit {
     seriesList: Series[];
