@@ -4,13 +4,17 @@
         'rxjs':     'node_modules/rxjs',
         '@angular': 'node_modules/@angular',
         'lodash': 'node_modules/lodash',
-        'angular2-datatable': 'node_modules/angular2-datatable'
+        'moment': 'node_modules/moment',
+        'angular2-datatable': 'node_modules/angular2-datatable',
+        'ng2-bootstrap': 'node_modules/ng2-bootstrap'
     };
 
     var packages = {
         'app':  { main: 'main.js',  defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
         'lodash': { main: 'lodash', defaultExtension: 'js' },
+        'moment': { main: 'moment', defaultExtension: 'js' },
+        'ng2-bootstrap': { defaultExtension: 'js' },
         'angular2-datatable':  {main: "datatable", defaultExtension: "js"}
     };
 

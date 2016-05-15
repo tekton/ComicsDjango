@@ -32,8 +32,7 @@ gulp.task('shims', function() {
             "node_modules/systemjs/dist/system.src.js",
             'node_modules/zone.js/dist/zone.js',
             'node_modules/reflect-metadata/Reflect.js',
-            "node_modules/es6-shim/es6-shim.min.js",
-            "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            "node_modules/es6-shim/es6-shim.min.js"
         ])
         .pipe(concat('shims.js'))
         .pipe(gulp.dest(assetsProd+'/js/'));
@@ -80,16 +79,16 @@ gulp.task('lintScss', function() {
         .pipe(scssLint({ config: 'lint.yml' }));
 });
 
-gulp.task('scss', function() {
-    return gulp.src('assets/scss/main.scss')
-        .pipe(sass({
-            precision: 10,
-            includePaths: 'node_modules/node-normalize-scss'
-        }))
-        .pipe(concat('styles.css'))
-        .pipe(cssPrefixer())
-        .pipe(gulp.dest(assetsProd+'/css/'));
-});
+// gulp.task('scss', function() {
+//     return gulp.src('assets/scss/main.scss')
+//         .pipe(sass({
+//             precision: 10,
+//             includePaths: 'node_modules/node-normalize-scss'
+//         }))
+//         .pipe(concat('styles.css'))
+//         .pipe(cssPrefixer())
+//         .pipe(gulp.dest(assetsProd+'/css/'));
+// });
 
 gulp.task('test-tsc', function() {
     var tsProject = tsc.createProject('tsconfig.json');
@@ -121,7 +120,7 @@ gulp.task('minify', function() {
 
 gulp.task('watch', function() {
     var watchTs = gulp.watch('app/**/**.ts', [ 'system-build' ]),
-        watchScss = gulp.watch('assets/**/*.scss', [ 'lintScss', 'scss' ]),
+        // watchScss = gulp.watch('assets/**/*.scss', [ 'lintScss', 'scss' ]),
         watchHtml = gulp.watch('app/**/*.html', [ 'html' ]),
         watchCss = gulp.watch('assets/**/**.css', [ 'css' ]);
     // watchImages = gulp.watch('src/images/**/*.*', [ 'images' ]),
@@ -131,7 +130,7 @@ gulp.task('watch', function() {
     };
 
     watchTs.on('change', onChanged);
-    watchScss.on('change', onChanged);
+    // watchScss.on('change', onChanged);
     watchHtml.on('change', onChanged);
     // watchImages.on('change', onChanged);
     watchCss.on('change', onChanged);
@@ -154,7 +153,7 @@ gulp.task('default', [
     'system-build',
     'html',
     'images',
-    'lintScss',
-    'scss',
+    // 'lintScss',
+    // 'scss',
     'css'
 ]);
