@@ -8,6 +8,7 @@ import {SeriesListComponent} from "./shared/series/series-list.component";
 import {SeriesService} from "./shared/series/series.service";
 import {SeriesOverviewComponent} from "./shared/series/series-overview.component";
 import {NavBarComponent} from "./shared/nav/nav.component";
+import {SeriesNewComponent} from "./shared/series/series-new.component";
 
 @Component({
     selector: 'my-app',
@@ -36,6 +37,11 @@ import {NavBarComponent} from "./shared/nav/nav.component";
         path: '/series',
         name: 'Series',
         component: SeriesListComponent
+    },
+    {
+        path: '/series/new',
+        name: 'SeriesNew',
+        component: SeriesNewComponent
     },
     {
         path: '/series/:id',
