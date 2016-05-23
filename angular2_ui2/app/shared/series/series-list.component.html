@@ -1,28 +1,24 @@
 <h2 (click)="getList()">Series List</h2>
-<table class="table table-striped" [mfData]="seriesList" #mf="mfDataTable" [mfRowsOnPage]="5">
-
+<table class="table" [mfData]="seriesList" #mf="mfDataTable" [mfRowsOnPage]="5">
     <thead>
     <tr>
-        <th style="width: 20%">
-            <mfDefaultSorter by="id">ID</mfDefaultSorter>
-        </th>
-        <th style="width: 60%">
+        <th style="width: 100%">
             <mfDefaultSorter by="name">Name</mfDefaultSorter>
-        </th>
-        <th style="width: 10%">
-            <mfDefaultSorter by="tup">TUP</mfDefaultSorter>
-        </th>
-        <th style="width: 10%">
-            <mfDefaultSorter by="rm">Remove</mfDefaultSorter>
         </th>
     </tr>
     </thead>
 <tbody>
     <tr *ngFor="let item of mf.data">
-        <td>{{item.id}}</td>
-        <td (click)="gotoOverview(item)">{{item.name}}</td>
-        <td class="text-right">TUP</td>
-        <td></td>
+        <td>
+            <md-card (click)="gotoOverview(item)">
+                <md-card-title>{{item.name}}</md-card-title>
+                <md-card-content class="secondary"></md-card-content>
+                <md-card-actions layout="row" align="end">
+                    <button md-button color="primary">Transfer Unread</button>
+                    <button md-button color="primary">Remove</button>
+                </md-card-actions>
+            </md-card>
+        </td>
     </tr>
 </tbody>
     <tfoot>
@@ -33,7 +29,7 @@
     </tr>
     </tfoot>
 </table>
-
+<!--
 <ul class="pulls">
     <li *ngFor="let series of seriesList" (click)="gotoOverview(series)">
         <span class="badge">{{series.id}}</span>
@@ -45,3 +41,13 @@
         </span>
     </li>
 </ul>
+
+<div class="md" *ngIf="seriesList">
+    <md-card *ngFor="let series of seriesList">
+        <md-card-title>{{series.name}}</md-card-title>
+        <md-card-actions align="end">
+        <button md-button color="primary">Transfer Unread</button>
+        <button md-button color="primary">Remove</button>
+      </md-card-actions>
+    </md-card>
+</div>-->

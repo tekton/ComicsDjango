@@ -36,7 +36,7 @@ export class SeriesNewService {
                 label: 'Series Name',
                 value: '',
                 required: true,
-                order: 0
+                order: 5
             })
         ];
         return questions.sort((a, b) => a.order - b.order);

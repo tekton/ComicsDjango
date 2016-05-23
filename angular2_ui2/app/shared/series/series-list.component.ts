@@ -4,12 +4,15 @@ import { SeriesService } from './series.service';
 import {RouteParams} from "@angular/router-deprecated";
 import {Router} from "@angular/router-deprecated";
 import {DataTableDirectives} from 'angular2-datatable/datatable';
-
+import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
+import {MdButton} from '@angular2-material/button';
+// @angular2-material/core
+// @angular2-material/card
 
 @Component({
     selector: 'series-list-detail',
     templateUrl: '/static/app/shared/series/series-list.component.html',
-    directives: [DataTableDirectives]
+    directives: [DataTableDirectives, MD_CARD_DIRECTIVES, MdButton]
 })
 export class SeriesListComponent implements OnInit {
     seriesList: Series[];
