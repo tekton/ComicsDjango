@@ -1,0 +1,53 @@
+<h2 (click)="getList()">Series List</h2>
+<table class="table" [mfData]="seriesList" #mf="mfDataTable" [mfRowsOnPage]="5">
+    <thead>
+    <tr>
+        <th style="width: 100%">
+            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+        </th>
+    </tr>
+    </thead>
+<tbody>
+    <tr *ngFor="let item of mf.data">
+        <td>
+            <md-card (click)="gotoOverview(item)">
+                <md-card-title>{{item.name}}</md-card-title>
+                <md-card-content class="secondary"></md-card-content>
+                <md-card-actions layout="row" align="end">
+                    <button md-button color="primary">Transfer Unread</button>
+                    <button md-button color="primary">Remove</button>
+                </md-card-actions>
+            </md-card>
+        </td>
+    </tr>
+</tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+<!--
+<ul class="pulls">
+    <li *ngFor="let series of seriesList" (click)="gotoOverview(series)">
+        <span class="badge">{{series.id}}</span>
+        <span class="text">{{series.name}}</span>
+        <span class="controls">
+        <span class="tup">Transfer Unread
+        </span>
+        <span class="remove">Remove</span>
+        </span>
+    </li>
+</ul>
+
+<div class="md" *ngIf="seriesList">
+    <md-card *ngFor="let series of seriesList">
+        <md-card-title>{{series.name}}</md-card-title>
+        <md-card-actions align="end">
+        <button md-button color="primary">Transfer Unread</button>
+        <button md-button color="primary">Remove</button>
+      </md-card-actions>
+    </md-card>
+</div>-->

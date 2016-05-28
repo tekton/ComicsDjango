@@ -1,0 +1,13 @@
+<h2 (click)="getList()">My Pull List</h2>
+<ul class="pulls">
+    <li *ngFor="let pull of pullList"
+        [class.selected]="pull === selectedPull">
+        <span class="badge">{{pull.series}}</span>
+        <span class="text" (click)="gotoOverview(pull.series)">{{pull.series__name}}</span>
+        <span class="controls">
+        <span class="tup" (click)="tup(pull.series)">Transfer Unread
+        </span>
+        <span class="remove" (click)="removePull(pull.id)">Remove</span>
+        </span>
+    </li>
+</ul>

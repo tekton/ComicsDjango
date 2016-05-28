@@ -1,0 +1,58 @@
+<div *ngIf="series">
+<h1>{{series.name}}</h1>
+<ul class="seriesControls">
+    <li class="seriesControl atp">Add to Pull List</li>
+    <li class="seriesControl tp">Transfer Primaries</li>
+    <li class="seriesControl tup">Transfer Unread Primaries</li>
+    <li class="seriesControl inc">++</li>
+</ul>
+
+<h2 (click)="getList()">Series List</h2>
+<table class="table table-striped" [mfData]="issueList" #mf="mfDataTable" [mfRowsOnPage]="12">
+
+    <thead>
+    <tr>
+        <th style="width: 5%">
+            <mfDefaultSorter by="number">Number</mfDefaultSorter>
+        </th>
+        <th style="width: 70%">
+            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+            <mfDefaultSorter by="read">Read</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+            <mfDefaultSorter by="own">Own</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+            <mfDefaultSorter by="art">Art</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+            <mfDefaultSorter by="story">Story</mfDefaultSorter>
+        </th>
+        <th style="width: 5%">
+            <mfDefaultSorter by="overall">Overall</mfDefaultSorter>
+        </th>
+    </tr>
+    </thead>
+<tbody>
+    <tr *ngFor="let item of mf.data">
+        <td>{{item.number}}</td>
+        <td (click)="gotoOverview(item)">{{item.name}}</td>
+        <td>{{item.read}}</td>
+        <td>{{item.own}}</td>
+        <td>{{item.art}}</td>
+        <td>{{item.story}}</td>
+        <td>{{item.overall}}</td>
+    </tr>
+</tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25,100]"></mfBootstrapPaginator>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+</div>
