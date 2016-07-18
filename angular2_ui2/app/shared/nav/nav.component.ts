@@ -5,7 +5,7 @@ import {DROPDOWN_DIRECTIVES} from "ng2-bootstrap/ng2-bootstrap"
 
 @Component({
     selector: 'nav-bar',
-    templateUrl: '/static/app/shared/nav/nav.html',
+    templateUrl: '/static/app/shared/nav/nav.mat.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     directives: [RouterLink, CORE_DIRECTIVES, DROPDOWN_DIRECTIVES]
 })

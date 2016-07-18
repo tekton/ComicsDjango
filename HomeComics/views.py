@@ -20,6 +20,7 @@ from comicFiles.file_parsing import copy_file_to_transfer
 import json
 
 
+@login_required
 def angular_test(request):
     return render_to_response("angular.html", {}, context_instance=RequestContext(request))
 
